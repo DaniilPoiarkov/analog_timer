@@ -1,14 +1,9 @@
 ﻿
 Console.WriteLine("Hello Analog timer!");
 
-var ts = TimeSpan.Zero;
+var timer = new AnalogTimer.Implementations.AnalogTimer();
 
-var fiveSeconds = ts.Add(TimeSpan.FromSeconds(5));
+timer.AddSeconds(15);
+timer.Start();
 
-while(fiveSeconds > TimeSpan.Zero)
-{
-    await Task.Delay(1000);
-
-    fiveSeconds = fiveSeconds.Add(new TimeSpan(0, 0, -1));
-    Console.WriteLine(fiveSeconds);
-}
+Console.ReadKey();
