@@ -11,7 +11,9 @@ public class StartPrompt : PromptBase
         if(string.IsNullOrEmpty(input))
             return Task.CompletedTask;
 
-        var values = SplitInput(input).Select(v => v.ToLower()).ToList();
+        var values = SplitInput(input)
+            .Select(v => v.ToLower())
+            .ToList();
 
         if (!values.Any() || !values[0].Equals("start") || values.Count != 2)
         {

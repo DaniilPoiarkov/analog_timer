@@ -97,4 +97,12 @@ public class TimerState
         var seconds = Seconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Seconds}";
         return $"{hours}:{minutes}:{seconds}";
     }
+
+    public void Reset()
+    {
+        Hours = 0;
+        Minutes = 0;
+        Seconds = 0;
+        IsZero = true;
+    }
 }

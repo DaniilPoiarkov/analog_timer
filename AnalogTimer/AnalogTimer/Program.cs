@@ -10,7 +10,9 @@ var timer = new AnalogTimer.Implementations.AnalogTimer();
 
 var prompts = new List<IPrompt>()
 { 
-    new StartPrompt()
+    new StartPrompt(),
+    new PausePrompt(),
+    new ResetPrompt(),
 };
 
 var promptService = new PromptService(prompts, timer);

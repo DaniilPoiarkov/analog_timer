@@ -30,14 +30,41 @@ public class AnalogTimer : IAnalogTimer
 
     public void AddSeconds(int seconds)
     {
-        _state.AddSeconds(seconds);
+        UpdateState(state => state.AddSeconds(seconds));
+    }
+
+    public void AddMinutes(int minutes)
+    {
+        UpdateState(state => state.AddMinutes(minutes));
+    }
+
+    public void AddHours(int hours)
+    {
+        UpdateState(state => state.AddHours(hours));
+    }
+
+    public void ResetState()
+    {
+        _state.Reset();
+        _displayService.Display(_state);
+    }
+
+    private void UpdateState(Action<TimerState> stateUpdateAction)
+    {
+        if (IsRunning)
+        {
+            throw new Exception("Cannot add seconds when timer is running");
+        }
+
+        stateUpdateAction?.Invoke(_state);
+        _displayService.Display(_state);
     }
 
     public void Start()
     {
         if (IsRunning)
         {
-            return;
+            throw new Exception("Timer is already running");
         }
 
         IsRunning = true;
@@ -65,7 +92,7 @@ public class AnalogTimer : IAnalogTimer
     {
         if (!IsRunning || Execution is null)
         {
-            return;
+            throw new Exception("Timer is not running");
         }
 
         IsRunning = false;
