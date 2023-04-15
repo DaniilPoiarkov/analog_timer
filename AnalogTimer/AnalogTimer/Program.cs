@@ -1,21 +1,17 @@
-﻿using AnalogTimer.Contracts;
-using AnalogTimer.Implementations;
+﻿using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
-
-Console.WriteLine("Hello Analog timer!");
-
-Console.Clear();
 
 var timer = new AnalogTimer.Implementations.AnalogTimer();
 
-var prompts = new List<IPrompt>()
-{ 
-    new StartPrompt(),
-    new PausePrompt(),
-    new ResetPrompt(),
-};
+var prompts = new PromptCollectionBuilder()
+    .Add<StartPrompt>()
+    .Add<PausePrompt>()
+    .Add<ResetPrompt>()
+    .Build();
 
 var promptService = new PromptService(prompts, timer);
+
+promptService.DisplayPrompts();
 
 while (true)
 {

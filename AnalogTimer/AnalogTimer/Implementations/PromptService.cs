@@ -8,6 +8,10 @@ public class PromptService : IPromptService
 
     private readonly AnalogTimer _analogTimer;
 
+    private const int _exceptionLine = 8;
+    
+    private const int _inputLine = 9;
+
     public PromptService(
         IEnumerable<IPrompt> prompts,
         AnalogTimer analogTimer)
@@ -28,9 +32,10 @@ public class PromptService : IPromptService
 
     public async Task Run()
     {
-        DisplayPrompts();
-
+        Console.CursorTop = _inputLine;
         var input = Console.ReadLine();
+        Console.CursorTop = _inputLine;
+        Console.WriteLine(new string(' ', Console.BufferWidth));
 
         var values = input?
             .TrimEnd()
@@ -38,16 +43,10 @@ public class PromptService : IPromptService
             .Select(v => v.ToLower())
             .ToList();
 
-        Console.CursorTop = 12;
-
-        foreach (var instruction in _prompts.Select(p => p.Instruction))
-        {
-            Console.WriteLine(new string(' ', instruction.Length));
-        }
-
         if (values is null || !values.Any())
         {
-            Console.WriteLine("Invalid input");
+            Console.CursorTop = _exceptionLine;
+            Console.WriteLine("Exception: Invalid input");
             return;
         }
 
@@ -55,6 +54,7 @@ public class PromptService : IPromptService
 
         if(prompt is null)
         {
+            Console.CursorTop = _exceptionLine;
             Console.WriteLine($"Prompt with name \'{values[0]}\' not found");
             return;
         }
@@ -65,10 +65,10 @@ public class PromptService : IPromptService
         }
         catch (Exception ex)
         {
-            Console.CursorTop = 8;
+            Console.CursorTop = _exceptionLine;
             Console.WriteLine(new string(' ', Console.BufferWidth));
             
-            Console.CursorTop = 8;
+            Console.CursorTop = _exceptionLine;
             Console.WriteLine($"Exception: {ex.Message}");
         }
     }

@@ -8,7 +8,6 @@ public class ResetPrompt : PromptBase
 
     public override async Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
     {
-        await timer.Stop();
-        timer.ResetState();
+        await timer.ResetState();
     }
 }

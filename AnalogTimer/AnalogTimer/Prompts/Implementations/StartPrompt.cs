@@ -6,10 +6,10 @@ public class StartPrompt : PromptBase
 
     public override string Name => "Start";
 
-    public override Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
+    public override async Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
     {
         if(string.IsNullOrEmpty(input))
-            return Task.CompletedTask;
+            throw new ArgumentNullException(nameof(input));
 
         var values = SplitInput(input)
             .Select(v => v.ToLower())
@@ -17,7 +17,7 @@ public class StartPrompt : PromptBase
 
         if (!values.Any() || !values[0].Equals("start") || values.Count != 2)
         {
-            return Task.CompletedTask;
+            throw new ArgumentNullException(nameof(input));
         }
 
         var seconds = int.Parse(values[1]);
@@ -28,9 +28,8 @@ public class StartPrompt : PromptBase
         if (timer.IsRunning)
             throw new Exception("Timer is already running");
 
+        await timer.ResetState();
         timer.AddSeconds(seconds);
         timer.Start();
-
-        return Task.CompletedTask;
     }
 }
