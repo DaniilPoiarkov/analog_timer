@@ -7,21 +7,24 @@ public class AnalogTimer : IAnalogTimer
 {
     private readonly TimerState _state;
 
+    private readonly DisplayService _displayService;
+
     public bool IsRunning { get; private set; }
 
     private int TicksPerSecond { get; set; }
 
     private Func<Task>? Counter { get; set; }
 
-    public AnalogTimer(TimerState state)
+    public AnalogTimer(TimerState state, ITimerTemplate template)
     {
         _state = state;
         IsRunning = false;
         TicksPerSecond = 1;
+        _displayService = new(template);
     }
 
     public AnalogTimer()
-        : this(new()) { }
+        : this(new(), new DefaultPattern()) { }
 
     public void AddSeconds(int seconds)
     {
@@ -45,8 +48,7 @@ public class AnalogTimer : IAnalogTimer
         while(IsRunning)
         {
             await _state.Wait(TicksPerSecond);
-            Console.Clear();
-            Console.WriteLine(_state);
+            _displayService.Display(_state);
 
             if (_state.IsZero)
             {

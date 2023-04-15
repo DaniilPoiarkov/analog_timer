@@ -2,5 +2,5 @@
 
 public interface ITimerTemplate
 {
-    string Pattern { get; }
+    char Pattern { get; }
 }
