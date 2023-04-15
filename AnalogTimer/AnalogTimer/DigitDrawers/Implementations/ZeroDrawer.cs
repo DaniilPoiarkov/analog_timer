@@ -17,6 +17,7 @@ public class ZeroDrawer : DigitDrawerBase
         PrintHeightLine(false, positionLeft, template.Pattern);
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
 
+        Console.CursorLeft = 0;
         Console.CursorTop = 9;
     }
 }

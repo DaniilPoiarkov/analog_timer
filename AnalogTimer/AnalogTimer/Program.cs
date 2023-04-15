@@ -1,5 +1,4 @@
-﻿
-using AnalogTimer.Contracts;
+﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
 
@@ -11,7 +10,7 @@ var timer = new AnalogTimer.Implementations.AnalogTimer();
 
 var prompts = new List<IPrompt>()
 { 
-    new StartPrompt() 
+    new StartPrompt()
 };
 
 var promptService = new PromptService(prompts, timer);
@@ -20,15 +19,3 @@ while (true)
 {
     await promptService.Run();
 }
-
-timer.AddSeconds(5);
-timer.Start();
-
-Console.ReadKey();
-
-timer.AddSeconds(15);
-
-if(!timer.IsRunning)
-    timer.Start();
-
-Console.ReadKey();

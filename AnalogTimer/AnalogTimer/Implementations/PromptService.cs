@@ -62,4 +62,3 @@ public class PromptService : IPromptService
         await prompt.Proceed(input, _analogTimer);
     }
 }
-    
