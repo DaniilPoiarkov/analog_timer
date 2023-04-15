@@ -18,28 +18,16 @@ public class StartPrompt : PromptBase
             return Task.CompletedTask;
         }
 
-        int seconds;
+        var seconds = int.Parse(values[1]);
 
-        try
-        {
-            seconds = int.Parse(values[1]);
+        if (seconds < 0)
+            throw new Exception("Seconds cannot be below 0");
 
-            if (seconds < 0)
-                throw new Exception("Seconds cannot be below 0");
+        if (timer.IsRunning)
+            throw new Exception("Timer is already running");
 
-            if (timer.IsRunning)
-                throw new Exception("Timer is already running");
-
-            timer.AddSeconds(seconds);
-            timer.Start();
-        }
-        catch (Exception ex)
-        {
-            Console.CursorTop = 8;
-            Console.WriteLine($"Exception: {ex.Message}");
-
-            return Task.CompletedTask;
-        }
+        timer.AddSeconds(seconds);
+        timer.Start();
 
         return Task.CompletedTask;
     }

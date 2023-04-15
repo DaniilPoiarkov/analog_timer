@@ -59,6 +59,17 @@ public class PromptService : IPromptService
             return;
         }
 
-        await prompt.Proceed(input, _analogTimer);
+        try
+        {
+            await prompt.Proceed(input, _analogTimer);
+        }
+        catch (Exception ex)
+        {
+            Console.CursorTop = 8;
+            Console.WriteLine(new string(' ', Console.BufferWidth));
+            
+            Console.CursorTop = 8;
+            Console.WriteLine($"Exception: {ex.Message}");
+        }
     }
 }
