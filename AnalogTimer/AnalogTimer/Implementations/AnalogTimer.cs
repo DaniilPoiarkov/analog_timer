@@ -67,8 +67,9 @@ public class AnalogTimer : IAnalogTimer
         {
             return;
         }
+
         IsRunning = false;
-        await Execution;// Counter.Invoke();
+        await Execution;
         Counter = null;
     }
 }
