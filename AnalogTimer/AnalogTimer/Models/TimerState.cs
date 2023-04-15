@@ -28,20 +28,38 @@ public class TimerState
         : this(hours, minutes, _zero) { }
 
     public TimerState()
-        : this(0, 0) { }
+        : this(_zero, _zero) { }
 
-    public void AddSeconds(int seconds) => Seconds += seconds;
+    public void AddSeconds(int seconds)
+    {
+        Seconds += seconds;
 
-    public void AddMinutes(int minutes) => Minutes += minutes;
+        if (IsZero)
+            IsZero = false;
+    }
 
-    public void AddHours(int hours) => Hours += hours;
+    public void AddMinutes(int minutes)
+    {
+        Minutes += minutes;
+
+        if (IsZero)
+            IsZero = false;
+    }
+
+    public void AddHours(int hours)
+    {
+        Hours += hours;
+
+        if (IsZero)
+            IsZero = false;
+    }
 
     public async Task Wait(int ticksPerSecond)
     {
         if (IsZero)
             throw new ArgumentOutOfRangeException(nameof(ticksPerSecond));
 
-        await Task.Delay(_millisecondsInSecond / ticksPerSecond);
+        await Task.Delay(_millisecondsInSecond / ticksPerSecond);//* 60 
 
         //TODO
         Seconds -= (int)TimeSpan.FromMilliseconds(_millisecondsInSecond).TotalSeconds / ticksPerSecond;

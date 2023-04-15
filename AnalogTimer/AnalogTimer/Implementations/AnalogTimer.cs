@@ -15,6 +15,8 @@ public class AnalogTimer : IAnalogTimer
 
     private Func<Task>? Counter { get; set; }
 
+    private Task? Execution { get; set; }
+
     public AnalogTimer(TimerState state, ITimerTemplate template)
     {
         _state = state;
@@ -33,19 +35,21 @@ public class AnalogTimer : IAnalogTimer
 
     public void Start()
     {
-        if(IsRunning)
+        if (IsRunning)
         {
             return;
         }
 
         IsRunning = true;
         Counter = StartTimerTemplate;
-        Counter.Invoke();
+        Execution = Counter.Invoke();
     }
 
     private async Task StartTimerTemplate()
     {
-        while(IsRunning)
+        _displayService.Display(_state);
+
+        while (IsRunning)
         {
             await _state.Wait(TicksPerSecond);
             _displayService.Display(_state);
@@ -59,13 +63,12 @@ public class AnalogTimer : IAnalogTimer
 
     public async Task Stop()
     {
-        if(!IsRunning || Counter is null)
+        if (!IsRunning || Execution is null)
         {
             return;
         }
-
         IsRunning = false;
-        await Counter.Invoke();
+        await Execution;// Counter.Invoke();
         Counter = null;
     }
 }
