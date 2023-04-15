@@ -35,7 +35,7 @@ public class StartPrompt : PromptBase
         }
         catch (Exception ex)
         {
-            Console.CursorTop = 10;
+            Console.CursorTop = 8;
             Console.WriteLine($"Exception: {ex.Message}");
 
             return Task.CompletedTask;

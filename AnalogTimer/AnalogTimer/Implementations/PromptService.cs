@@ -40,7 +40,7 @@ public class PromptService : IPromptService
 
         Console.CursorTop = 12;
 
-        foreach(var instruction in _prompts.Select(p => p.Instruction))
+        foreach (var instruction in _prompts.Select(p => p.Instruction))
         {
             Console.WriteLine(new string(' ', instruction.Length));
         }
