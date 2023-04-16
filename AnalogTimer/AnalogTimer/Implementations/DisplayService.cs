@@ -30,11 +30,14 @@ public class DisplayService : IDisplayService
 
     public void Display(TimerState state)
     {
-        Update(state.Hours, TimerValue.Hour);
-        PrintDots(_dotsBetweenHourAndMinute);
-        Update(state.Minutes, TimerValue.Minute);
-        PrintDots(_dotsBetweenMinuteAndSecond);
-        Update(state.Seconds, TimerValue.Second);
+        lock(this)
+        {
+            Update(state.Hours, TimerValue.Hour);
+            PrintDots(_dotsBetweenHourAndMinute);
+            Update(state.Minutes, TimerValue.Minute);
+            PrintDots(_dotsBetweenMinuteAndSecond);
+            Update(state.Seconds, TimerValue.Second);
+        }
     }
 
     private void Update(int digit, TimerValue value)

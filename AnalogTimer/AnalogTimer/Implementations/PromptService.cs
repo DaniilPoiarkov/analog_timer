@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 
 namespace AnalogTimer.Implementations;
 
@@ -33,7 +34,27 @@ public class PromptService : IPromptService
     public async Task Run()
     {
         Console.CursorTop = _inputLine;
-        var input = Console.ReadLine();
+
+        while(true)
+        {
+            var key = Console.ReadKey();
+
+            if (key.Key == ConsoleKey.Enter)
+                break;
+
+            if (key.Key == ConsoleKey.Backspace)
+            {
+                UIHelper.RemoveLast();
+                Console.CursorLeft = UIHelper.CursorPosition;
+                Console.Write(' ');
+                Console.CursorLeft = UIHelper.CursorPosition;
+                continue;
+            }
+
+            UIHelper.Add(key.KeyChar);
+        }
+
+        var input = UIHelper.GetInput();
         Console.CursorTop = _inputLine;
         Console.WriteLine(new string(' ', Console.BufferWidth));
 
@@ -65,11 +86,14 @@ public class PromptService : IPromptService
         }
         catch (Exception ex)
         {
-            Console.CursorTop = _exceptionLine;
-            Console.WriteLine(new string(' ', Console.BufferWidth));
-            
-            Console.CursorTop = _exceptionLine;
-            Console.WriteLine($"Exception: {ex.Message}");
+            lock (this)
+            {
+                Console.CursorTop = _exceptionLine;
+                Console.WriteLine(new string(' ', Console.BufferWidth));
+
+                Console.CursorTop = _exceptionLine;
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
         }
     }
 }

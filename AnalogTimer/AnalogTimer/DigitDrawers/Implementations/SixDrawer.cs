@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers.Implementations;
 
@@ -17,7 +18,7 @@ public class SixDrawer : DigitDrawerBase
         PrintHeightLine(false, positionLeft, template.Pattern);
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
 
-        Console.CursorLeft = 0;
+        Console.CursorLeft = UIHelper.CursorPosition;
         Console.CursorTop = 9;
     }
 }
