@@ -15,10 +15,7 @@ public class StartPrompt : PromptBase
             .Select(v => v.ToLower())
             .ToList();
 
-        if (!values.Any() || !values[0].Equals("start") || values.Count != 2)
-        {
-            throw new ArgumentNullException(nameof(input));
-        }
+        ValidateInput(values);
 
         var seconds = int.Parse(values[1]);
 

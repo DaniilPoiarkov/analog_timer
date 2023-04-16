@@ -9,6 +9,8 @@ var prompts = new PromptCollectionBuilder()
     .Add<ResetPrompt>()
     .Add<ResumePrompt>()
     .Add<AddSecondsPrompt>()
+    .Add<AddMinutesPrompt>()
+    .Add<AddHoursPrompt>()
     .Build();
 
 var promptService = new PromptService(prompts, timer);

@@ -10,7 +10,7 @@ public class TimerState
 
     private const int _millisecondsInSecond = 1000;
 
-    private const int _secondsInMinute = 60;
+    private const int _secondsInMinute = 59;
 
     private const int _minutesInHourMinusOne = 59;
 
@@ -32,22 +32,57 @@ public class TimerState
 
     public void AddSeconds(int seconds)
     {
+        if(seconds < 0)
+            throw new ArgumentException("Seconds cannot be below 0", nameof(seconds));
+
         Seconds += seconds;
 
         if (IsZero)
             IsZero = false;
+
+        if (Seconds < 60)
+            return;
+
+        var minutes = 0;
+
+        while(Seconds >= 60)
+        {
+            minutes++;
+            Seconds -= 60;
+        }
+
+        AddMinutes(minutes);
     }
 
     public void AddMinutes(int minutes)
     {
+        if (minutes < 0)
+            throw new ArgumentException("Minutes cannot be below 0", nameof(minutes));
+
         Minutes += minutes;
 
         if (IsZero)
             IsZero = false;
+
+        if (Minutes < 60)
+            return;
+
+        var hours = 0;
+
+        while (Minutes >= 60)
+        {
+            hours++;
+            Minutes -= 60;
+        }
+
+        AddHours(hours);
     }
 
     public void AddHours(int hours)
     {
+        if (hours < 0)
+            throw new ArgumentException("Hours cannot be below 0", nameof(hours));
+
         Hours += hours;
 
         if (IsZero)
@@ -59,12 +94,12 @@ public class TimerState
         if (IsZero)
             throw new ArgumentOutOfRangeException(nameof(ticksPerSecond));
 
-        await Task.Delay(_millisecondsInSecond / ticksPerSecond);//* 60 
+        await Task.Delay(_millisecondsInSecond / ticksPerSecond);
 
         //TODO
         Seconds -= (int)TimeSpan.FromMilliseconds(_millisecondsInSecond).TotalSeconds / ticksPerSecond;
 
-        if (Seconds > _zero)
+        if (Seconds >= _zero)
             return;
 
         if (Minutes > _zero)
