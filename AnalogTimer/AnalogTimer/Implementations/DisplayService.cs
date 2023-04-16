@@ -8,6 +8,7 @@ public class DisplayService : IDisplayService
 {
     private readonly ITimerTemplate _timerTemplate;
 
+
     private const int _space = 13;
 
     private const int _zero = 0;
@@ -30,9 +31,9 @@ public class DisplayService : IDisplayService
     public void Display(TimerState state)
     {
         Update(state.Hours, TimerValue.Hour);
-        DeparatorOfTimeValues(_dotsBetweenHourAndMinute);
+        PrintDots(_dotsBetweenHourAndMinute);
         Update(state.Minutes, TimerValue.Minute);
-        DeparatorOfTimeValues(_dotsBetweenMinuteAndSecond);
+        PrintDots(_dotsBetweenMinuteAndSecond);
         Update(state.Seconds, TimerValue.Second);
     }
 
@@ -73,7 +74,7 @@ public class DisplayService : IDisplayService
         }
     }
 
-    private void DeparatorOfTimeValues(int position)
+    private void PrintDots(int position)
     {
         Console.CursorTop = 2;
         Console.CursorLeft = position;

@@ -58,7 +58,7 @@ public class AnalogTimer : IAnalogTimer
     {
         if (IsRunning)
         {
-            throw new Exception("Cannot add seconds when timer is running");
+            throw new Exception("Cannot update timer when it is running");
         }
 
         stateUpdateAction?.Invoke(_state);

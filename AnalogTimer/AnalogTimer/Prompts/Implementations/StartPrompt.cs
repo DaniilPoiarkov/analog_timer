@@ -2,7 +2,7 @@
 
 public class StartPrompt : PromptBase
 {
-    public override string Instruction => "Write \'start x\' where x is amount of seconds";
+    public override string Instruction => "Write \'start x\' where \'x\' is amount of seconds";
 
     public override string Name => "Start";
 
