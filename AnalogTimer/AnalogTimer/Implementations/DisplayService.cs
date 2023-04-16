@@ -23,6 +23,8 @@ public class DisplayService : IDisplayService
 
     private const int _startPositionForSecond = 52;
 
+    private TimerState? _snapshot;
+
     public DisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
@@ -32,12 +34,21 @@ public class DisplayService : IDisplayService
     {
         lock(this)
         {
-            Update(state.Hours, TimerValue.Hour);
+            if(state.Hours != _snapshot?.Hours)
+                Update(state.Hours, TimerValue.Hour);
+
             PrintDots(_dotsBetweenHourAndMinute);
-            Update(state.Minutes, TimerValue.Minute);
+
+            if(state.Minutes != _snapshot?.Minutes)
+                Update(state.Minutes, TimerValue.Minute);
+
             PrintDots(_dotsBetweenMinuteAndSecond);
-            Update(state.Seconds, TimerValue.Second);
+
+            if(state.Seconds != _snapshot?.Seconds)
+                Update(state.Seconds, TimerValue.Second);
         }
+
+        _snapshot = new(state.Hours, state.Minutes, state.Seconds);
     }
 
     private void Update(int digit, TimerValue value)
