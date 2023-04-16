@@ -96,8 +96,7 @@ public class TimerState
 
         await Task.Delay(_millisecondsInSecond / ticksPerSecond);
 
-        //TODO
-        Seconds -= (int)TimeSpan.FromMilliseconds(_millisecondsInSecond).TotalSeconds / ticksPerSecond;
+        Seconds--;
 
         if (Seconds >= _zero)
             return;

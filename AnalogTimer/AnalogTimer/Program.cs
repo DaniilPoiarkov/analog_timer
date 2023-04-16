@@ -11,6 +11,7 @@ var prompts = new PromptCollectionBuilder()
     .Add<AddSecondsPrompt>()
     .Add<AddMinutesPrompt>()
     .Add<AddHoursPrompt>()
+    .Add<ChangeSpeedPrompt>()
     .Build();
 
 var promptService = new PromptService(prompts, timer);

@@ -28,6 +28,11 @@ public class AnalogTimer : IAnalogTimer
     public AnalogTimer()
         : this(new(), new DefaultPattern()) { }
 
+    public void ChangeTicksPerSecond(int ticksPerSecond)
+    {
+        TicksPerSecond = ticksPerSecond;
+    }
+
     public void AddSeconds(int seconds)
     {
         UpdateState(state => state.AddSeconds(seconds));
