@@ -7,7 +7,7 @@ public class PromptService : IPromptService
 {
     private readonly IEnumerable<IPrompt> _prompts;
 
-    private readonly AnalogTimer _analogTimer;
+    private readonly IAnalogTimer _analogTimer;
 
     private const int _exceptionLine = 8;
     
@@ -15,7 +15,7 @@ public class PromptService : IPromptService
 
     public PromptService(
         IEnumerable<IPrompt> prompts,
-        AnalogTimer analogTimer)
+        IAnalogTimer analogTimer)
     {
         _prompts = prompts;
         _analogTimer = analogTimer;

@@ -1,4 +1,6 @@
-﻿namespace AnalogTimer.Prompts.Implementations;
+﻿using AnalogTimer.Contracts;
+
+namespace AnalogTimer.Prompts.Implementations;
 
 public class ResetPrompt : PromptBase
 {
@@ -6,7 +8,7 @@ public class ResetPrompt : PromptBase
 
     public override string Instruction => "Write \'reset\' to stop timer and set all values to zero";
 
-    public override async Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
+    public override async Task Proceed(string? input, IAnalogTimer timer)
     {
         await timer.ResetState();
     }

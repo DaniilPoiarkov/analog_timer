@@ -2,7 +2,7 @@
 
 namespace AnalogTimer.Implementations;
 
-public class DefaultPattern : ITimerTemplate
+public class DefaultTemplate : ITimerTemplate
 {
     public char Pattern => '█';
 }

@@ -1,4 +1,5 @@
-﻿namespace AnalogTimer.Prompts.Implementations;
+﻿using AnalogTimer.Contracts;
+namespace AnalogTimer.Prompts.Implementations;
 
 public class StartPrompt : PromptBase
 {
@@ -6,7 +7,7 @@ public class StartPrompt : PromptBase
 
     public override string Name => "Start";
 
-    public override async Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
+    public override async Task Proceed(string? input, IAnalogTimer timer)
     {
         if(string.IsNullOrEmpty(input))
             throw new ArgumentNullException(nameof(input));

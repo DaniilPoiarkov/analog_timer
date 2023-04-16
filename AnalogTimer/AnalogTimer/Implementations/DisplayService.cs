@@ -8,6 +8,8 @@ public class DisplayService : IDisplayService
 {
     private readonly ITimerTemplate _timerTemplate;
 
+    private TimerState? _snapshot;
+
 
     private const int _space = 13;
 
@@ -22,8 +24,6 @@ public class DisplayService : IDisplayService
     private const int _startPositionForMinute = 26;
 
     private const int _startPositionForSecond = 52;
-
-    private TimerState? _snapshot;
 
     public DisplayService(ITimerTemplate timerTemplate)
     {

@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-
 namespace AnalogTimer.Prompts.Implementations;
 
 public class CloseTimerPrompt : PromptBase
@@ -8,7 +7,7 @@ public class CloseTimerPrompt : PromptBase
 
     public override string Instruction => "Write \'close\' to close a timer";
 
-    public override Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
+    public override Task Proceed(string? input, IAnalogTimer timer)
     {
         Console.CursorTop += GetType().Assembly
             .GetTypes()

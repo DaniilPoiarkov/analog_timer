@@ -1,4 +1,6 @@
-﻿namespace AnalogTimer.Prompts.Implementations;
+﻿using AnalogTimer.Contracts;
+
+namespace AnalogTimer.Prompts.Implementations;
 
 public class ResumePrompt : PromptBase
 {
@@ -6,7 +8,7 @@ public class ResumePrompt : PromptBase
 
     public override string Instruction => "Write \'resume\' to resume timer";
 
-    public override Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
+    public override Task Proceed(string? input, IAnalogTimer timer)
     {
         timer.Start();
         return Task.CompletedTask;

@@ -1,4 +1,5 @@
-﻿namespace AnalogTimer.Prompts.Implementations;
+﻿using AnalogTimer.Contracts;
+namespace AnalogTimer.Prompts.Implementations;
 
 public class AddSecondsPrompt : PromptBase
 {
@@ -6,7 +7,7 @@ public class AddSecondsPrompt : PromptBase
 
     public override string Instruction => "Write \'seconds x\' where \'x\' is amount of seconds which you want to add";
 
-    public override Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer)
+    public override Task Proceed(string? input, IAnalogTimer timer)
     {
         var values = SplitInput(input ?? string.Empty).ToList();
 

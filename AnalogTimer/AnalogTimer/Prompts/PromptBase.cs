@@ -8,9 +8,11 @@ public abstract class PromptBase : IPrompt
 
     public abstract string Instruction { get; }
 
-    public abstract Task Proceed(string? input, AnalogTimer.Implementations.AnalogTimer timer);
+    public abstract Task Proceed(string? input, IAnalogTimer timer);
 
-    protected static IEnumerable<string> SplitInput(string input) => input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    protected static IEnumerable<string> SplitInput(string input) => input
+        .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        .Select(v => v.ToLower());
 
     protected static void ValidateInput(List<string> values)
     {

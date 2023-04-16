@@ -7,7 +7,7 @@ public class AnalogTimer : IAnalogTimer
 {
     private readonly TimerState _state;
 
-    private readonly DisplayService _displayService;
+    private readonly IDisplayService _displayService;
 
     public bool IsRunning { get; private set; }
 
@@ -22,7 +22,7 @@ public class AnalogTimer : IAnalogTimer
         _state = state;
         IsRunning = false;
         TicksPerSecond = 1;
-        _displayService = new(template);
+        _displayService = new DisplayService(template);
     }
 
     public AnalogTimer()

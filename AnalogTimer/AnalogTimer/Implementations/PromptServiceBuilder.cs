@@ -4,9 +4,9 @@ namespace AnalogTimer.Implementations;
 
 public class PromptServiceBuilder
 {
-    private readonly AnalogTimer _timer;
+    private readonly IAnalogTimer _timer;
 
-    public PromptServiceBuilder(AnalogTimer timer)
+    public PromptServiceBuilder(IAnalogTimer timer)
     {
         _timer = timer;
     }
