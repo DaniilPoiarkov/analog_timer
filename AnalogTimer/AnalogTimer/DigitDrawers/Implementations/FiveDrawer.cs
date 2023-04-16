@@ -15,6 +15,8 @@ public class FiveDrawer : DigitDrawerBase
         PrintHeightLine(true, positionLeft, template.Pattern);
 
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
+
+        Console.CursorLeft = 0;
         Console.CursorTop = 9;
     }
 }

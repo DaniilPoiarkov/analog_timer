@@ -10,7 +10,7 @@ public class TimerState
 
     private const int _millisecondsInSecond = 1000;
 
-    private const int _secondsInMinute = 60;
+    private const int _secondsInMinute = 59;
 
     private const int _minutesInHourMinusOne = 59;
 
@@ -28,13 +28,66 @@ public class TimerState
         : this(hours, minutes, _zero) { }
 
     public TimerState()
-        : this(0, 0) { }
+        : this(_zero, _zero) { }
 
-    public void AddSeconds(int seconds) => Seconds += seconds;
+    public void AddSeconds(int seconds)
+    {
+        if(seconds < 0)
+            throw new ArgumentException("Seconds cannot be below 0", nameof(seconds));
 
-    public void AddMinutes(int minutes) => Minutes += minutes;
+        Seconds += seconds;
 
-    public void AddHours(int hours) => Hours += hours;
+        if (IsZero)
+            IsZero = false;
+
+        if (Seconds < 60)
+            return;
+
+        var minutes = 0;
+
+        while(Seconds >= 60)
+        {
+            minutes++;
+            Seconds -= 60;
+        }
+
+        AddMinutes(minutes);
+    }
+
+    public void AddMinutes(int minutes)
+    {
+        if (minutes < 0)
+            throw new ArgumentException("Minutes cannot be below 0", nameof(minutes));
+
+        Minutes += minutes;
+
+        if (IsZero)
+            IsZero = false;
+
+        if (Minutes < 60)
+            return;
+
+        var hours = 0;
+
+        while (Minutes >= 60)
+        {
+            hours++;
+            Minutes -= 60;
+        }
+
+        AddHours(hours);
+    }
+
+    public void AddHours(int hours)
+    {
+        if (hours < 0)
+            throw new ArgumentException("Hours cannot be below 0", nameof(hours));
+
+        Hours += hours;
+
+        if (IsZero)
+            IsZero = false;
+    }
 
     public async Task Wait(int ticksPerSecond)
     {
@@ -46,7 +99,7 @@ public class TimerState
         //TODO
         Seconds -= (int)TimeSpan.FromMilliseconds(_millisecondsInSecond).TotalSeconds / ticksPerSecond;
 
-        if (Seconds > _zero)
+        if (Seconds >= _zero)
             return;
 
         if (Minutes > _zero)
@@ -78,5 +131,13 @@ public class TimerState
         var minutes = Minutes.ToString().Length == 2 ? Minutes.ToString() : $"0{Minutes}";
         var seconds = Seconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Seconds}";
         return $"{hours}:{minutes}:{seconds}";
+    }
+
+    public void Reset()
+    {
+        Hours = 0;
+        Minutes = 0;
+        Seconds = 0;
+        IsZero = true;
     }
 }

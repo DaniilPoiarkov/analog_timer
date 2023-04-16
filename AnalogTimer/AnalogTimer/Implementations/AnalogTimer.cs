@@ -15,6 +15,8 @@ public class AnalogTimer : IAnalogTimer
 
     private Func<Task>? Counter { get; set; }
 
+    private Task? Execution { get; set; }
+
     public AnalogTimer(TimerState state, ITimerTemplate template)
     {
         _state = state;
@@ -28,24 +30,58 @@ public class AnalogTimer : IAnalogTimer
 
     public void AddSeconds(int seconds)
     {
-        _state.AddSeconds(seconds);
+        UpdateState(state => state.AddSeconds(seconds));
+    }
+
+    public void AddMinutes(int minutes)
+    {
+        UpdateState(state => state.AddMinutes(minutes));
+    }
+
+    public void AddHours(int hours)
+    {
+        UpdateState(state => state.AddHours(hours));
+    }
+
+    public async Task ResetState()
+    {
+        if (IsRunning)
+        {
+            await Stop();
+        }
+
+        _state.Reset();
+        _displayService.Display(_state);
+    }
+
+    private void UpdateState(Action<TimerState> stateUpdateAction)
+    {
+        if (IsRunning)
+        {
+            throw new Exception("Cannot update timer when it is running");
+        }
+
+        stateUpdateAction?.Invoke(_state);
+        _displayService.Display(_state);
     }
 
     public void Start()
     {
-        if(IsRunning)
+        if (IsRunning)
         {
-            return;
+            throw new Exception("Timer is already running");
         }
 
         IsRunning = true;
         Counter = StartTimerTemplate;
-        Counter.Invoke();
+        Execution = Counter.Invoke();
     }
 
     private async Task StartTimerTemplate()
     {
-        while(IsRunning)
+        _displayService.Display(_state);
+
+        while (IsRunning)
         {
             await _state.Wait(TicksPerSecond);
             _displayService.Display(_state);
@@ -59,13 +95,13 @@ public class AnalogTimer : IAnalogTimer
 
     public async Task Stop()
     {
-        if(!IsRunning || Counter is null)
+        if (!IsRunning || Execution is null)
         {
-            return;
+            throw new Exception("Timer is not running");
         }
 
         IsRunning = false;
-        await Counter.Invoke();
+        await Execution;
         Counter = null;
     }
 }

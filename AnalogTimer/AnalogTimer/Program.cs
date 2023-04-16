@@ -1,15 +1,23 @@
 ﻿using AnalogTimer.Implementations;
-
-Console.WriteLine("Hello Analog timer!");
-
-Console.Clear();
+using AnalogTimer.Prompts.Implementations;
 
 var timer = new AnalogTimer.Implementations.AnalogTimer();
 
-timer.AddSeconds(15);
-timer.Start();
+var prompts = new PromptCollectionBuilder()
+    .Add<StartPrompt>()
+    .Add<PausePrompt>()
+    .Add<ResetPrompt>()
+    .Add<ResumePrompt>()
+    .Add<AddSecondsPrompt>()
+    .Add<AddMinutesPrompt>()
+    .Add<AddHoursPrompt>()
+    .Build();
 
-Console.ReadKey();
+var promptService = new PromptService(prompts, timer);
 
-timer.AddSeconds(15);
-Console.ReadKey();
+promptService.DisplayPrompts();
+
+while (true)
+{
+    await promptService.Run();
+}
