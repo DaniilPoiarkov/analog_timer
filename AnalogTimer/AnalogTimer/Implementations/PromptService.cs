@@ -74,7 +74,7 @@ public class PromptService : IPromptService
             return;
         }
 
-        var prompt = _prompts.FirstOrDefault(p => p.Name.ToLower().Equals(values[0]?.ToLower()));
+        var prompt = _prompts.FirstOrDefault(p => p.Name.ToLower().Equals(values[0].ToLower()));
 
         if(prompt is null)
         {
