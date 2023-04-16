@@ -26,7 +26,7 @@ public class AnalogTimer : IAnalogTimer
     }
 
     public AnalogTimer()
-        : this(new(), new DefaultPattern()) { }
+        : this(new(), new DefaultTemplate()) { }
 
     public void ChangeTicksPerSecond(int ticksPerSecond)
     {

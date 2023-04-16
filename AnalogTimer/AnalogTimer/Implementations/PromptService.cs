@@ -67,6 +67,9 @@ public class PromptService : IPromptService
         if (values is null || !values.Any())
         {
             Console.CursorTop = _exceptionLine;
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+
+            Console.CursorTop = _exceptionLine;
             Console.WriteLine("Exception: Invalid input");
             return;
         }
@@ -76,7 +79,10 @@ public class PromptService : IPromptService
         if(prompt is null)
         {
             Console.CursorTop = _exceptionLine;
-            Console.WriteLine($"Prompt with name \'{values[0]}\' not found");
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+
+            Console.CursorTop = _exceptionLine;
+            Console.WriteLine($"Exception: Prompt with name \'{values[0]}\' not found");
             return;
         }
 
@@ -89,7 +95,7 @@ public class PromptService : IPromptService
             lock (this)
             {
                 Console.CursorTop = _exceptionLine;
-                Console.WriteLine(new string(' ', Console.BufferWidth));
+                Console.WriteLine(new string(' ', Console.WindowWidth));
 
                 Console.CursorTop = _exceptionLine;
                 Console.WriteLine($"Exception: {ex.Message}");
