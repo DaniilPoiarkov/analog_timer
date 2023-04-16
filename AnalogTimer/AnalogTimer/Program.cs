@@ -3,7 +3,7 @@ using AnalogTimer.Prompts.Implementations;
 
 var timer = new AnalogTimer.Implementations.AnalogTimer();
 
-var prompts = new PromptCollectionBuilder()
+var promptService = new PromptServiceBuilder(timer)
     .Add<StartPrompt>()
     .Add<PausePrompt>()
     .Add<ResetPrompt>()
@@ -14,8 +14,6 @@ var prompts = new PromptCollectionBuilder()
     .Add<ChangeSpeedPrompt>()
     .Add<CloseTimerPrompt>()
     .Build();
-
-var promptService = new PromptService(prompts, timer);
 
 promptService.DisplayPrompts();
 

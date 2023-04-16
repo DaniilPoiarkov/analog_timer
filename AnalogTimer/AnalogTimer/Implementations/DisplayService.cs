@@ -34,17 +34,17 @@ public class DisplayService : IDisplayService
     {
         lock(this)
         {
-            if(state.Hours != _snapshot?.Hours)
+            if (state.Hours != _snapshot?.Hours)
                 Update(state.Hours, TimerValue.Hour);
 
             PrintDots(_dotsBetweenHourAndMinute);
 
-            if(state.Minutes != _snapshot?.Minutes)
+            if (state.Minutes != _snapshot?.Minutes)
                 Update(state.Minutes, TimerValue.Minute);
 
             PrintDots(_dotsBetweenMinuteAndSecond);
 
-            if(state.Seconds != _snapshot?.Seconds)
+            if (state.Seconds != _snapshot?.Seconds)
                 Update(state.Seconds, TimerValue.Second);
         }
 
