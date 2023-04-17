@@ -7,7 +7,7 @@ public class StartPrompt : PromptBase
 
     public override string Name => "Start";
 
-    public override async Task Proceed(string? input, IAnalogTimer timer)
+    public override Task Proceed(string? input, IAnalogTimer timer)
     {
         if(string.IsNullOrEmpty(input))
             throw new ArgumentNullException(nameof(input));
@@ -24,8 +24,10 @@ public class StartPrompt : PromptBase
         if (timer.IsRunning)
             throw new Exception("Timer is already running");
 
-        await timer.ResetState();
+        timer.ResetState();
         timer.AddSeconds(seconds);
         timer.Start();
+
+        return Task.CompletedTask;
     }
 }

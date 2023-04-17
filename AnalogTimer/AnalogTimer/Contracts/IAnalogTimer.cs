@@ -16,5 +16,5 @@ public interface IAnalogTimer
 
     void ChangeTicksPerSecond(int ticksPerSecond);
 
-    Task ResetState();
+    void ResetState();
 }

@@ -8,8 +8,9 @@ public class ResetPrompt : PromptBase
 
     public override string Instruction => "Write \'reset\' to stop timer and set all values to zero";
 
-    public override async Task Proceed(string? input, IAnalogTimer timer)
+    public override Task Proceed(string? input, IAnalogTimer timer)
     {
-        await timer.ResetState();
+        timer.ResetState();
+        return Task.CompletedTask;
     }
 }

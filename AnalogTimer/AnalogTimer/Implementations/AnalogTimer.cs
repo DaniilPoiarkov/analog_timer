@@ -48,15 +48,9 @@ public class AnalogTimer : IAnalogTimer
         UpdateState(state => state.AddHours(hours));
     }
 
-    public async Task ResetState()
+    public void ResetState()
     {
-        if (IsRunning)
-        {
-            await Stop();
-        }
-
-        _state.Reset();
-        _displayService.Display(_state);
+        UpdateState(state => state.Reset());
     }
 
     private void UpdateState(Action<TimerState> stateUpdateAction)
