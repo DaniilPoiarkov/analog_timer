@@ -1,5 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
+using Microsoft.Win32.SafeHandles;
+using System.Net.NetworkInformation;
 
 namespace AnalogTimer.Implementations;
 
@@ -66,11 +68,7 @@ public class PromptService : IPromptService
 
         if (values is null || !values.Any())
         {
-            Console.CursorTop = _exceptionLine;
-            Console.WriteLine(new string(' ', Console.WindowWidth));
-
-            Console.CursorTop = _exceptionLine;
-            Console.WriteLine("Exception: Invalid input");
+            PrintException("Invalid input");
             return;
         }
 
@@ -78,11 +76,7 @@ public class PromptService : IPromptService
 
         if(prompt is null)
         {
-            Console.CursorTop = _exceptionLine;
-            Console.WriteLine(new string(' ', Console.WindowWidth));
-
-            Console.CursorTop = _exceptionLine;
-            Console.WriteLine($"Exception: Prompt with name \'{values[0]}\' not found");
+            PrintException($"Prompt with name \'{values[0]}\' not found");
             return;
         }
 
@@ -94,12 +88,17 @@ public class PromptService : IPromptService
         {
             lock (this)
             {
-                Console.CursorTop = _exceptionLine;
-                Console.WriteLine(new string(' ', Console.WindowWidth));
-
-                Console.CursorTop = _exceptionLine;
-                Console.WriteLine($"Exception: {ex.Message}");
+                PrintException(ex.Message);
             }
         }
+    }
+
+    private static void PrintException(string message)
+    {
+        Console.CursorTop = _exceptionLine;
+        Console.WriteLine(new string(' ', Console.WindowWidth));
+
+        Console.CursorTop = _exceptionLine;
+        Console.WriteLine($"Exception: {message}");
     }
 }
