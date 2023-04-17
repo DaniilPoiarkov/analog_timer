@@ -12,7 +12,7 @@ public class TimerState
 
     private const int _secondsInMinute = 59;
 
-    private const int _minutesInHourMinusOne = 59;
+    private const int _maxValueInMinuteOrHour = 60;
 
     private const int _zero = 0;
 
@@ -32,7 +32,7 @@ public class TimerState
 
     public void AddSeconds(int seconds)
     {
-        if(seconds < 0)
+        if(seconds < _zero)
             throw new ArgumentException("Seconds cannot be below 0", nameof(seconds));
 
         Seconds += seconds;
@@ -40,15 +40,15 @@ public class TimerState
         if (IsZero)
             IsZero = false;
 
-        if (Seconds < 60)
+        if (Seconds < _maxValueInMinuteOrHour)
             return;
 
-        var minutes = 0;
+        var minutes = _zero;
 
-        while(Seconds >= 60)
+        while(Seconds >= _maxValueInMinuteOrHour)
         {
             minutes++;
-            Seconds -= 60;
+            Seconds -= _maxValueInMinuteOrHour;
         }
 
         AddMinutes(minutes);
@@ -56,7 +56,7 @@ public class TimerState
 
     public void AddMinutes(int minutes)
     {
-        if (minutes < 0)
+        if (minutes < _zero)
             throw new ArgumentException("Minutes cannot be below 0", nameof(minutes));
 
         Minutes += minutes;
@@ -64,15 +64,15 @@ public class TimerState
         if (IsZero)
             IsZero = false;
 
-        if (Minutes < 60)
+        if (Minutes < _maxValueInMinuteOrHour)
             return;
 
-        var hours = 0;
+        var hours = _zero;
 
-        while (Minutes >= 60)
+        while (Minutes >= _maxValueInMinuteOrHour)
         {
             hours++;
-            Minutes -= 60;
+            Minutes -= _maxValueInMinuteOrHour;
         }
 
         AddHours(hours);
@@ -80,7 +80,7 @@ public class TimerState
 
     public void AddHours(int hours)
     {
-        if (hours < 0)
+        if (hours < _zero)
             throw new ArgumentException("Hours cannot be below 0", nameof(hours));
 
         Hours += hours;
@@ -111,7 +111,7 @@ public class TimerState
         if (Hours > _zero)
         {
             Hours--;
-            Minutes = _minutesInHourMinusOne;
+            Minutes = _secondsInMinute;
             Seconds = _secondsInMinute;
             return;
         }
@@ -134,9 +134,9 @@ public class TimerState
 
     public void Reset()
     {
-        Hours = 0;
-        Minutes = 0;
-        Seconds = 0;
+        Hours = _zero;
+        Minutes = _zero;
+        Seconds = _zero;
         IsZero = true;
     }
 }
