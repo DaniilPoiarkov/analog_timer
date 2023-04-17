@@ -9,9 +9,7 @@ public class AddHoursPrompt : PromptBase
 
     public override Task Proceed(string? input, IAnalogTimer timer)
     {
-        var values = SplitInput(input ?? string.Empty).ToList();
-
-        ValidateInput(values);
+        var values = ParseAndValidateInput(input ?? string.Empty);
 
         var hours = int.Parse(values[1]);
 

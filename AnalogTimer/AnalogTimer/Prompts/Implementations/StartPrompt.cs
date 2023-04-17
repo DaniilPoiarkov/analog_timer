@@ -12,17 +12,15 @@ public class StartPrompt : PromptBase
         if(string.IsNullOrEmpty(input))
             throw new ArgumentNullException(nameof(input));
 
-        var values = SplitInput(input).ToList();
-
-        ValidateInput(values);
+        var values = ParseAndValidateInput(input);
 
         var seconds = int.Parse(values[1]);
 
         if (seconds < 0)
-            throw new Exception("Seconds cannot be below 0");
+            throw new ArgumentException("Seconds cannot be below 0");
 
         if (timer.IsRunning)
-            throw new Exception("Timer is already running");
+            throw new InvalidOperationException("Timer is already running");
 
         timer.ResetState();
         timer.AddSeconds(seconds);

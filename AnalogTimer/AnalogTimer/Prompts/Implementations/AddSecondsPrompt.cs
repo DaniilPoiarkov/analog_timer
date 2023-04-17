@@ -9,9 +9,7 @@ public class AddSecondsPrompt : PromptBase
 
     public override Task Proceed(string? input, IAnalogTimer timer)
     {
-        var values = SplitInput(input ?? string.Empty).ToList();
-
-        ValidateInput(values);
+        var values = ParseAndValidateInput(input ?? string.Empty);
 
         var seconds = int.Parse(values[1]);
 

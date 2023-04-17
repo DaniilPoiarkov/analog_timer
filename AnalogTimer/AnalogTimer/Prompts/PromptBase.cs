@@ -17,6 +17,13 @@ public abstract class PromptBase : IPrompt
     protected static void ValidateInput(List<string> values)
     {
         if (!values.Any() || values.Count != 2)
-            throw new Exception("Invalid input");
+            throw new ArgumentException("Invalid input");
+    }
+
+    protected static List<string> ParseAndValidateInput(string input)
+    {
+        var values = SplitInput(input).ToList();
+        ValidateInput(values);
+        return values;
     }
 }

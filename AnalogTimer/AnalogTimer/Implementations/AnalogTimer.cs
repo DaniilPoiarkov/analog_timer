@@ -57,7 +57,7 @@ public class AnalogTimer : IAnalogTimer
     {
         if (IsRunning)
         {
-            throw new Exception("Cannot update timer when it is running");
+            throw new InvalidOperationException("Cannot update timer when it is running");
         }
 
         stateUpdateAction?.Invoke(_state);
@@ -68,7 +68,7 @@ public class AnalogTimer : IAnalogTimer
     {
         if (IsRunning)
         {
-            throw new Exception("Timer is already running");
+            throw new InvalidOperationException("Timer is already running");
         }
 
         IsRunning = true;
@@ -96,7 +96,7 @@ public class AnalogTimer : IAnalogTimer
     {
         if (!IsRunning || Execution is null)
         {
-            throw new Exception("Timer is not running");
+            throw new InvalidOperationException("Timer is not running");
         }
 
         IsRunning = false;

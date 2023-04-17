@@ -10,9 +10,7 @@ public class ChangeSpeedPrompt : PromptBase
 
     public override Task Proceed(string? input, IAnalogTimer timer)
     {
-        var values = SplitInput(input ?? string.Empty).ToList();
-
-        ValidateInput(values);
+        var values = ParseAndValidateInput(input ?? string.Empty);
 
         var ticksPerSecond = int.Parse(values[1]);
 

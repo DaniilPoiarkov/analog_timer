@@ -68,24 +68,25 @@ public class DisplayService : IDisplayService
             _ => throw new ArgumentOutOfRangeException(nameof(value), "No such timer value"),
         };
 
-        IEnumerable<int> values = Enumerable.Empty<int>();
+        var values = ParseValues(asString);
 
-        if (asString.Length == 2)
-        {
-            values = asString.Select(v => int.Parse(v.ToString()));
-        }
-        else
-        {
-            values = new[] { _zero, int.Parse(asString) };
-        }
-
-        foreach(var num in values)
+        foreach (var num in values)
         {
             var drawer = DigitDrawerProvider.GetDrawer(num);
             drawer.Draw(positionLeft, _timerTemplate);
 
             positionLeft += _space;
         }
+    }
+
+    private static IEnumerable<int> ParseValues(string asString)
+    {
+        if (asString.Length == 2)
+        {
+            return asString.Select(v => int.Parse(v.ToString()));
+        }
+
+        return new[] { _zero, int.Parse(asString) };
     }
 
     private void PrintDots(int position)
