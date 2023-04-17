@@ -12,9 +12,7 @@ public class StartPrompt : PromptBase
         if(string.IsNullOrEmpty(input))
             throw new ArgumentNullException(nameof(input));
 
-        var values = SplitInput(input)
-            .Select(v => v.ToLower())
-            .ToList();
+        var values = SplitInput(input).ToList();
 
         ValidateInput(values);
 
