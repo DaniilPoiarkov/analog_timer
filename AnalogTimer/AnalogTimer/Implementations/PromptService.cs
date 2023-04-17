@@ -1,7 +1,5 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
-using Microsoft.Win32.SafeHandles;
-using System.Net.NetworkInformation;
 
 namespace AnalogTimer.Implementations;
 
