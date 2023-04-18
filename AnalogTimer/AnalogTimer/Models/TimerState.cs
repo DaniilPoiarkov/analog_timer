@@ -5,10 +5,11 @@ public class TimerState
     public int Hours { get; private set; }
     public int Minutes { get; private set; }
     public int Seconds { get; private set; }
+    public int Milliseconds { get; private set; }
     public bool IsZero { get; private set; }
 
 
-    private const int _millisecondsInSecond = 1000;
+    private const int _baseDelay = 10;
 
     private const int _secondsInMinute = 59;
 
@@ -17,18 +18,21 @@ public class TimerState
     private const int _zero = 0;
 
 
-    public TimerState(int hours, int minutes, int seconds)
+    public TimerState(int hours, int minutes, int seconds, int milliseconds)
     {
         Hours = hours;
         Minutes = minutes;
         Seconds = seconds;
+        Milliseconds = milliseconds;
 
-        if (Hours == _zero && Minutes == _zero && Seconds == _zero)
-            IsZero = true;
+        IsZero = Hours == _zero
+            && Minutes == _zero
+            && Seconds == _zero
+            && Milliseconds == _zero;
     }
 
     public TimerState(int hours, int minutes)
-        : this(hours, minutes, _zero) { }
+        : this(hours, minutes, _zero, _zero) { }
 
     public TimerState()
         : this(_zero, _zero) { }
@@ -97,25 +101,35 @@ public class TimerState
         if (IsZero)
             throw new ArgumentOutOfRangeException(nameof(ticksPerSecond));
 
-        await Task.Delay(_millisecondsInSecond / ticksPerSecond);
+        await Task.Delay(_baseDelay / ticksPerSecond);
 
-        Seconds--;
+        Milliseconds -= _baseDelay;
 
         if (Seconds == _zero 
             && Minutes == _zero
-            && Hours == _zero)
+            && Hours == _zero
+            && Milliseconds == _zero)
         {
             IsZero = true;
             return;
         }
 
-        if (Seconds >= _zero)
+        if (Milliseconds >= _zero)
             return;
+
+        if (Seconds > _zero)
+        {
+            Seconds--;
+            Milliseconds = 900;
+
+            return;
+        }
 
         if (Minutes > _zero)
         {
             Minutes--;
             Seconds = _secondsInMinute;
+            Milliseconds = 900;
             return;
         }
 
@@ -124,6 +138,7 @@ public class TimerState
             Hours--;
             Minutes = _secondsInMinute;
             Seconds = _secondsInMinute;
+            Milliseconds = 900;
             return;
         }
     }
@@ -133,7 +148,8 @@ public class TimerState
         var hours = Hours.ToString().Length == 2 ? Hours.ToString() : $"0{Hours}";
         var minutes = Minutes.ToString().Length == 2 ? Minutes.ToString() : $"0{Minutes}";
         var seconds = Seconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Seconds}";
-        return $"{hours}:{minutes}:{seconds}";
+        var ms = Milliseconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Milliseconds}";
+        return $"{hours}:{minutes}:{seconds}:{ms}";
     }
 
     public void Reset()

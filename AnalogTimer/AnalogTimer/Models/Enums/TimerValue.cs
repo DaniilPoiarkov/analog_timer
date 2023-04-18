@@ -4,5 +4,6 @@ public enum TimerValue
 {
     Hour,
     Minute,
-    Second
+    Second,
+    Millisecond
 }

@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Models;
+using NLog;
 
 namespace AnalogTimer.Implementations;
 
@@ -87,8 +88,16 @@ public class AnalogTimer : IAnalogTimer
 
         while (IsRunning)
         {
-            await _state.Wait(TicksPerSecond);
-            _displayService.Display(_state);
+            try
+            {
+                await _state.Wait(TicksPerSecond);
+                _displayService.Display(_state);
+            }
+            catch (Exception ex)
+            {
+                var logger = LogManager.GetCurrentClassLogger();
+                logger.Error(ex, "Handled when wait or display");
+            }
 
             if (_state.IsZero)
             {

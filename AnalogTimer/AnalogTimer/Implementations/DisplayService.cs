@@ -20,11 +20,15 @@ public class DisplayService : IDisplayService
 
     private const int _dotsBetweenMinuteAndSecond = 49;
 
+    private const int _dotsBetweenSecondsAndMilliseconds = 75;
+
     private const int _startPositionForHour = 0;
 
     private const int _startPositionForMinute = 26;
 
     private const int _startPositionForSecond = 52;
+
+    private const int _startPositionForMillisecond = 78;
 
     public DisplayService(ITimerTemplate timerTemplate)
     {
@@ -47,16 +51,21 @@ public class DisplayService : IDisplayService
 
             if (state.Seconds != _snapshot?.Seconds)
                 Update(state.Seconds, TimerValue.Second);
+
+            PrintDots(_dotsBetweenSecondsAndMilliseconds);
+
+            if(state.Milliseconds != _snapshot?.Milliseconds)
+                Update(state.Milliseconds, TimerValue.Millisecond);
         }
 
-        _snapshot = new(state.Hours, state.Minutes, state.Seconds);
+        _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
     }
 
     private void Update(int digit, TimerValue value)
     {
         var asString = digit.ToString();
 
-        if (string.IsNullOrEmpty(asString) || asString.Length > 2)
+        if (string.IsNullOrEmpty(asString) || (asString.Length > 2 && value != TimerValue.Millisecond))
         {
             throw new ArgumentException($"Invalid timer digit {digit}", nameof(digit));
         }
@@ -66,6 +75,7 @@ public class DisplayService : IDisplayService
             TimerValue.Hour => _startPositionForHour,
             TimerValue.Minute => _startPositionForMinute,
             TimerValue.Second => _startPositionForSecond,
+            TimerValue.Millisecond => _startPositionForMillisecond,
             _ => throw new ArgumentOutOfRangeException(nameof(value), "No such timer value"),
         };
 
@@ -82,7 +92,7 @@ public class DisplayService : IDisplayService
 
     private static IEnumerable<int> ParseValues(string asString)
     {
-        if (asString.Length == 2)
+        if (asString.Length >= 2)
         {
             return asString.Select(v => int.Parse(v.ToString()));
         }
