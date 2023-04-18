@@ -1,6 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.DigitDrawers;
 using AnalogTimer.Models;
+using AnalogTimer.Models.Enums;
 
 namespace AnalogTimer.Implementations;
 

@@ -8,7 +8,7 @@ public abstract class PromptBase : IPrompt
 
     public abstract string Instruction { get; }
 
-    public abstract Task Proceed(string? input, IAnalogTimer timer);
+    public abstract Task Proceed(string input, IAnalogTimer timer);
 
     protected static IEnumerable<string> SplitInput(string input) => input
         .Split(' ', StringSplitOptions.RemoveEmptyEntries)

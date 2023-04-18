@@ -22,6 +22,9 @@ public class TimerState
         Hours = hours;
         Minutes = minutes;
         Seconds = seconds;
+
+        if (Hours == _zero && Minutes == _zero && Seconds == _zero)
+            IsZero = true;
     }
 
     public TimerState(int hours, int minutes)

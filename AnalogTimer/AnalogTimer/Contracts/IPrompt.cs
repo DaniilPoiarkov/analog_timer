@@ -7,5 +7,5 @@ public interface IPrompt
 
     string Instruction { get; }
 
-    Task Proceed(string? input, IAnalogTimer timer);
+    Task Proceed(string input, IAnalogTimer timer);
 }

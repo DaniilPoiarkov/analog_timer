@@ -1,29 +1,80 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.InputFlyweight;
+using AnalogTimer.Prompts.ShortcutFlags.StartPromptFlags;
+
 namespace AnalogTimer.Prompts.Implementations;
 
 public class StartPrompt : PromptBase
 {
-    public override string Instruction => "Write \'start x\' where \'x\' is amount of seconds";
+    public override string Instruction => "Write \'start\' to start timer.\n\t" +
+        "Flags: \'-h\', \'-m\', \'-s\' allows you to add hours, minutes and seconds accordingly.\n\t\t" +
+        "Usage with positive number which represents amount of specific value.";
 
     public override string Name => "start";
 
-    public override Task Proceed(string? input, IAnalogTimer timer)
+    private readonly List<IShortcutFlag> _shortcutFlags;
+
+    public StartPrompt()
     {
-        if(string.IsNullOrEmpty(input))
-            throw new ArgumentNullException(nameof(input));
+        _shortcutFlags = new List<IShortcutFlag>()
+        {
+            new StartSecondsFlag(),
+            new StartMinutesFlag(),
+            new StartHoursFlag(),
+        };
+    }
 
-        var values = ParseAndValidateInput(input);
+    public override Task Proceed(string input, IAnalogTimer timer)
+    {
+        var userInput = new UserInput(input);
 
-        var seconds = int.Parse(values[1]);
+        if (userInput.Tokens.Count() == 1)
+        {
+            timer.Start();
+            return Task.CompletedTask;
+        }
 
-        if (seconds < 0)
-            throw new ArgumentException("Seconds cannot be below 0");
+        var parsed = userInput.Tokens
+            .Where(t => t.Type == Models.Enums.TokenType.Flag)
+            .Select(t => t.Value
+                .Trim()
+                .Split(' '));
 
-        if (timer.IsRunning)
-            throw new InvalidOperationException("Timer is already running");
+        if (!parsed.Any())
+        {
+            throw new InvalidOperationException($"Cannot parse expression \'{input}\'. Ensure that you are using only valid shorcuts");
+        }
+
+        if (parsed.Any(p => p.Length != 2))
+        {
+            var unexpected = parsed.Where(p => p.Length != 2)
+                .Select(p => string.Join(" ", p))
+                .Select(v => $"\'-{v}\'");
+
+            throw new InvalidOperationException($"Unexpected value(s) {string.Join(' ', unexpected)}");
+        }
+
+        var flags = parsed.Where(v => v.Length == 2)
+            .Select(v => (Flag: v[0], Value: v[1]))
+            .ToList();
+
+        if(!flags.All(f => _shortcutFlags.Any(s => s.Shortcut.Equals(f.Flag))))
+        {
+            var unexpected = flags.Where(f => 
+                !_shortcutFlags.Any(s => s.Shortcut.Equals(f.Flag)))
+                .Select(f => $"-{f.Flag}");
+
+            throw new InvalidOperationException($"Unexpected flag(s) {string.Join(", ", unexpected)}");
+        }
 
         timer.ResetState();
-        timer.AddSeconds(seconds);
+
+        flags.ForEach(f =>
+        {
+            var handler = _shortcutFlags.First(s => s.Shortcut.Equals(f.Flag));
+            handler.Handle(f.Value, timer);
+        });
+
         timer.Start();
 
         return Task.CompletedTask;
