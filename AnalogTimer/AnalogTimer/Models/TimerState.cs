@@ -98,6 +98,14 @@ public class TimerState
 
         Seconds--;
 
+        if (Seconds == _zero 
+            && Minutes == _zero
+            && Hours == _zero)
+        {
+            IsZero = true;
+            return;
+        }
+
         if (Seconds >= _zero)
             return;
 
@@ -114,13 +122,6 @@ public class TimerState
             Minutes = _secondsInMinute;
             Seconds = _secondsInMinute;
             return;
-        }
-
-        if (Hours == _zero
-            && Minutes == _zero
-            && Seconds == _zero)
-        {
-            IsZero = true;
         }
     }
 

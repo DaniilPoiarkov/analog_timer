@@ -32,7 +32,7 @@ public class DisplayService : IDisplayService
 
     public void Display(TimerState state)
     {
-        lock(this)
+        lock (this)
         {
             if (state.Hours != _snapshot?.Hours)
                 Update(state.Hours, TimerValue.Hour);
@@ -57,7 +57,7 @@ public class DisplayService : IDisplayService
 
         if (string.IsNullOrEmpty(asString) || asString.Length > 2)
         {
-            throw new ArgumentException("Invalid timer digit", nameof(digit));
+            throw new ArgumentException($"Invalid timer digit {digit}", nameof(digit));
         }
 
         var positionLeft = value switch

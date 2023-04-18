@@ -1,6 +1,5 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Models;
-using NLog;
 
 namespace AnalogTimer.Implementations;
 
@@ -17,8 +16,6 @@ public class AnalogTimer : IAnalogTimer
     private Func<Task>? Counter { get; set; }
 
     private Task? Execution { get; set; }
-
-    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
     public AnalogTimer(TimerState state, ITimerTemplate template)
     {
@@ -90,27 +87,12 @@ public class AnalogTimer : IAnalogTimer
 
         while (IsRunning)
         {
-            try
-            {
-                await _state.Wait(TicksPerSecond);
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e, "Exception when waiting a state");
-            }
-
+            await _state.Wait(TicksPerSecond);
             _displayService.Display(_state);
 
             if (_state.IsZero)
             {
-                try
-                {
-                    await Stop();
-                }
-                catch(Exception e)
-                {
-                    _logger.Error(e, "Exception while stopping timer in template");
-                }
+                await Stop();
             }
         }
     }
