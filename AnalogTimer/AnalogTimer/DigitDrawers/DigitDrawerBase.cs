@@ -8,7 +8,7 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     private const int _width = 8;
 
-    private const char _empty = ' ';
+    protected const char _empty = ' ';
 
     public abstract void Draw(int positionLeft, ITimerTemplate template);
 

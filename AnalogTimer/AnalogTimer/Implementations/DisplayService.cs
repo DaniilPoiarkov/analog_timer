@@ -20,7 +20,7 @@ public class DisplayService : IDisplayService
 
     private const int _dotsBetweenMinuteAndSecond = 49;
 
-    private const int _dotsBetweenSecondsAndMilliseconds = 75;
+    //private const int _dotsBetweenSecondsAndMilliseconds = 75;
 
     private const int _startPositionForHour = 0;
 
@@ -57,7 +57,7 @@ public class DisplayService : IDisplayService
             //    Update(state.Milliseconds, TimerValue.Millisecond);
         }
 
-        _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
+        _snapshot = new(state.Hours, state.Minutes, state.Seconds/*, state.Milliseconds*/);
     }
 
     private void Update(int digit, TimerValue value)
