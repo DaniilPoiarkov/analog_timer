@@ -9,7 +9,7 @@ public class TimerState
     public bool IsZero { get; private set; }
 
 
-    private const int _baseDelay = 10;
+    private const int _baseDelay = 1000;
 
     private const int _secondsInMinute = 59;
 
@@ -23,12 +23,12 @@ public class TimerState
         Hours = hours;
         Minutes = minutes;
         Seconds = seconds;
-        Milliseconds = milliseconds;
+        //Milliseconds = milliseconds;
 
         IsZero = Hours == _zero
             && Minutes == _zero
-            && Seconds == _zero
-            && Milliseconds == _zero;
+            && Seconds == _zero;
+            //&& Milliseconds == _zero;
     }
 
     public TimerState(int hours, int minutes)
@@ -103,24 +103,24 @@ public class TimerState
 
         await Task.Delay(_baseDelay / ticksPerSecond);
 
-        Milliseconds -= _baseDelay;
+        Seconds--;// -= _baseDelay;
 
         if (Seconds == _zero 
             && Minutes == _zero
             && Hours == _zero
-            && Milliseconds == _zero)
+            /*&& Milliseconds == _zero*/)
         {
             IsZero = true;
             return;
         }
 
-        if (Milliseconds >= _zero)
-            return;
+        //if (Milliseconds >= _zero)
+        //    return;
 
-        if (Seconds > _zero)
+        if (Seconds >= _zero)
         {
-            Seconds--;
-            Milliseconds = 900;
+            //Seconds--;
+            //Milliseconds = 900;
 
             return;
         }
@@ -129,7 +129,7 @@ public class TimerState
         {
             Minutes--;
             Seconds = _secondsInMinute;
-            Milliseconds = 900;
+            //Milliseconds = 900;
             return;
         }
 
@@ -138,7 +138,7 @@ public class TimerState
             Hours--;
             Minutes = _secondsInMinute;
             Seconds = _secondsInMinute;
-            Milliseconds = 900;
+            //Milliseconds = 900;
             return;
         }
     }
@@ -157,6 +157,7 @@ public class TimerState
         Hours = _zero;
         Minutes = _zero;
         Seconds = _zero;
+        //Milliseconds = _zero;
         IsZero = true;
     }
 }

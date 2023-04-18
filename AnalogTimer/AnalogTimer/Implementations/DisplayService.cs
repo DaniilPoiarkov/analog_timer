@@ -33,6 +33,9 @@ public class DisplayService : IDisplayService
     public DisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
+        PrintDots(_dotsBetweenHourAndMinute);
+        PrintDots(_dotsBetweenMinuteAndSecond);
+        Display(new());
     }
 
     public void Display(TimerState state)
@@ -42,20 +45,16 @@ public class DisplayService : IDisplayService
             if (state.Hours != _snapshot?.Hours)
                 Update(state.Hours, TimerValue.Hour);
 
-            PrintDots(_dotsBetweenHourAndMinute);
-
             if (state.Minutes != _snapshot?.Minutes)
                 Update(state.Minutes, TimerValue.Minute);
-
-            PrintDots(_dotsBetweenMinuteAndSecond);
 
             if (state.Seconds != _snapshot?.Seconds)
                 Update(state.Seconds, TimerValue.Second);
 
-            PrintDots(_dotsBetweenSecondsAndMilliseconds);
+            //PrintDots(_dotsBetweenSecondsAndMilliseconds);
 
-            if(state.Milliseconds != _snapshot?.Milliseconds)
-                Update(state.Milliseconds, TimerValue.Millisecond);
+            //if(state.Milliseconds != _snapshot?.Milliseconds)
+            //    Update(state.Milliseconds, TimerValue.Millisecond);
         }
 
         _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
