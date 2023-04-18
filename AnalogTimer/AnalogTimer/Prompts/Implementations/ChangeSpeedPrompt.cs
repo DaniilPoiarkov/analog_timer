@@ -4,7 +4,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class ChangeSpeedPrompt : PromptBase
 {
-    public override string Name => "Speed";
+    public override string Name => "speed";
 
     public override string Instruction => "Write \'speed x\' where \'x\' represents ticks per second.";
 

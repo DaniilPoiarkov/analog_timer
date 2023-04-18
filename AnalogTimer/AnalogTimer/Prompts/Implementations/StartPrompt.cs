@@ -5,7 +5,7 @@ public class StartPrompt : PromptBase
 {
     public override string Instruction => "Write \'start x\' where \'x\' is amount of seconds";
 
-    public override string Name => "Start";
+    public override string Name => "start";
 
     public override Task Proceed(string? input, IAnalogTimer timer)
     {

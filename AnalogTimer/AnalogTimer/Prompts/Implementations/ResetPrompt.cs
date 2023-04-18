@@ -4,7 +4,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class ResetPrompt : PromptBase
 {
-    public override string Name => "Reset";
+    public override string Name => "reset";
 
     public override string Instruction => "Write \'reset\' to stop timer and set all values to zero";
 

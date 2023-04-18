@@ -3,7 +3,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class AddHoursPrompt : PromptBase
 {
-    public override string Name => "Hours";
+    public override string Name => "hours";
 
     public override string Instruction => "Write \'hours x\' where \'x\' is amount of hours which you want to add";
 

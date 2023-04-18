@@ -4,7 +4,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class AddMinutesPrompt : PromptBase
 {
-    public override string Name => "Minutes";
+    public override string Name => "minutes";
 
     public override string Instruction => "Write \'minutes x\' where \'x\' is amount of minutes which you want to add";
 

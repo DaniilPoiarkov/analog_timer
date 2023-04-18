@@ -4,7 +4,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class ResumePrompt : PromptBase
 {
-    public override string Name => "Resume";
+    public override string Name => "resume";
 
     public override string Instruction => "Write \'resume\' to resume timer";
 

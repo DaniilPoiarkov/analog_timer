@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Models;
+using System.Diagnostics;
 
 namespace AnalogTimer.Implementations;
 
@@ -69,6 +70,11 @@ public class AnalogTimer : IAnalogTimer
         if (IsRunning)
         {
             throw new InvalidOperationException("Timer is already running");
+        }
+
+        if (_state.IsZero)
+        {
+            throw new InvalidOperationException("Timer state consist of zeros. Set time before starting timer");
         }
 
         IsRunning = true;

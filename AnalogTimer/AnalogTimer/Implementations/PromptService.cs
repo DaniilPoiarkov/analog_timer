@@ -72,7 +72,7 @@ public class PromptService : IPromptService
 
         var prompt = _prompts.FirstOrDefault(p => p.Name.ToLower().Equals(values[0]));
 
-        if(prompt is null)
+        if (prompt is null)
         {
             PrintException($"Prompt with name \'{values[0]}\' not found");
             return;

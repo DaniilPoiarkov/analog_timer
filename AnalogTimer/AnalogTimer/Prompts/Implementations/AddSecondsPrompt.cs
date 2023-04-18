@@ -3,7 +3,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class AddSecondsPrompt : PromptBase
 {
-    public override string Name => "Seconds";
+    public override string Name => "seconds";
 
     public override string Instruction => "Write \'seconds x\' where \'x\' is amount of seconds which you want to add";
 

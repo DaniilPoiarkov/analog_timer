@@ -3,7 +3,7 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class PausePrompt : PromptBase
 {
-    public override string Name => "Pause";
+    public override string Name => "pause";
 
     public override string Instruction => "White \'pause\' to pause a timer";
 
