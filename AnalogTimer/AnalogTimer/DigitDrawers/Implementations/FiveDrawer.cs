@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers.Implementations;
 
@@ -17,7 +16,13 @@ public class FiveDrawer : DigitDrawerBase
 
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
 
-        Console.CursorLeft = UIHelper.CursorPosition;
-        Console.CursorTop = 9;
+        SetCursor();
+    }
+
+    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    {
+        ClearHeightLine(false, positionLeft);
+
+        SetCursor();
     }
 }

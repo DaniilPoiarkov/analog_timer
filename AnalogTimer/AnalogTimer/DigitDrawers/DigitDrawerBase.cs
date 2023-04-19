@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers;
 
@@ -11,6 +12,8 @@ public abstract class DigitDrawerBase : IDigitDrawer
     protected const char _empty = ' ';
 
     public abstract void Draw(int positionLeft, ITimerTemplate template);
+
+    public abstract void DrawFromPrevious(int positionLeft, ITimerTemplate template);
 
     protected static void Clear(int positionLeft)
     {
@@ -40,7 +43,7 @@ public abstract class DigitDrawerBase : IDigitDrawer
         Console.CursorLeft = default;
     }
 
-    protected static void CrearWidthLine(int top, int left)
+    protected static void ClearWidthLine(int top, int left)
     {
         Console.CursorTop = top;
         Console.CursorLeft = left + 1;
@@ -73,8 +76,15 @@ public abstract class DigitDrawerBase : IDigitDrawer
         for(int i = 1; i <= _partialHeight - 1; i++)
         {
             Console.WriteLine(_empty);
+            Console.CursorLeft = left;
         }
 
         Console.CursorLeft = default;
+    }
+
+    protected static void SetCursor()
+    {
+        Console.CursorLeft = UIHelper.CursorPosition;
+        Console.CursorTop = 9;
     }
 }

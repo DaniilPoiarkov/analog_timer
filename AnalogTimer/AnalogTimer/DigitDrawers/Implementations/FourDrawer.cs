@@ -16,7 +16,19 @@ public class FourDrawer : DigitDrawerBase
 
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
 
-        Console.CursorLeft = UIHelper.CursorPosition;
-        Console.CursorTop = 9;
+        SetCursor();
+    }
+
+    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    {
+        ClearWidthLine(0, positionLeft);
+        ClearWidthLine(6, positionLeft);
+        Console.CursorTop = 6;
+        Console.CursorLeft = 0;
+        Console.WriteLine(_empty);
+
+        PrintHeightLine(true, positionLeft + 7, template.Pattern);
+
+        SetCursor();
     }
 }
