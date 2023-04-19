@@ -31,42 +31,11 @@ public class StartPrompt : PromptBase
         if (userInput.Tokens.Count() == 1)
         {
             timer.Start();
+            return;
         }
 
-        var parsed = userInput.Tokens
-            .Where(t => t.Type == Models.Enums.TokenType.Flag)
-            .Select(t => t.Value
-                .Trim()
-                .Split(' '));
-
-        if (!parsed.Any())
-        {
-            throw new InvalidOperationException($"Cannot parse expression \'{input}\'. Ensure that you are using only valid shorcuts",
-                new Exception($"Tokens: {string.Join(' ', userInput.Tokens.Select(t => t.Value))}{Environment.NewLine}" +
-                    $"Parsed: {string.Join(',', parsed.Select(p => string.Join(' ', p)))}"));
-        }
-
-        if (parsed.Any(p => p.Length != 2))
-        {
-            var unexpected = parsed.Where(p => p.Length != 2)
-                .Select(p => string.Join(" ", p))
-                .Select(v => $"\'-{v}\'");
-
-            throw new InvalidOperationException($"Unexpected value(s) {string.Join(' ', unexpected)}");
-        }
-
-        var flags = parsed.Where(v => v.Length == 2)
-            .Select(v => (Flag: v[0], Value: v[1]))
+        var flags = GenerateFlags(userInput, _shortcutFlags)
             .ToList();
-
-        if(!flags.All(f => _shortcutFlags.Any(s => s.Shortcut.Equals(f.Flag))))
-        {
-            var unexpected = flags.Where(f => 
-                !_shortcutFlags.Any(s => s.Shortcut.Equals(f.Flag)))
-                .Select(f => $"-{f.Flag}");
-
-            throw new InvalidOperationException($"Unexpected flag(s) {string.Join(", ", unexpected)}");
-        }
 
         timer.ResetState();
 
