@@ -24,14 +24,13 @@ public class StartPrompt : PromptBase
         };
     }
 
-    public override Task Proceed(string input, IAnalogTimer timer)
+    public override async Task Proceed(string input, IAnalogTimer timer)
     {
         var userInput = new UserInput(input);
 
         if (userInput.Tokens.Count() == 1)
         {
             timer.Start();
-            return Task.CompletedTask;
         }
 
         var parsed = userInput.Tokens
@@ -42,7 +41,9 @@ public class StartPrompt : PromptBase
 
         if (!parsed.Any())
         {
-            throw new InvalidOperationException($"Cannot parse expression \'{input}\'. Ensure that you are using only valid shorcuts");
+            throw new InvalidOperationException($"Cannot parse expression \'{input}\'. Ensure that you are using only valid shorcuts",
+                new Exception($"Tokens: {string.Join(' ', userInput.Tokens.Select(t => t.Value))}{Environment.NewLine}" +
+                    $"Parsed: {string.Join(',', parsed.Select(p => string.Join(' ', p)))}"));
         }
 
         if (parsed.Any(p => p.Length != 2))
@@ -69,14 +70,16 @@ public class StartPrompt : PromptBase
 
         timer.ResetState();
 
+        var tasks = new List<Task>(flags.Count);
+
         flags.ForEach(f =>
         {
             var handler = _shortcutFlags.First(s => s.Shortcut.Equals(f.Flag));
-            handler.Handle(f.Value, timer);
+            tasks.Add(handler.Handle(f.Value, timer));
         });
 
-        timer.Start();
+        await Task.WhenAll(tasks);
 
-        return Task.CompletedTask;
+        timer.Start();
     }
 }

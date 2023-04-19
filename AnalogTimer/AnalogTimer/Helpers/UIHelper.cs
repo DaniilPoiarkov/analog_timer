@@ -21,7 +21,8 @@ public static class UIHelper
 
         _chars.Clear();
 
-        return sb.ToString();
+        return sb.ToString()
+            .Trim();
     }
 
     public static void RemoveLast()

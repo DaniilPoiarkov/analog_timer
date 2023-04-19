@@ -119,16 +119,16 @@ public class AnalogTimer : IAnalogTimer
                 }
 
                 _displayService.Display(_state);
+
+                if (_state.IsZero)
+                {
+                    await Stop();
+                }
             }
             catch (Exception ex)
             {
                 var logger = LogManager.GetCurrentClassLogger();
-                logger.Error(ex, "Handled when wait or display");
-            }
-
-            if (_state.IsZero)
-            {
-                await Stop();
+                logger.Error(ex, "Handled when wait, display or stop");
             }
         }
     }
