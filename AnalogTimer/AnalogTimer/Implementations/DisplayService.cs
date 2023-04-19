@@ -11,6 +11,7 @@ public class DisplayService : IDisplayService
 
     private TimerState? _snapshot;
 
+    private DisplayMode Mode { get; set; }
 
     private const int _space = 13;
 
@@ -33,6 +34,7 @@ public class DisplayService : IDisplayService
     public DisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
+        Mode = DisplayMode.Full;
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);
@@ -43,7 +45,7 @@ public class DisplayService : IDisplayService
 
     public void Display(TimerState state)
     {
-        lock (this)
+        lock (state)
         {
             if (state.Hours != _snapshot?.Hours)
                 Update(state.Hours, TimerValue.Hour);
@@ -80,13 +82,33 @@ public class DisplayService : IDisplayService
 
         var values = ParseValues(asString);
 
+        if (value == TimerValue.Millisecond)
+            values = values.Skip(1);
+
         foreach (var num in values)
         {
             var drawer = DigitDrawerProvider.GetDrawer(num);
-            drawer.Draw(positionLeft, _timerTemplate);
+
+            if (Mode == DisplayMode.Full)
+            {
+                drawer.Draw(positionLeft, _timerTemplate);
+            }
+            else if (Mode == DisplayMode.Down)
+            {
+                drawer.DrawDown(positionLeft, _timerTemplate);
+            }
+            else
+            {
+                drawer.DrawUp(positionLeft, _timerTemplate);
+            }
 
             positionLeft += _space;
         }
+    }
+
+    public void SetMode(DisplayMode mode)
+    {
+        Mode = mode;
     }
 
     private static IEnumerable<int> ParseValues(string asString)

@@ -16,7 +16,7 @@ public class SevenDrawer : DigitDrawerBase
         SetCursor();
     }
 
-    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
         ClearHeightLine(true, positionLeft);
         ClearHeightLine(false, positionLeft);
@@ -31,5 +31,10 @@ public class SevenDrawer : DigitDrawerBase
         Console.WriteLine(_empty);
 
         SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -26,7 +26,7 @@ public class AnalogTimer : IAnalogTimer
     private Task? Execution { get; set; }
 
 
-    private const int _baseDelay = 10;
+    private const int _baseDelay = 100;
 
     public AnalogTimer(TimerState state, IDisplayService displayService)
     {
@@ -36,6 +36,7 @@ public class AnalogTimer : IAnalogTimer
         IsRunning = false;
         TicksPerSecond = 1;
         Type = TimerType.Timer;
+        _displayService.SetMode(DisplayMode.Down);
     }
 
     public AnalogTimer()
@@ -79,6 +80,8 @@ public class AnalogTimer : IAnalogTimer
         }
 
         stateUpdateAction?.Invoke(this);
+
+        _displayService.SetMode(DisplayMode.Full);
         _displayService.Display(_state);
     }
 
@@ -93,6 +96,15 @@ public class AnalogTimer : IAnalogTimer
         {
             throw new InvalidOperationException("Timer state consist of zeros. Set time before starting timer");
         }
+
+        var mode = Type switch
+        {
+            TimerType.Timer => DisplayMode.Down,
+            TimerType.Stopwatch => DisplayMode.Up,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        _displayService.SetMode(mode);
 
         IsRunning = true;
         Counter = StartTimerTemplate;

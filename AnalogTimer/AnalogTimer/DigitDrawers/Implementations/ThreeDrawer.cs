@@ -18,7 +18,7 @@ public class ThreeDrawer : DigitDrawerBase
         SetCursor();
     }
 
-    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
         ClearHeightLine(true, positionLeft);
 
@@ -26,5 +26,10 @@ public class ThreeDrawer : DigitDrawerBase
         PrintWidthLine(6, positionLeft, template.Pattern);
 
         SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        throw new NotImplementedException();
     }
 }

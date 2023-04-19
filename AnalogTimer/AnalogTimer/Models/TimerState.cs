@@ -9,7 +9,7 @@ public class TimerState
     public bool IsZero { get; private set; }
 
 
-    private const int _msInSecond = 100;
+    private const int _msInSecond = 10;
 
     private const int _maxValueInMinuteOrHour = 60;
 
@@ -22,9 +22,7 @@ public class TimerState
         Minutes = minutes;
         Seconds = seconds;
 
-        IsZero = Hours == _zero
-            && Minutes == _zero
-            && Seconds == _zero;
+        CheckIsZero();
     }
 
     public TimerState(int hours, int minutes)
@@ -57,9 +55,7 @@ public class TimerState
             Milliseconds = _zero;
         }
 
-        IsZero = Seconds == _zero
-            && Minutes == _zero
-            && Hours == _zero;
+        CheckIsZero();
     }
 
     public void SubtractSeconds(int seconds)
@@ -86,9 +82,7 @@ public class TimerState
             Seconds = _zero;
         }
 
-        IsZero = Seconds == _zero
-            && Minutes == _zero
-            && Hours == _zero;
+        CheckIsZero();
     }
 
     public void SubtractMinutes(int minutes)
@@ -113,9 +107,7 @@ public class TimerState
             Minutes = _zero;
         }
 
-        IsZero = Seconds == _zero
-            && Minutes == _zero
-            && Hours == _zero;
+        CheckIsZero();
     }
 
     public void SubtractHours(int hours)
@@ -127,7 +119,13 @@ public class TimerState
             Hours = _zero;
         }
 
-        IsZero = Seconds == _zero
+        CheckIsZero();
+    }
+
+    private void CheckIsZero()
+    {
+        IsZero = Milliseconds == _zero
+            && Seconds == _zero
             && Minutes == _zero
             && Hours == _zero;
     }
@@ -227,6 +225,7 @@ public class TimerState
         Hours = _zero;
         Minutes = _zero;
         Seconds = _zero;
+        Milliseconds = _zero;
         IsZero = true;
     }
 }

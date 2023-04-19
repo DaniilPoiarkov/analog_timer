@@ -18,11 +18,16 @@ public class TwoDrawer : DigitDrawerBase
         SetCursor();
     }
 
-    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
         ClearHeightLine(false, positionLeft + 7);
         PrintHeightLine(false, positionLeft, template.Pattern);
 
         SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        throw new NotImplementedException();
     }
 }

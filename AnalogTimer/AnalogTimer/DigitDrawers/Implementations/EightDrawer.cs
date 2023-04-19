@@ -21,10 +21,15 @@ public class EightDrawer : DigitDrawerBase
         SetCursor();
     }
 
-    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
         PrintHeightLine(false, positionLeft, template.Pattern);
 
         SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        throw new NotImplementedException();
     }
 }

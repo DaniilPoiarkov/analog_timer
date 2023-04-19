@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers.Implementations;
 
@@ -19,7 +18,7 @@ public class FourDrawer : DigitDrawerBase
         SetCursor();
     }
 
-    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
         ClearWidthLine(0, positionLeft);
         ClearWidthLine(6, positionLeft);
@@ -30,5 +29,10 @@ public class FourDrawer : DigitDrawerBase
         PrintHeightLine(true, positionLeft + 7, template.Pattern);
 
         SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        throw new NotImplementedException();
     }
 }

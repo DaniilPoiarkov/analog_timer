@@ -13,7 +13,9 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     public abstract void Draw(int positionLeft, ITimerTemplate template);
 
-    public abstract void DrawFromPrevious(int positionLeft, ITimerTemplate template);
+    public abstract void DrawDown(int positionLeft, ITimerTemplate template);
+
+    public abstract void DrawUp(int positionLeft, ITimerTemplate template);
 
     protected static void Clear(int positionLeft)
     {

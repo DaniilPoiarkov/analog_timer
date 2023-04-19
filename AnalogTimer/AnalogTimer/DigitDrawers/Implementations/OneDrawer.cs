@@ -14,7 +14,7 @@ public class OneDrawer : DigitDrawerBase
         SetCursor();
     }
 
-    public override void DrawFromPrevious(int positionLeft, ITimerTemplate template)
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
         ClearWidthLine(0, positionLeft);
         Console.CursorTop = 0;
@@ -35,5 +35,10 @@ public class OneDrawer : DigitDrawerBase
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
 
         SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        throw new NotImplementedException();
     }
 }
