@@ -22,7 +22,7 @@ public class ChangeTimerTypePrompt : PromptBase
             {
                 "-s" => TimerType.Stopwatch,
                 "-t" => TimerType.Timer,
-                _ => throw new ArgumentException($"Invalid flag \'{value}\'", nameof(input))
+                _ => throw new ArgumentException($"Unexpected flag \'{value}\'", nameof(input))
             };
 
             timer.SetTimerType(type);
