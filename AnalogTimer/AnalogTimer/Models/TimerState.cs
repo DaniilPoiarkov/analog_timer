@@ -9,8 +9,6 @@ public class TimerState
     public bool IsZero { get; private set; }
 
 
-    private const int _baseDelay = 1000;
-
     private const int _secondsInMinute = 59;
 
     private const int _maxValueInMinuteOrHour = 60;
@@ -61,51 +59,18 @@ public class TimerState
         AddMinutes(minutes);
     }
 
-    public void AddMinutes(int minutes)
+    public void SubtractSeconds(int seconds)
     {
-        if (minutes < _zero)
-            throw new ArgumentException("Minutes cannot be below 0", nameof(minutes));
-
-        Minutes += minutes;
-
-        if (IsZero)
-            IsZero = false;
-
-        if (Minutes < _maxValueInMinuteOrHour)
-            return;
-
-        var hours = _zero;
-
-        while (Minutes >= _maxValueInMinuteOrHour)
+        if (Seconds - seconds < _zero)
         {
-            hours++;
-            Minutes -= _maxValueInMinuteOrHour;
+            Seconds = _zero;
+        }
+        else
+        {
+            Seconds -= seconds;
         }
 
-        AddHours(hours);
-    }
-
-    public void AddHours(int hours)
-    {
-        if (hours < _zero)
-            throw new ArgumentException("Hours cannot be below 0", nameof(hours));
-
-        Hours += hours;
-
-        if (IsZero)
-            IsZero = false;
-    }
-
-    public async Task Wait(int ticksPerSecond)
-    {
-        if (IsZero)
-            throw new ArgumentOutOfRangeException(nameof(ticksPerSecond));
-
-        await Task.Delay(_baseDelay / ticksPerSecond);
-
-        Seconds--;// -= _baseDelay;
-
-        if (Seconds == _zero 
+        if (Seconds == _zero
             && Minutes == _zero
             && Hours == _zero
             /*&& Milliseconds == _zero*/)
@@ -141,6 +106,41 @@ public class TimerState
             //Milliseconds = 900;
             return;
         }
+    }
+
+    public void AddMinutes(int minutes)
+    {
+        if (minutes < _zero)
+            throw new ArgumentException("Minutes cannot be below 0", nameof(minutes));
+
+        Minutes += minutes;
+
+        if (IsZero)
+            IsZero = false;
+
+        if (Minutes < _maxValueInMinuteOrHour)
+            return;
+
+        var hours = _zero;
+
+        while (Minutes >= _maxValueInMinuteOrHour)
+        {
+            hours++;
+            Minutes -= _maxValueInMinuteOrHour;
+        }
+
+        AddHours(hours);
+    }
+
+    public void AddHours(int hours)
+    {
+        if (hours < _zero)
+            throw new ArgumentException("Hours cannot be below 0", nameof(hours));
+
+        Hours += hours;
+
+        if (IsZero)
+            IsZero = false;
     }
 
     public override string ToString()

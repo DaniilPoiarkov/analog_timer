@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Models;
+using AnalogTimer.Models.Enums;
 using NLog;
 
 namespace AnalogTimer.Implementations;
@@ -10,7 +11,11 @@ public class AnalogTimer : IAnalogTimer
 
     private readonly IDisplayService _displayService;
 
+
     public bool IsRunning { get; private set; }
+
+    public TimerType Type { get; private set; }
+
 
     private int TicksPerSecond { get; set; }
 
@@ -18,50 +23,62 @@ public class AnalogTimer : IAnalogTimer
 
     private Task? Execution { get; set; }
 
-    public AnalogTimer(TimerState state, ITimerTemplate template)
+
+    private const int _baseDelay = 1000;
+
+    private const int _oneSecond = 1;
+
+    public AnalogTimer(TimerState state, IDisplayService displayService)
     {
         _state = state;
+        _displayService = displayService;
+
         IsRunning = false;
         TicksPerSecond = 1;
-        _displayService = new DisplayService(template);
+        Type = TimerType.Timer;
     }
 
     public AnalogTimer()
-        : this(new(), new DefaultTemplate()) { }
+        : this(new(), new DisplayService(new DefaultTemplate())) { }
+
+    public void SetTimerType(TimerType type)
+    {
+        UpdateState(timer => timer.Type = type);
+    }
 
     public void ChangeTicksPerSecond(int ticksPerSecond)
     {
-        TicksPerSecond = ticksPerSecond;
+        UpdateState(timer => timer.TicksPerSecond = ticksPerSecond);
     }
 
     public void AddSeconds(int seconds)
     {
-        UpdateState(state => state.AddSeconds(seconds));
+        UpdateState(timer => timer._state.AddSeconds(seconds));
     }
 
     public void AddMinutes(int minutes)
     {
-        UpdateState(state => state.AddMinutes(minutes));
+        UpdateState(timer => timer._state.AddMinutes(minutes));
     }
 
     public void AddHours(int hours)
     {
-        UpdateState(state => state.AddHours(hours));
+        UpdateState(timer => timer._state.AddHours(hours));
     }
 
     public void ResetState()
     {
-        UpdateState(state => state.Reset());
+        UpdateState(timer => timer._state.Reset());
     }
 
-    private void UpdateState(Action<TimerState> stateUpdateAction)
+    private void UpdateState(Action<AnalogTimer> stateUpdateAction)
     {
         if (IsRunning)
         {
             throw new InvalidOperationException("Cannot update timer when it is running");
         }
 
-        stateUpdateAction?.Invoke(_state);
+        stateUpdateAction?.Invoke(this);
         _displayService.Display(_state);
     }
 
@@ -90,7 +107,17 @@ public class AnalogTimer : IAnalogTimer
         {
             try
             {
-                await _state.Wait(TicksPerSecond);
+                await Task.Delay(_baseDelay / TicksPerSecond);
+                
+                if (Type == TimerType.Timer)
+                {
+                    _state.SubtractSeconds(_oneSecond);
+                }
+                else
+                {
+                    _state.AddSeconds(_oneSecond);
+                }
+
                 _displayService.Display(_state);
             }
             catch (Exception ex)
