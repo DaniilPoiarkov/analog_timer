@@ -5,7 +5,7 @@ public class AddHoursPrompt : PromptBase
 {
     public override string Name => "hours";
 
-    public override string Instruction => "Write \'hours x\' or \'-h x\' where \'x\' is amount of hours which you want to add";
+    public override string Instruction => "Write \'hours x\' or \'-h x\' where \'x\' is amount of hours which you want to add.";
 
     public override string Shortcut => "-h";
 

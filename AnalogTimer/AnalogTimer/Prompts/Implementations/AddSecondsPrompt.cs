@@ -5,7 +5,7 @@ public class AddSecondsPrompt : PromptBase
 {
     public override string Name => "seconds";
 
-    public override string Instruction => "Write \'seconds x\' or \'-s x\' where \'x\' is amount of seconds which you want to add";
+    public override string Instruction => "Write \'seconds x\' or \'-s x\' where \'x\' is amount of seconds which you want to add.";
 
     public override string Shortcut => "-s";
 

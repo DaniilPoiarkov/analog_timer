@@ -92,7 +92,7 @@ public class AnalogTimer : IAnalogTimer
             throw new InvalidOperationException("Timer is already running");
         }
 
-        if (_state.IsZero)
+        if (_state.IsZero && Type == TimerType.Timer)
         {
             throw new InvalidOperationException("Timer state consist of zeros. Set time before starting timer");
         }

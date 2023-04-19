@@ -11,6 +11,7 @@ var promptService = new PromptServiceBuilder(timer)
     .Add<AddMinutesPrompt>()
     .Add<AddHoursPrompt>()
     .Add<ChangeSpeedPrompt>()
+    .Add<ChangeTimerTypePrompt>()
     .Add<CloseTimerPrompt>()
     .Build();
 

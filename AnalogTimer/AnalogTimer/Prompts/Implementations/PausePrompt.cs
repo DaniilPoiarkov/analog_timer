@@ -5,7 +5,7 @@ public class PausePrompt : PromptBase
 {
     public override string Name => "pause";
 
-    public override string Instruction => "White \'pause\' or \'-p\' to pause a timer";
+    public override string Instruction => "White \'pause\' or \'-p\' to pause a timer.";
 
     public override string Shortcut => "-p";
 
