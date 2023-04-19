@@ -12,6 +12,8 @@ public class StartPrompt : PromptBase
 
     public override string Name => "start";
 
+    public override string Shortcut => Name;
+
     private readonly List<IShortcutFlag> _shortcutFlags;
 
     public StartPrompt()

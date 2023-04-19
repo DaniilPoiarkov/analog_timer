@@ -73,11 +73,15 @@ public class PromptService : IPromptService
             return;
         }
 
-        var prompt = _prompts.FirstOrDefault(p => p.Name.ToLower().Equals(values[0]));
+        var prompt = _prompts.FirstOrDefault(p => 
+                p.Name.ToLower().Equals(values[0])
+             || p.Shortcut.ToLower().Equals(values[0]));
 
         if (prompt is null)
         {
-            PrintException($"Prompt with name \'{values[0]}\' not found");
+            var name = values[0].StartsWith('-') ? "shortcut" : "name";
+
+            PrintException($"Prompt with {name} \'{values[0]}\' not found");
             return;
         }
 

@@ -7,7 +7,9 @@ public class CloseTimerPrompt : PromptBase
 
     public override string Instruction => "Write \'close\' to close a timer";
 
-    public override Task Proceed(string? input, IAnalogTimer timer)
+    public override string Shortcut => Name;
+
+    public override Task Proceed(string input, IAnalogTimer timer)
     {
         Console.CursorTop += GetType().Assembly
             .GetTypes()

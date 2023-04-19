@@ -9,6 +9,8 @@ public abstract class PromptBase : IPrompt
 
     public abstract string Instruction { get; }
 
+    public abstract string Shortcut { get; }
+
     public abstract Task Proceed(string input, IAnalogTimer timer);
 
     protected static IEnumerable<string> SplitInput(string input) => input
