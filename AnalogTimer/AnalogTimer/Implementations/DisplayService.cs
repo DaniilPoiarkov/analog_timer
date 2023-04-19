@@ -85,11 +85,24 @@ public class DisplayService : IDisplayService
         if (value == TimerValue.Millisecond)
             values = values.Skip(1);
 
+        var needFullRewrite = value switch
+        {
+            TimerValue.Hour => _snapshot?.Hours - digit > 1 || _snapshot?.Hours - digit < -1,
+            TimerValue.Minute => _snapshot?.Minutes - digit > 1 || _snapshot?.Minutes - digit < -1,
+            TimerValue.Second => _snapshot?.Seconds - digit > 1 || _snapshot?.Seconds - digit < -1,
+            TimerValue.Millisecond => false,
+            _ => throw new NotImplementedException(),
+        };
+
         foreach (var num in values)
         {
             var drawer = DigitDrawerProvider.GetDrawer(num);
 
-            if (Mode == DisplayMode.Full)
+            if (needFullRewrite)
+            {
+                drawer.Draw(positionLeft, _timerTemplate);
+            }
+            else if (Mode == DisplayMode.Full)
             {
                 drawer.Draw(positionLeft, _timerTemplate);
             }
