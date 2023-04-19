@@ -26,9 +26,7 @@ public class AnalogTimer : IAnalogTimer
     private Task? Execution { get; set; }
 
 
-    private const int _baseDelay = 1000;
-
-    private const int _oneSecond = 1;
+    private const int _baseDelay = 10;
 
     public AnalogTimer(TimerState state, IDisplayService displayService)
     {
@@ -109,15 +107,15 @@ public class AnalogTimer : IAnalogTimer
         {
             try
             {
-                await Task.Delay(_baseDelay / TicksPerSecond);
+                await Task.Delay(_baseDelay);
                 
                 if (Type == TimerType.Timer)
                 {
-                    _state.SubtractSeconds(_oneSecond);
+                    _state.SubtractMilliseconds(TicksPerSecond);
                 }
                 else
                 {
-                    _state.AddSeconds(_oneSecond);
+                    _state.AddMilliseconds(TicksPerSecond);
                 }
 
                 _displayService.Display(_state);

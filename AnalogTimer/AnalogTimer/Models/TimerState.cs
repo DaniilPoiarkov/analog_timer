@@ -5,11 +5,11 @@ public class TimerState
     public int Hours { get; private set; }
     public int Minutes { get; private set; }
     public int Seconds { get; private set; }
-    //public int Milliseconds { get; private set; }
+    public int Milliseconds { get; private set; }
     public bool IsZero { get; private set; }
 
 
-    private const int _secondsInMinute = 59;
+    private const int _msInSecond = 100;
 
     private const int _maxValueInMinuteOrHour = 60;
 
@@ -33,6 +33,35 @@ public class TimerState
     public TimerState()
         : this(_zero, _zero) { }
 
+    public void SubtractMilliseconds(int milliseconds)
+    {
+        Milliseconds -= milliseconds;
+
+        if (Milliseconds < _zero)
+        {
+            var seconds = _zero;
+
+            var maxValue = Seconds + Minutes * Hours + Minutes * _maxValueInMinuteOrHour + Hours * _maxValueInMinuteOrHour * _maxValueInMinuteOrHour;
+
+            while (Milliseconds < _zero && seconds <= maxValue)
+            {
+                seconds++;
+                Milliseconds += _msInSecond;
+            }
+
+            SubtractSeconds(seconds);
+        }
+
+        if (Milliseconds < _zero)
+        {
+            Milliseconds = _zero;
+        }
+
+        IsZero = Seconds == _zero
+            && Minutes == _zero
+            && Hours == _zero;
+    }
+
     public void SubtractSeconds(int seconds)
     {
         Seconds -= seconds;
@@ -41,10 +70,12 @@ public class TimerState
         {
             var minutes = _zero;
 
-            while (Seconds < _zero && minutes <= Minutes + Hours * _maxValueInMinuteOrHour)
+            var maxValue = Minutes + Hours * _maxValueInMinuteOrHour;
+
+            while (Seconds < _zero && minutes <= maxValue)
             {
                 minutes++;
-                Seconds += 60;
+                Seconds += _maxValueInMinuteOrHour;
             }
 
             SubtractMinutes(minutes);
@@ -99,6 +130,27 @@ public class TimerState
         IsZero = Seconds == _zero
             && Minutes == _zero
             && Hours == _zero;
+    }
+
+    public void AddMilliseconds(int ms)
+    {
+        Milliseconds += ms;
+
+        if (IsZero)
+            IsZero = false;
+
+        if (Milliseconds < _msInSecond)
+            return;
+
+        var seconds = _zero;
+
+        while (Milliseconds >= _msInSecond)
+        {
+            Milliseconds -= _msInSecond;
+            seconds++;
+        }
+
+        AddSeconds(seconds);
     }
 
     public void AddSeconds(int seconds)
@@ -165,10 +217,9 @@ public class TimerState
         var hours = Hours.ToString().Length == 2 ? Hours.ToString() : $"0{Hours}";
         var minutes = Minutes.ToString().Length == 2 ? Minutes.ToString() : $"0{Minutes}";
         var seconds = Seconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Seconds}";
+        var ms = Milliseconds.ToString().Length == 2 ? Milliseconds.ToString() : $"0{Milliseconds}";
 
-        //var ms = Milliseconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Milliseconds}";
-
-        return $"{hours}:{minutes}:{seconds}";
+        return $"{hours}:{minutes}:{seconds}:{ms}";
     }
 
     public void Reset()

@@ -81,7 +81,9 @@ public class PromptService : IPromptService
         {
             var name = values[0].StartsWith('-') ? "shortcut" : "name";
 
-            PrintException($"Prompt with {name} \'{values[0]}\' not found");
+            PrintException($"Prompt with {name} \'{values[0]}\' not found",
+                new Exception($"Input: \'{input}\', Values: {string.Join(' ', values)}"));
+
             return;
         }
 

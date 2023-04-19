@@ -40,6 +40,19 @@ public abstract class DigitDrawerBase : IDigitDrawer
         Console.CursorLeft = default;
     }
 
+    protected static void CrearWidthLine(int top, int left)
+    {
+        Console.CursorTop = top;
+        Console.CursorLeft = left + 1;
+
+        for(int i = 1;  i < _width - 1; i++)
+        {
+            Console.Write(_empty);
+        }
+
+        Console.CursorLeft = default;
+    }
+
     protected static void PrintHeightLine(bool isTop, int positionLeft, char pattern)
     {
         Console.CursorTop = isTop ? 0 : 3;
@@ -50,5 +63,18 @@ public abstract class DigitDrawerBase : IDigitDrawer
             Console.WriteLine(pattern);
             Console.CursorLeft = positionLeft;
         }
+    }
+
+    protected static void ClearHeightLine(bool isTop, int left)
+    {
+        Console.CursorTop = isTop ? 1 : 4;
+        Console.CursorLeft = left;
+
+        for(int i = 1; i <= _partialHeight - 1; i++)
+        {
+            Console.WriteLine(_empty);
+        }
+
+        Console.CursorLeft = default;
     }
 }

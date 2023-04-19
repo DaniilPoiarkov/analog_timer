@@ -2,7 +2,7 @@
 using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
 
-/*
+
 var nine = new NineDrawer();
 var eight = new EightDrawer();
 var seven = new SevenDrawer();
@@ -39,7 +39,7 @@ await Task.Delay(1000);
 zero.Draw(0, template);
 
 return;
-*/
+
 
 var timer = new AnalogTimer.Implementations.AnalogTimer();
 
