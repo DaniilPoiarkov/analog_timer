@@ -20,11 +20,7 @@ public class FourDrawer : DigitDrawerBase
 
     public override void DrawDown(int positionLeft, ITimerTemplate template)
     {
-        ClearWidthLine(0, positionLeft);
-        ClearWidthLine(6, positionLeft);
-        Console.CursorTop = 6;
-        Console.CursorLeft = 0;
-        Console.WriteLine(_empty);
+        ClearWidthLines(positionLeft);
 
         PrintHeightLine(true, positionLeft + 7, template.Pattern);
 
@@ -33,6 +29,19 @@ public class FourDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        ClearWidthLines(positionLeft);
+        PrintHeightLine(true, positionLeft, template.Pattern);
+
+        SetCursor();
+    }
+
+    private static void ClearWidthLines(int positionLeft)
+    {
+        ClearWidthLine(0, positionLeft);
+        ClearWidthLine(6, positionLeft);
+
+        Console.CursorTop = 6;
+        Console.CursorLeft = positionLeft;
+        Console.WriteLine(_empty);
     }
 }

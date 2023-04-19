@@ -28,6 +28,10 @@ public class FiveDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        ClearHeightLine(true, positionLeft + 7);
+        PrintWidthLine(0, positionLeft, template.Pattern);
+        PrintWidthLine(6, positionLeft, template.Pattern);
+
+        SetCursor();
     }
 }

@@ -28,6 +28,14 @@ public class TwoDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        PrintWidthLine(0, positionLeft, template.Pattern);
+        PrintWidthLine(3, positionLeft, template.Pattern);
+        PrintWidthLine(6, positionLeft, template.Pattern);
+
+        PrintHeightLine(false, positionLeft, template.Pattern);
+
+        ClearHeightLine(false, positionLeft + 7);
+
+        SetCursor();
     }
 }

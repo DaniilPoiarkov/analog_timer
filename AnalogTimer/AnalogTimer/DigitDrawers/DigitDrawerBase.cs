@@ -37,10 +37,7 @@ public abstract class DigitDrawerBase : IDigitDrawer
         Console.CursorTop = top;
         Console.CursorLeft = left;
 
-        for (int i = 0; i < _width; i++)
-        {
-            Console.Write(pattern);
-        }
+        Console.WriteLine(new string(pattern, _width));
 
         Console.CursorLeft = default;
     }
@@ -50,10 +47,7 @@ public abstract class DigitDrawerBase : IDigitDrawer
         Console.CursorTop = top;
         Console.CursorLeft = left + 1;
 
-        for(int i = 1;  i < _width - 1; i++)
-        {
-            Console.Write(_empty);
-        }
+        Console.WriteLine(new string(_empty, 6));
 
         Console.CursorLeft = default;
     }

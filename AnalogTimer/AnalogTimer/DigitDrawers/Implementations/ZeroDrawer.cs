@@ -33,6 +33,9 @@ public class ZeroDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        ClearWidthLine(3, positionLeft);
+        PrintHeightLine(false, positionLeft, template.Pattern);
+
+        SetCursor();
     }
 }

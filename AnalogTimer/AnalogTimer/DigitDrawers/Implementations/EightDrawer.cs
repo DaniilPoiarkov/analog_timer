@@ -30,6 +30,12 @@ public class EightDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        PrintWidthLine(3, positionLeft, template.Pattern);
+        PrintWidthLine(6, positionLeft, template.Pattern);
+
+        PrintHeightLine(true, positionLeft, template.Pattern);
+        PrintHeightLine(false, positionLeft, template.Pattern);
+
+        SetCursor();
     }
 }

@@ -30,6 +30,8 @@ public class NineDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        ClearHeightLine(false, positionLeft);
+
+        SetCursor();
     }
 }

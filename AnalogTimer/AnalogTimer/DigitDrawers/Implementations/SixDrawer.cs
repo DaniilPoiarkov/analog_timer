@@ -35,6 +35,8 @@ public class SixDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        PrintHeightLine(false, positionLeft, template.Pattern);
+
+        SetCursor();
     }
 }

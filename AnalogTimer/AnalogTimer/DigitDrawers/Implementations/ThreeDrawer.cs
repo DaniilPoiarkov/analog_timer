@@ -30,6 +30,10 @@ public class ThreeDrawer : DigitDrawerBase
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
     {
-        throw new NotImplementedException();
+        ClearHeightLine(false, positionLeft);
+
+        PrintHeightLine(false, positionLeft + 7, template.Pattern);
+
+        SetCursor();
     }
 }
