@@ -59,7 +59,7 @@ public class DisplayService : IDisplayService
             Update(state.Milliseconds, TimerValue.Millisecond);
         }
 
-        _snapshot = new(state.Hours, state.Minutes, state.Seconds);
+        _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
     }
 
     private void Update(int digit, TimerValue value)

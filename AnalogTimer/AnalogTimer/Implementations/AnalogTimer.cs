@@ -42,6 +42,11 @@ public class AnalogTimer : IAnalogTimer
     public AnalogTimer()
         : this(new(), new DisplayService(new DefaultTemplate())) { }
 
+    public TimerState GetSnapshot()
+    {
+        return new TimerState(_state.Hours, _state.Minutes, _state.Seconds, _state.Milliseconds);
+    }
+
     public void SetTimerType(TimerType type)
     {
         UpdateState(timer => timer.Type = type);

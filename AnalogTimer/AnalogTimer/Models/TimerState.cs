@@ -16,17 +16,18 @@ public class TimerState
     private const int _zero = 0;
 
 
-    public TimerState(int hours, int minutes, int seconds)
+    public TimerState(int hours, int minutes, int seconds, int milliseconds)
     {
         Hours = hours;
         Minutes = minutes;
         Seconds = seconds;
+        Milliseconds = milliseconds;
 
         CheckIsZero();
     }
 
     public TimerState(int hours, int minutes)
-        : this(hours, minutes, _zero) { }
+        : this(hours, minutes, _zero, _zero) { }
 
     public TimerState()
         : this(_zero, _zero) { }

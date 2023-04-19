@@ -13,6 +13,7 @@ var promptService = new PromptServiceBuilder(timer)
     .Add<ChangeSpeedPrompt>()
     .Add<ChangeTimerTypePrompt>()
     .Add<CloseTimerPrompt>()
+    .Add<CutTimerStatePrompt>()
     .Build();
 
 promptService.DisplayPrompts();

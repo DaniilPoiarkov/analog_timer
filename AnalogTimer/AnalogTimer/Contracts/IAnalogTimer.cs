@@ -1,4 +1,5 @@
-﻿using AnalogTimer.Models.Enums;
+﻿using AnalogTimer.Models;
+using AnalogTimer.Models.Enums;
 
 namespace AnalogTimer.Contracts;
 
@@ -21,4 +22,6 @@ public interface IAnalogTimer
     void ResetState();
 
     void SetTimerType(TimerType type);
+
+    TimerState GetSnapshot();
 }
