@@ -216,7 +216,7 @@ public class TimerState
         var hours = Hours.ToString().Length == 2 ? Hours.ToString() : $"0{Hours}";
         var minutes = Minutes.ToString().Length == 2 ? Minutes.ToString() : $"0{Minutes}";
         var seconds = Seconds.ToString().Length == 2 ? Seconds.ToString() : $"0{Seconds}";
-        var ms = Milliseconds.ToString().Length == 2 ? Milliseconds.ToString() : $"0{Milliseconds}";
+        var ms = Milliseconds.ToString();
 
         return $"{hours}:{minutes}:{seconds}:{ms}";
     }

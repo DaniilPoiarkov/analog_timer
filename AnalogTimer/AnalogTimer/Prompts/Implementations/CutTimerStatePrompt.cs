@@ -4,9 +4,20 @@ namespace AnalogTimer.Prompts.Implementations;
 
 public class CutTimerStatePrompt : PromptBase
 {
-    private static int PositionTop = 25;
+    private const int _startPositionTop = 25;
 
-    private static int PositionLeft = 0;
+    private const int _startPositionLeft = 0;
+
+    private const int _maxPositionLeft = 104;
+
+    private const int _maxPositionTop = 29;
+
+    private const int _space = 23;
+
+
+    private static int PositionTop = _startPositionTop;
+
+    private static int PositionLeft = _startPositionLeft;
 
     public override string Name => "cut";
 
@@ -18,22 +29,22 @@ public class CutTimerStatePrompt : PromptBase
     {
         var snapshot = timer.GetSnapshot();
 
-        if (PositionTop >= 29)
+        if (PositionTop >= _maxPositionTop)
         {
-            PositionTop = 25;
-            PositionLeft += 21;
+            PositionTop = _startPositionTop;
+            PositionLeft += _space;
         }
 
-        if(PositionLeft >= 104)
+        if(PositionLeft >= _maxPositionLeft)
         {
-            PositionTop = 25;
-            PositionLeft = 0;
+            PositionTop = _startPositionTop;
+            PositionLeft = _startPositionLeft;
         }
 
         Console.CursorTop = PositionTop;
         Console.CursorLeft = PositionLeft;
 
-        Console.WriteLine($"|{DateTime.UtcNow.ToShortTimeString()}: {snapshot}|");
+        Console.WriteLine($"|{DateTime.UtcNow.ToShortTimeString()} => {snapshot}|");
         PositionTop++;
 
         return Task.CompletedTask;
