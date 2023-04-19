@@ -11,6 +11,8 @@ public class AnalogTimer : IAnalogTimer
 
     private readonly IDisplayService _displayService;
 
+    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
 
     public bool IsRunning { get; private set; }
 
@@ -127,8 +129,7 @@ public class AnalogTimer : IAnalogTimer
             }
             catch (Exception ex)
             {
-                var logger = LogManager.GetCurrentClassLogger();
-                logger.Error(ex, "Handled when wait, display or stop");
+                _logger.Error(ex, $"Handled is {ex.Source}");
             }
         }
     }

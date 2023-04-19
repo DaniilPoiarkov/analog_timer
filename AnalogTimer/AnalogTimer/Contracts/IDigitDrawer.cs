@@ -1,6 +1,4 @@
-﻿using AnalogTimer.Contracts;
-
-namespace AnalogTimer.DigitDrawers;
+﻿namespace AnalogTimer.Contracts;
 
 public interface IDigitDrawer
 {
