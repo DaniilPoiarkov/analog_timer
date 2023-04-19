@@ -8,9 +8,11 @@ public class ChangeSpeedPrompt : PromptBase
 
     public override string Instruction => "Write \'speed x\' where \'x\' represents ticks per second.";
 
-    public override Task Proceed(string? input, IAnalogTimer timer)
+    public override string Shortcut => Name;
+
+    public override Task Proceed(string input, IAnalogTimer timer)
     {
-        var values = ParseAndValidateInput(input ?? string.Empty);
+        var values = ParseAndValidateInput(input);
 
         var ticksPerSecond = int.Parse(values[1]);
 

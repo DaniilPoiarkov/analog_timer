@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers;
 
@@ -8,9 +9,13 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     private const int _width = 8;
 
-    private const char _empty = ' ';
+    protected const char _empty = ' ';
 
     public abstract void Draw(int positionLeft, ITimerTemplate template);
+
+    public abstract void DrawDown(int positionLeft, ITimerTemplate template);
+
+    public abstract void DrawUp(int positionLeft, ITimerTemplate template);
 
     protected static void Clear(int positionLeft)
     {
@@ -32,10 +37,17 @@ public abstract class DigitDrawerBase : IDigitDrawer
         Console.CursorTop = top;
         Console.CursorLeft = left;
 
-        for (int i = 0; i < _width; i++)
-        {
-            Console.Write(pattern);
-        }
+        Console.WriteLine(new string(pattern, _width));
+
+        Console.CursorLeft = default;
+    }
+
+    protected static void ClearWidthLine(int top, int left)
+    {
+        Console.CursorTop = top;
+        Console.CursorLeft = left + 1;
+
+        Console.WriteLine(new string(_empty, 6));
 
         Console.CursorLeft = default;
     }
@@ -50,5 +62,25 @@ public abstract class DigitDrawerBase : IDigitDrawer
             Console.WriteLine(pattern);
             Console.CursorLeft = positionLeft;
         }
+    }
+
+    protected static void ClearHeightLine(bool isTop, int left)
+    {
+        Console.CursorTop = isTop ? 1 : 4;
+        Console.CursorLeft = left;
+
+        for(int i = 1; i <= _partialHeight - 1; i++)
+        {
+            Console.WriteLine(_empty);
+            Console.CursorLeft = left;
+        }
+
+        Console.CursorLeft = default;
+    }
+
+    protected static void SetCursor()
+    {
+        Console.CursorLeft = UIHelper.CursorPosition;
+        Console.CursorTop = 9;
     }
 }

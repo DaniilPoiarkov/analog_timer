@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
+using NLog;
 
 namespace AnalogTimer.Implementations;
 
@@ -12,6 +13,8 @@ public class PromptService : IPromptService
     private const int _exceptionLine = 8;
     
     private const int _inputLine = 9;
+
+    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
     public PromptService(
         IEnumerable<IPrompt> prompts,
@@ -64,17 +67,23 @@ public class PromptService : IPromptService
             .Select(v => v.ToLower())
             .ToList();
 
-        if (values is null || !values.Any())
+        if (values is null || !values.Any() || string.IsNullOrEmpty(input))
         {
             PrintException("Invalid input");
             return;
         }
 
-        var prompt = _prompts.FirstOrDefault(p => p.Name.ToLower().Equals(values[0]));
+        var prompt = _prompts.FirstOrDefault(p => 
+                p.Name.ToLower().Equals(values[0])
+             || p.Shortcut.ToLower().Equals(values[0]));
 
         if (prompt is null)
         {
-            PrintException($"Prompt with name \'{values[0]}\' not found");
+            var name = values[0].StartsWith('-') ? "shortcut" : "name";
+
+            PrintException($"Prompt with {name} \'{values[0]}\' not found",
+                new Exception($"Input: \'{input}\', Values: {string.Join(' ', values)}"));
+
             return;
         }
 
@@ -86,17 +95,18 @@ public class PromptService : IPromptService
         {
             lock (this)
             {
-                PrintException(ex.Message);
+                PrintException(ex.Message, ex);
             }
         }
     }
 
-    private static void PrintException(string message)
+    private void PrintException(string message, Exception? ex = null)
     {
         Console.CursorTop = _exceptionLine;
         Console.WriteLine(new string(' ', Console.WindowWidth));
 
         Console.CursorTop = _exceptionLine;
         Console.WriteLine($"Exception: {message}");
+        _logger.Error(ex, message);
     }
 }
