@@ -22,6 +22,8 @@ public static class UIHelper
         _chars.Clear();
 
         return sb.ToString()
+            .TrimEnd()
+            .TrimStart()
             .Trim();
     }
 
