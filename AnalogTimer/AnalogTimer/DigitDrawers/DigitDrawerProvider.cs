@@ -1,4 +1,5 @@
-﻿using AnalogTimer.DigitDrawers.Implementations;
+﻿using AnalogTimer.Contracts;
+using AnalogTimer.DigitDrawers.Implementations;
 
 namespace AnalogTimer.DigitDrawers;
 

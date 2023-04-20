@@ -1,31 +1,56 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.InputFlyweight;
+using AnalogTimer.Prompts.ShortcutFlags.StartPromptFlags;
+
 namespace AnalogTimer.Prompts.Implementations;
 
 public class StartPrompt : PromptBase
 {
-    public override string Instruction => "Write \'start x\' where \'x\' is amount of seconds";
+    public override string Instruction => "Write \'start\' to start timer.\n\t" +
+        "Flags: \'-h\', \'-m\', \'-s\' allows you to add hours, minutes and seconds accordingly.\n\t\t" +
+        "Usage with positive number which represents amount of specific value.";
 
     public override string Name => "start";
 
-    public override Task Proceed(string? input, IAnalogTimer timer)
+    public override string Shortcut => Name;
+
+    private readonly List<IShortcutFlag> _shortcutFlags;
+
+    public StartPrompt()
     {
-        if(string.IsNullOrEmpty(input))
-            throw new ArgumentNullException(nameof(input));
+        _shortcutFlags = new List<IShortcutFlag>()
+        {
+            new StartSecondsFlag(),
+            new StartMinutesFlag(),
+            new StartHoursFlag(),
+        };
+    }
 
-        var values = ParseAndValidateInput(input);
+    public override async Task Proceed(string input, IAnalogTimer timer)
+    {
+        var userInput = new UserInput(input);
 
-        var seconds = int.Parse(values[1]);
+        if (userInput.Tokens.Count() == 1)
+        {
+            timer.Start();
+            return;
+        }
 
-        if (seconds < 0)
-            throw new ArgumentException("Seconds cannot be below 0");
-
-        if (timer.IsRunning)
-            throw new InvalidOperationException("Timer is already running");
+        var flags = GenerateFlags(userInput, _shortcutFlags)
+            .ToList();
 
         timer.ResetState();
-        timer.AddSeconds(seconds);
-        timer.Start();
 
-        return Task.CompletedTask;
+        var tasks = new List<Task>(flags.Count);
+
+        flags.ForEach(f =>
+        {
+            var handler = _shortcutFlags.First(s => s.Shortcut.Equals(f.Flag));
+            tasks.Add(handler.Handle(f.Value, timer));
+        });
+
+        await Task.WhenAll(tasks);
+
+        timer.Start();
     }
 }

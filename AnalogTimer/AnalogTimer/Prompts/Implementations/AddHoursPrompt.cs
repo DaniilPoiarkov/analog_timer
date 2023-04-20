@@ -5,11 +5,13 @@ public class AddHoursPrompt : PromptBase
 {
     public override string Name => "hours";
 
-    public override string Instruction => "Write \'hours x\' where \'x\' is amount of hours which you want to add";
+    public override string Instruction => "Write \'hours x\' or \'-h x\' where \'x\' is amount of hours which you want to add.";
 
-    public override Task Proceed(string? input, IAnalogTimer timer)
+    public override string Shortcut => "-h";
+
+    public override Task Proceed(string input, IAnalogTimer timer)
     {
-        var values = ParseAndValidateInput(input ?? string.Empty);
+        var values = ParseAndValidateInput(input);
 
         var hours = int.Parse(values[1]);
 

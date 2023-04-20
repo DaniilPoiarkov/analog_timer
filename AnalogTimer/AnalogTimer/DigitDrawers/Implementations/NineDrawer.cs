@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers.Implementations;
 
@@ -17,8 +16,22 @@ public class NineDrawer : DigitDrawerBase
         PrintHeightLine(true, positionLeft + 7, template.Pattern);
 
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
+        
+        SetCursor();
+    }
 
-        Console.CursorLeft = UIHelper.CursorPosition;
-        Console.CursorTop = 9;
+    public override void DrawDown(int positionLeft, ITimerTemplate template)
+    {
+        PrintWidthLine(3, positionLeft, template.Pattern);
+        ClearHeightLine(false, positionLeft);
+
+        SetCursor();
+    }
+
+    public override void DrawUp(int positionLeft, ITimerTemplate template)
+    {
+        ClearHeightLine(false, positionLeft);
+
+        SetCursor();
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace AnalogTimer.Contracts;
+﻿using AnalogTimer.Models;
+using AnalogTimer.Models.Enums;
+
+namespace AnalogTimer.Contracts;
 
 public interface IAnalogTimer
 {
@@ -17,4 +20,8 @@ public interface IAnalogTimer
     void ChangeTicksPerSecond(int ticksPerSecond);
 
     void ResetState();
+
+    void SetTimerType(TimerType type);
+
+    TimerState GetSnapshot();
 }
