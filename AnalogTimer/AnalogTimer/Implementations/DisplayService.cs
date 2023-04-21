@@ -62,6 +62,23 @@ public class DisplayService : IDisplayService
         _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
     }
 
+    public void DisplayMatrix(bool[,] matrix)
+    {
+        var rows = matrix.GetUpperBound(0) + 1;
+        var columns = matrix.Length / rows;
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                Console.CursorTop = j;
+                Console.CursorLeft = i;
+
+                Console.WriteLine(matrix[i, j] ? _timerTemplate.Pattern : ' ');
+            }
+        }
+    }
+
     private void Update(int digit, TimerValue value)
     {
         var asString = digit.ToString();

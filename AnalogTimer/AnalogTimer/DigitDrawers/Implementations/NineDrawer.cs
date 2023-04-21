@@ -4,7 +4,17 @@ namespace AnalogTimer.DigitDrawers.Implementations;
 
 public class NineDrawer : DigitDrawerBase
 {
-    public override bool[,] Matrix => throw new NotImplementedException();
+    public override bool[,] Matrix => new bool[,]
+    {
+        {true, true, true, true, false, false, true,},
+        {true, false, false, true, false, false, true,},
+        {true, false, false, true, false, false, true,},
+        {true, false, false, true, false, false, true,},
+        {true, false, false, true, false, false, true,},
+        {true, false, false, true, false, false, true,},
+        {true, false, false, true, false, false, true,},
+        {true, true, true, true, true, true, true,},
+    };
 
     public override void Draw(int positionLeft, ITimerTemplate template)
     {
