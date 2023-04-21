@@ -11,6 +11,8 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     protected const char _empty = ' ';
 
+    public abstract bool[,] Matrix { get; }
+
     public abstract void Draw(int positionLeft, ITimerTemplate template);
 
     public abstract void DrawDown(int positionLeft, ITimerTemplate template);

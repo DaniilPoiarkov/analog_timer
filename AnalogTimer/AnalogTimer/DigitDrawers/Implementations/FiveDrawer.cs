@@ -4,6 +4,8 @@ namespace AnalogTimer.DigitDrawers.Implementations;
 
 public class FiveDrawer : DigitDrawerBase
 {
+    public override bool[,] Matrix => throw new NotImplementedException();
+
     public override void Draw(int positionLeft, ITimerTemplate template)
     {
         Clear(positionLeft);
