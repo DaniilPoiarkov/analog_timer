@@ -1,5 +1,5 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.DigitDrawers;
+using AnalogTimer.DisplayHandlers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 
@@ -11,11 +11,9 @@ public class DisplayService : IDisplayService
 
     private TimerState? _snapshot;
 
+    private IDisplayHandler _handler;
+
     private DisplayMode Mode { get; set; }
-
-    private const int _space = 13;
-
-    private const int _zero = 0;
 
     private const int _dotsBetweenHourAndMinute = 23;
 
@@ -23,18 +21,11 @@ public class DisplayService : IDisplayService
 
     private const int _dotsBetweenSecondsAndMilliseconds = 75;
 
-    private const int _startPositionForHour = 0;
-
-    private const int _startPositionForMinute = 26;
-
-    private const int _startPositionForSecond = 52;
-
-    private const int _startPositionForMillisecond = 78;
-
     public DisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
         Mode = DisplayMode.Full;
+        _handler = new DrawerDisplayHandler(timerTemplate, _snapshot, Mode);
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);
@@ -48,92 +39,18 @@ public class DisplayService : IDisplayService
         lock (state)
         {
             if (state.Hours != _snapshot?.Hours)
-                Update(state.Hours, TimerValue.Hour);
+                _handler.Update(state.Hours, TimerValue.Hour);
 
             if (state.Minutes != _snapshot?.Minutes)
-                Update(state.Minutes, TimerValue.Minute);
+                _handler.Update(state.Minutes, TimerValue.Minute);
 
             if (state.Seconds != _snapshot?.Seconds)
-                Update(state.Seconds, TimerValue.Second);
-
-            Update(state.Milliseconds, TimerValue.Millisecond);
+                _handler.Update(state.Seconds, TimerValue.Second);
+            
+            _handler.Update(state.Milliseconds, TimerValue.Millisecond);
         }
 
         _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
-    }
-
-    public void DisplayMatrix(bool[,] matrix)
-    {
-        var rows = matrix.GetUpperBound(0) + 1;
-        var columns = matrix.Length / rows;
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                Console.CursorTop = j;
-                Console.CursorLeft = i;
-
-                Console.WriteLine(matrix[i, j] ? _timerTemplate.Pattern : ' ');
-            }
-        }
-    }
-
-    private void Update(int digit, TimerValue value)
-    {
-        var asString = digit.ToString();
-
-        if (string.IsNullOrEmpty(asString) || asString.Length > 2)
-        {
-            throw new ArgumentException($"Invalid timer digit {digit}", nameof(digit));
-        }
-
-        var positionLeft = value switch
-        {
-            TimerValue.Hour => _startPositionForHour,
-            TimerValue.Minute => _startPositionForMinute,
-            TimerValue.Second => _startPositionForSecond,
-            TimerValue.Millisecond => _startPositionForMillisecond,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), "No such timer value"),
-        };
-
-        var values = ParseValues(asString);
-
-        if (value == TimerValue.Millisecond)
-            values = values.Skip(1);
-
-        var needFullRewrite = value switch
-        {
-            TimerValue.Hour => _snapshot?.Hours - digit > 1 || _snapshot?.Hours - digit < -1,
-            TimerValue.Minute => _snapshot?.Minutes - digit > 1 || _snapshot?.Minutes - digit < -1,
-            TimerValue.Second => _snapshot?.Seconds - digit > 1 || _snapshot?.Seconds - digit < -1,
-            TimerValue.Millisecond => false,
-            _ => throw new NotImplementedException(),
-        };
-
-        foreach (var num in values)
-        {
-            var drawer = DigitDrawerProvider.GetDrawer(num);
-
-            if (needFullRewrite)
-            {
-                drawer.Draw(positionLeft, _timerTemplate);
-            }
-            else if (Mode == DisplayMode.Full)
-            {
-                drawer.Draw(positionLeft, _timerTemplate);
-            }
-            else if (Mode == DisplayMode.Down)
-            {
-                drawer.DrawDown(positionLeft, _timerTemplate);
-            }
-            else
-            {
-                drawer.DrawUp(positionLeft, _timerTemplate);
-            }
-
-            positionLeft += _space;
-        }
     }
 
     public void SetMode(DisplayMode mode)
@@ -141,14 +58,16 @@ public class DisplayService : IDisplayService
         Mode = mode;
     }
 
-    private static IEnumerable<int> ParseValues(string asString)
+    public void ChangeHandler(DisplayHandler handler)
     {
-        if (asString.Length >= 2)
+        if(handler == DisplayHandler.ViaDrawer)
         {
-            return asString.Select(v => int.Parse(v.ToString()));
+            _handler = new DrawerDisplayHandler(_timerTemplate, _snapshot, Mode);
         }
-
-        return new[] { _zero, int.Parse(asString) };
+        else
+        {
+            _handler = new MatrixDisplayHandler(_timerTemplate);
+        }
     }
 
     private void PrintDots(int position)
