@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
 
 namespace AnalogTimer.DisplayHandlers;
@@ -16,6 +17,8 @@ public abstract class DisplayHandlerBase : IDisplayHandler
     private const int _startPositionForSecond = 52;
 
     private const int _startPositionForMillisecond = 78;
+
+    protected const char _empty = ' ';
 
     public abstract void Update(int digit, TimerValue value);
 

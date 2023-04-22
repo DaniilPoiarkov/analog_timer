@@ -79,10 +79,4 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
         Console.CursorLeft = default;
     }
-
-    protected static void SetCursor()
-    {
-        Console.CursorLeft = UIHelper.CursorPosition;
-        Console.CursorTop = 9;
-    }
 }

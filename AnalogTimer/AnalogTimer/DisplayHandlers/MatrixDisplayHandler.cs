@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.DigitDrawers;
+using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
 
 namespace AnalogTimer.DisplayHandlers;
@@ -29,6 +30,8 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
             positionLeft += _space;
         }
+
+        UIHelper.SetCursor();
     }
 
     private void DisplayMatrix(bool[,] matrix, int positionLeft)
@@ -48,7 +51,7 @@ public class MatrixDisplayHandler : DisplayHandlerBase
                     && matrix[i, j] == snapshot[i, j])
                     continue;
 
-                Console.WriteLine(matrix[i, j] ? _timerTemplate.Pattern : ' ');
+                Console.WriteLine(matrix[i, j] ? _timerTemplate.Pattern : _empty);
             }
         }
     }

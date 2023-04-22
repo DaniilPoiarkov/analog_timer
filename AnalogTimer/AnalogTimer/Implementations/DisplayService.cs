@@ -25,7 +25,7 @@ public class DisplayService : IDisplayService
     {
         _timerTemplate = timerTemplate;
         Mode = DisplayMode.Full;
-        _handler = new DrawerDisplayHandler(timerTemplate, _snapshot, Mode);
+        _handler = new MatrixDisplayHandler(_timerTemplate);
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);
@@ -60,7 +60,7 @@ public class DisplayService : IDisplayService
 
     public void ChangeHandler(DisplayHandler handler)
     {
-        if(handler == DisplayHandler.ViaDrawer)
+        if (handler == DisplayHandler.ViaDrawer)
         {
             _handler = new DrawerDisplayHandler(_timerTemplate, _snapshot, Mode);
         }

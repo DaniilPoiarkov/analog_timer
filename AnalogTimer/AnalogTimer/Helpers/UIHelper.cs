@@ -32,4 +32,10 @@ public static class UIHelper
         if(_chars.Any())
             _chars.Pop();
     }
+
+    public static void SetCursor()
+    {
+        Console.CursorLeft = CursorPosition;
+        Console.CursorTop = 9;
+    }
 }
