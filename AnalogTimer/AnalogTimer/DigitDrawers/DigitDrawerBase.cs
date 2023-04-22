@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers;
 
@@ -11,7 +10,7 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     protected const char _empty = ' ';
 
-    public abstract bool[,] Matrix { get; }
+    public abstract List<List<bool>> Matrix { get; }
 
     public abstract void Draw(int positionLeft, ITimerTemplate template);
 

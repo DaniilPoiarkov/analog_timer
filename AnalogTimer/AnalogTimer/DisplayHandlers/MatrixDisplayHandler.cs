@@ -9,7 +9,7 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 {
     private readonly ITimerTemplate _timerTemplate;
 
-    private readonly Dictionary<int, bool[,]> _digitsStore = new();
+    private readonly Dictionary<int, List<bool>> _digitsStore = new();
 
     public MatrixDisplayHandler(ITimerTemplate timerTemplate)
     {
@@ -34,25 +34,24 @@ public class MatrixDisplayHandler : DisplayHandlerBase
         UIHelper.SetCursor();
     }
 
-    private void DisplayMatrix(bool[,] matrix, int positionLeft)
+    private void DisplayMatrix(List<List<bool>> matrix, int positionLeft)
     {
-        var rows = matrix.GetUpperBound(0) + 1;
-
-        var columns = matrix.Length / rows;
-
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < matrix.Count; i++)
         {
-            for (int j = 0; j < columns; j++)
+            var values = matrix[i];
+            _digitsStore.TryGetValue(positionLeft + i, out var snapshot);
+
+            var diff = values.IntersectWithIndex(snapshot);
+
+            foreach (var val in diff)
             {
-                Console.CursorTop = j;
+                Console.CursorTop = val.Index;
                 Console.CursorLeft = positionLeft + i;
 
-                if (_digitsStore.TryGetValue(positionLeft + i, out var snapshot)
-                    && matrix[i, j] == snapshot[i, j])
-                    continue;
-
-                Console.WriteLine(matrix[i, j] ? _timerTemplate.Pattern : _empty);
+                Console.WriteLine(val.Value ? _timerTemplate.Pattern : _empty);
             }
+
+            _digitsStore[positionLeft + i] = values;
         }
     }
 }

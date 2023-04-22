@@ -5,16 +5,16 @@ namespace AnalogTimer.DigitDrawers.Implementations;
 
 public class ZeroDrawer : DigitDrawerBase
 {
-    public override bool[,] Matrix => new bool[,]
+    public override List<List<bool>> Matrix => new()
     {
-        {true, true, true, true, true, true, true,},
-        {true, false, false, false, false, false, true},
-        {true, false, false, false, false, false, true},
-        {true, false, false, false, false, false, true},
-        {true, false, false, false, false, false, true},
-        {true, false, false, false, false, false, true},
-        {true, false, false, false, false, false, true},
-        {true, true, true, true, true, true, true,},
+        new List<bool>() { true, true, true, true, true, true, true,},
+        new List<bool>() { true, false, false, false, false, false, true},
+        new List<bool>() { true, false, false, false, false, false, true},
+        new List<bool>() { true, false, false, false, false, false, true},
+        new List<bool>() { true, false, false, false, false, false, true},
+        new List<bool>() { true, false, false, false, false, false, true},
+        new List<bool>() { true, false, false, false, false, false, true},
+        new List<bool>() { true, true, true, true, true, true, true,},
     };
 
     public override void Draw(int positionLeft, ITimerTemplate template)

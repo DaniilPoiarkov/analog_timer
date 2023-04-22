@@ -2,7 +2,7 @@
 
 public interface IDigitDrawer
 {
-    bool[,] Matrix { get; }
+    List<List<bool>> Matrix { get; }
 
     void Draw(int positionLeft, ITimerTemplate template);
 
