@@ -4,6 +4,11 @@ public static class Extensions
 {
     public static IEnumerable<(int Index, T Value)> IntersectWithIndex<T>(this IEnumerable<T> first, IEnumerable<T>? second)
     {
+        if (first.SequenceEqual(second ?? Enumerable.Empty<T>()))
+        {
+            return Enumerable.Empty<(int Index, T Value)>();
+        }
+
         if (second is null || !second.Any())
         {
             return ExtractItems(first, 0);

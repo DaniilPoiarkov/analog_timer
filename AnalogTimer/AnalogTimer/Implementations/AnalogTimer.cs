@@ -26,7 +26,7 @@ public class AnalogTimer : IAnalogTimer
     private Task? Execution { get; set; }
 
 
-    private const int _baseDelay = 100;
+    private const int _baseDelay = 10;
 
     public AnalogTimer(TimerState state, IDisplayService displayService)
     {

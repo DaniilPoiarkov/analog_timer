@@ -36,19 +36,17 @@ public class DisplayService : IDisplayService
 
     public void Display(TimerState state)
     {
-        lock (state)
-        {
-            if (state.Hours != _snapshot?.Hours)
-                _handler.Update(state.Hours, TimerValue.Hour);
+        if (state.Hours != _snapshot?.Hours)
+            _handler.Update(state.Hours, TimerValue.Hour);
 
-            if (state.Minutes != _snapshot?.Minutes)
-                _handler.Update(state.Minutes, TimerValue.Minute);
+        if (state.Minutes != _snapshot?.Minutes)
+            _handler.Update(state.Minutes, TimerValue.Minute);
 
-            if (state.Seconds != _snapshot?.Seconds)
-                _handler.Update(state.Seconds, TimerValue.Second);
-            
+        if (state.Seconds != _snapshot?.Seconds)
+            _handler.Update(state.Seconds, TimerValue.Second);
+
+        if (state.Milliseconds != _snapshot?.Milliseconds)
             _handler.Update(state.Milliseconds, TimerValue.Millisecond);
-        }
 
         _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
     }

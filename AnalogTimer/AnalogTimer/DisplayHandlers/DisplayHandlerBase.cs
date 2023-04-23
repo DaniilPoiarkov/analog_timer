@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
 
 namespace AnalogTimer.DisplayHandlers;
@@ -53,10 +52,25 @@ public abstract class DisplayHandlerBase : IDisplayHandler
             throw new ArgumentException($"Invalid timer digit {digit}", nameof(digit));
         }
 
-        var values = ParseValues(asString);
+        var values = ParseValues(asString)
+            .ToList();
 
         if (value == TimerValue.Millisecond)
-            values = values.Skip(1);
+        {
+            //values[0] = values[0] switch
+            //{
+            //    <= 3 => 0,
+            //    <= 7 => 3,
+            //    _ => 7,
+            //};
+
+            values[1] = values[1] switch
+            {
+                <= 3 => 0,
+                <= 7 => 3,
+                _ => 7,
+            };
+        }
 
         return values;
     }
