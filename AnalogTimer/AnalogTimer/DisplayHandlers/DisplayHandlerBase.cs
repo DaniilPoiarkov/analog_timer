@@ -57,13 +57,6 @@ public abstract class DisplayHandlerBase : IDisplayHandler
 
         if (value == TimerValue.Millisecond)
         {
-            //values[0] = values[0] switch
-            //{
-            //    <= 3 => 0,
-            //    <= 7 => 3,
-            //    _ => 7,
-            //};
-
             values[1] = values[1] switch
             {
                 <= 3 => 0,

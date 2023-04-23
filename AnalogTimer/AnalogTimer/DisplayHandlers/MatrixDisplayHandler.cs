@@ -2,6 +2,7 @@
 using AnalogTimer.DigitDrawers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
+using System.Runtime.InteropServices;
 
 namespace AnalogTimer.DisplayHandlers;
 
@@ -20,12 +21,13 @@ public class MatrixDisplayHandler : DisplayHandlerBase
     {
         var positionLeft = GetPosition(value);
 
-        var values = TransformToEnumerable(digit, value);
+        var values = TransformToEnumerable(digit, value)
+            .ToList();
 
-        foreach (var num in values)
+        foreach (var num in CollectionsMarshal.AsSpan(values))
         {
             var drawer = DigitDrawerProvider.GetDrawer(num);
-
+            
             DisplayMatrix(drawer.Matrix, positionLeft);
 
             positionLeft += _space;

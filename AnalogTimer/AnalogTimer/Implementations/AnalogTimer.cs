@@ -125,7 +125,7 @@ public class AnalogTimer : IAnalogTimer
             try
             {
                 await Task.Delay(_baseDelay);
-                
+
                 if (Type == TimerType.Timer)
                 {
                     _state.SubtractMilliseconds(TicksPerSecond);
