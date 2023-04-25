@@ -119,13 +119,13 @@ public class AnalogTimer : IAnalogTimer
     private async Task StartTimerTemplate()
     {
         _displayService.Display(_state);
-
+        
         while (IsRunning)
         {
             try
             {
                 await Task.Delay(_baseDelay);
-
+                
                 if (Type == TimerType.Timer)
                 {
                     _state.SubtractMilliseconds(TicksPerSecond);
