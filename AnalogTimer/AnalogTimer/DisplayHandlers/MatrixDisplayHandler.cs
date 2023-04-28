@@ -9,10 +9,6 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 {
     private readonly Dictionary<int, List<char>> _digitsStore = new();
 
-    public MatrixDisplayHandler()
-    {
-    }
-
     public override void Update(int digit, TimerValue value)
     {
         var positionLeft = GetPosition(value);

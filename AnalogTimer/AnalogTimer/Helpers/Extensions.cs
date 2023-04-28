@@ -45,35 +45,30 @@ public static class Extensions
 
     private static int GetDifference<T>(List<T> firstAsList, List<T> secondAsList, int limit, List<(int, T)> result)
     {
-        int index = 0;
+        int index;
 
-        while (index < limit)
+        for (index = 0; index < limit; index++)
         {
             var x = firstAsList[index];
             var y = secondAsList[index];
 
             if (x is null && y is null)
             {
-                index++;
                 continue;
             }
 
             if (x is null || y is null)
             {
                 result.Add((index, x));
-                index++;
-
                 continue;
             }
 
             if (x.Equals(y))
             {
-                index++;
                 continue;
             }
 
             result.Add((index, x));
-            index++;
         }
 
         return index;
