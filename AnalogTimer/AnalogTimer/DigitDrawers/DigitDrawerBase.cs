@@ -10,7 +10,7 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     protected const char _empty = ' ';
 
-    public abstract List<List<bool>> Matrix { get; }
+    public abstract List<List<char>> Matrix { get; }
 
     public abstract void Draw(int positionLeft, ITimerTemplate template);
 

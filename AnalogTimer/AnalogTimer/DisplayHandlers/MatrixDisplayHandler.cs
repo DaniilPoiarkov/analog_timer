@@ -1,5 +1,4 @@
-﻿using AnalogTimer.Contracts;
-using AnalogTimer.DigitDrawers;
+﻿using AnalogTimer.DigitDrawers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
 using System.Runtime.InteropServices;
@@ -8,13 +7,10 @@ namespace AnalogTimer.DisplayHandlers;
 
 public class MatrixDisplayHandler : DisplayHandlerBase
 {
-    private readonly ITimerTemplate _timerTemplate;
+    private readonly Dictionary<int, List<char>> _digitsStore = new();
 
-    private readonly Dictionary<int, List<bool>> _digitsStore = new();
-
-    public MatrixDisplayHandler(ITimerTemplate timerTemplate)
+    public MatrixDisplayHandler()
     {
-        _timerTemplate = timerTemplate;
     }
 
     public override void Update(int digit, TimerValue value)
@@ -36,7 +32,7 @@ public class MatrixDisplayHandler : DisplayHandlerBase
         UIHelper.SetCursor();
     }
 
-    private void DisplayMatrix(List<List<bool>> matrix, int positionLeft)
+    private void DisplayMatrix(List<List<char>> matrix, int positionLeft)
     {
         for (int i = 0; i < matrix.Count; i++)
         {
@@ -50,7 +46,7 @@ public class MatrixDisplayHandler : DisplayHandlerBase
                 Console.CursorTop = val.Index;
                 Console.CursorLeft = positionLeft + i;
 
-                Console.WriteLine(val.Value ? _timerTemplate.Pattern : _empty);
+                Console.WriteLine(val.Value);
             }
 
             _digitsStore[positionLeft + i] = values;

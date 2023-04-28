@@ -5,16 +5,16 @@ namespace AnalogTimer.DigitDrawers.Implementations;
 
 public class FourDrawer : DigitDrawerBase
 {
-    public override List<List<bool>> Matrix => new()
+    public override List<List<char>> Matrix => new()
     {
-        new() {true, true, true, true, false, false, false,},
-        new() {false, false, false, true, false, false, false,},
-        new() {false, false, false, true, false, false, false,},
-        new() {false, false, false, true, false, false, false,},
-        new() {false, false, false, true, false, false, false,},
-        new() {false, false, false, true, false, false, false,},
-        new() {false, false, false, true, false, false, false,},
-        new() {true, true, true, true, true, true, true,},
+        new() {'█', '█', '█', '█', ' ', ' ', ' ',},
+        new() {' ', ' ', ' ', '█', ' ', ' ', ' ',},
+        new() {' ', ' ', ' ', '█', ' ', ' ', ' ',},
+        new() {' ', ' ', ' ', '█', ' ', ' ', ' ',},
+        new() {' ', ' ', ' ', '█', ' ', ' ', ' ',},
+        new() {' ', ' ', ' ', '█', ' ', ' ', ' ',},
+        new() {' ', ' ', ' ', '█', ' ', ' ', ' ',},
+        new() {'█', '█', '█', '█', '█', '█', '█',},
     };
 
     public override void Draw(int positionLeft, ITimerTemplate template)

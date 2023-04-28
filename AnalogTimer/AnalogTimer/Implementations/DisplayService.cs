@@ -25,7 +25,7 @@ public class DisplayService : IDisplayService
     {
         _timerTemplate = timerTemplate;
         Mode = DisplayMode.Full;
-        _handler = new MatrixDisplayHandler(_timerTemplate);
+        _handler = new MatrixDisplayHandler();
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);
@@ -64,7 +64,7 @@ public class DisplayService : IDisplayService
         }
         else
         {
-            _handler = new MatrixDisplayHandler(_timerTemplate);
+            _handler = new MatrixDisplayHandler();
         }
     }
 
