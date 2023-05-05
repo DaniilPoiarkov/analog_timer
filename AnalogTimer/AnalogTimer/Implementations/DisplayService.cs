@@ -92,7 +92,7 @@ public class DisplayService : IDisplayService
         {
             for (int i = 0; i < 10; i++)
             {
-                await Task.Delay(100, token);
+                await Task.Delay(10, token);
                 var drawer = DigitDrawerProvider.GetDrawer(i);
                 handler.DisplayPattern(drawer.Pattern, position);
             }
