@@ -12,6 +12,8 @@ public abstract class DigitDrawerBase : IDigitDrawer
 
     public abstract List<List<char>> Matrix { get; }
 
+    public abstract List<string> Pattern { get; }
+
     public abstract void Draw(int positionLeft, ITimerTemplate template);
 
     public abstract void DrawDown(int positionLeft, ITimerTemplate template);

@@ -2,6 +2,7 @@
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
+using System.Diagnostics;
 
 namespace AnalogTimer.Implementations;
 
@@ -25,17 +26,24 @@ public class AnalogTimer : IAnalogTimer
 
     private Task? Execution { get; set; }
 
+    private Action<int> StateCallback { get; set; }
 
-    private const int _baseDelay = 10;
+    private CancellationTokenSource _cts;
+
+
+    private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(90);
 
     public AnalogTimer(TimerState state, IDisplayService displayService)
     {
         _state = state;
         _displayService = displayService;
 
+        _cts = new();
         IsRunning = false;
         TicksPerSecond = 1;
         Type = TimerType.Timer;
+
+        StateCallback = _state.SubtractMilliseconds;
         _displayService.SetMode(DisplayMode.Down);
     }
 
@@ -111,9 +119,19 @@ public class AnalogTimer : IAnalogTimer
 
         _displayService.SetMode(mode);
 
+        StateCallback = Type switch
+        {
+            TimerType.Timer => _state.SubtractMilliseconds,
+            TimerType.Stopwatch => _state.AddMilliseconds,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
         IsRunning = true;
         Counter = StartTimerTemplate;
         Execution = Counter.Invoke();
+
+        //_cts = new CancellationTokenSource();
+        //_displayService.StartBackgroundDisplay(_cts.Token);
     }
 
     private async Task StartTimerTemplate()
@@ -126,14 +144,7 @@ public class AnalogTimer : IAnalogTimer
             {
                 await Task.Delay(_baseDelay);
 
-                if (Type == TimerType.Timer)
-                {
-                    _state.SubtractMilliseconds(TicksPerSecond);
-                }
-                else
-                {
-                    _state.AddMilliseconds(TicksPerSecond);
-                }
+                StateCallback.Invoke(TicksPerSecond);
 
                 _displayService.Display(_state);
 
@@ -156,6 +167,7 @@ public class AnalogTimer : IAnalogTimer
             throw new InvalidOperationException("Timer is not running");
         }
 
+        _cts.Cancel();
         IsRunning = false;
         await Execution;
         Counter = null;

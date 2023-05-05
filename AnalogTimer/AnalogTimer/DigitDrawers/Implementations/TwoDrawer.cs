@@ -17,6 +17,17 @@ public class TwoDrawer : DigitDrawerBase
         new() {'█', '█', '█', '█', ' ', ' ', '█',},
     };
 
+    public override List<string> Pattern => new()
+    {
+        "████████",
+        "       █",
+        "       █",
+        "████████",
+        "█       ",
+        "█       ",
+        "████████",
+    };
+
     public override void Draw(int positionLeft, ITimerTemplate template)
     {
         Clear(positionLeft);

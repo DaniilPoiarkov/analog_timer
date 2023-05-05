@@ -9,7 +9,7 @@ public class TimerState
     public bool IsZero { get; private set; }
 
 
-    private const int _msInSecond = 100;
+    private const int _msInSecond = 10;
 
     private const int _maxValueInMinuteOrHour = 60;
 
