@@ -29,8 +29,6 @@ public class AnalogTimer : IAnalogTimer
 
     private Action<int> StateCallback { get; set; }
 
-    private CancellationTokenSource _cts;
-
 
     private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(90);
 
@@ -39,7 +37,6 @@ public class AnalogTimer : IAnalogTimer
         _state = state;
         _displayService = displayService;
 
-        _cts = new();
         IsRunning = false;
         TicksPerSecond = 1;
         Type = TimerType.Timer;
@@ -130,9 +127,6 @@ public class AnalogTimer : IAnalogTimer
         IsRunning = true;
         Counter = StartTimerTemplate;
         Execution = Counter.Invoke();
-
-        //_cts = new CancellationTokenSource();
-        //_displayService.StartBackgroundDisplay(_cts.Token);
     }
 
     private async Task StartTimerTemplate()
@@ -168,7 +162,6 @@ public class AnalogTimer : IAnalogTimer
             throw new InvalidOperationException("Timer is not running");
         }
 
-        _cts.Cancel();
         IsRunning = false;
         await Execution;
         Counter = null;

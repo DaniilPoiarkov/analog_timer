@@ -1,7 +1,6 @@
 ﻿using AnalogTimer.DigitDrawers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
-using System.Runtime.InteropServices;
 
 namespace AnalogTimer.DisplayHandlers;
 
@@ -12,25 +11,6 @@ public class MatrixDisplayHandler : DisplayHandlerBase
     private readonly Dictionary<int, string> _patternStore = new();
 
     private const int _spaceBetweenDigits = 5;
-
-    public void UpdateOld(int digit, TimerValue value)
-    {
-        var positionLeft = GetPosition(value);
-
-        var values = TransformToEnumerable(digit, value)
-            .ToList();
-
-        foreach (var num in CollectionsMarshal.AsSpan(values))
-        {
-            var drawer = DigitDrawerProvider.GetDrawer(num);
-
-            DisplayPattern(drawer.Pattern, positionLeft);
-
-            positionLeft += _space;
-        }
-
-        UIHelper.SetCursor();
-    }
 
     public override void Update(int digit, TimerValue value)
     {
