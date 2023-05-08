@@ -69,8 +69,6 @@ public static class MillisecondDisplayHelper
         var handler = new MatrixDisplayHandler();
         int snapshot = 0;
 
-        var mutex = new Mutex();
-
         while (!cancellationToken.IsCancellationRequested)
         {
             for (int i = 0; i < 10; i++)
@@ -87,9 +85,9 @@ public static class MillisecondDisplayHelper
 
                 await Task.Delay(10, cancellationToken);
                 var drawer = DigitDrawerProvider.GetDrawer(digit);
-                mutex.WaitOne();
+                
                 handler.DisplayPattern(drawer.Pattern, 91);
-                mutex.ReleaseMutex();
+                
                 snapshot = digit;
 
                 UIHelper.SetCursor();
