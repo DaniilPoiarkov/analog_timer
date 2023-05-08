@@ -36,28 +36,7 @@ public class PromptService : IPromptService
 
     public async Task Run()
     {
-        Console.CursorTop = _inputLine;
-
-        while(true)
-        {
-            var key = Console.ReadKey();
-
-            if (key.Key == ConsoleKey.Enter)
-                break;
-
-            if (key.Key == ConsoleKey.Backspace)
-            {
-                UIHelper.RemoveLast();
-                Console.CursorLeft = UIHelper.CursorPosition;
-                Console.Write(' ');
-                Console.CursorLeft = UIHelper.CursorPosition;
-                continue;
-            }
-
-            UIHelper.Add(key.KeyChar);
-        }
-
-        var input = UIHelper.GetInput();
+        string? input = GetUserInput();
         Console.CursorTop = _inputLine;
         Console.WriteLine(new string(' ', Console.BufferWidth));
 
@@ -73,7 +52,7 @@ public class PromptService : IPromptService
             return;
         }
 
-        var prompt = _prompts.FirstOrDefault(p => 
+        var prompt = _prompts.FirstOrDefault(p =>
                 p.Name.ToLower().Equals(values[0])
              || p.Shortcut.ToLower().Equals(values[0]));
 
@@ -98,6 +77,33 @@ public class PromptService : IPromptService
                 PrintException(ex.Message, ex);
             }
         }
+    }
+
+    private static string GetUserInput()
+    {
+        Console.CursorTop = _inputLine;
+
+        while (true)
+        {
+            var key = Console.ReadKey();
+
+            if (key.Key == ConsoleKey.Enter)
+                break;
+
+            if (key.Key == ConsoleKey.Backspace)
+            {
+                UIHelper.RemoveLast();
+                Console.CursorLeft = UIHelper.CursorPosition;
+                Console.Write(' ');
+                Console.CursorLeft = UIHelper.CursorPosition;
+                continue;
+            }
+
+            UIHelper.Add(key.KeyChar);
+        }
+
+        var input = UIHelper.GetInput();
+        return input;
     }
 
     private void PrintException(string message, Exception? ex = null)
