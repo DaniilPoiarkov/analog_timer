@@ -10,25 +10,24 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
     private readonly Dictionary<int, string> _patternStore = new();
 
+    private readonly object _lock = new();
+
     private const int _spaceBetweenDigits = 5;
 
     public override void Update(int digit, TimerValue value)
     {
-        lock (this)
-        {
-            var positionLeft = GetPosition(value);
+        var positionLeft = GetPosition(value);
 
-            var values = TransformToEnumerable(digit, value)
-                .Select(DigitDrawerProvider.GetDrawer)
-                .Select(d => d.Pattern)
-                .Aggregate((first, second) => first.Zip(second)
-                    .Select((pair) => $"{pair.First}{new string(_empty, _spaceBetweenDigits)}{pair.Second}")
-                    .ToList());
+        var values = TransformToEnumerable(digit, value)
+            .Select(DigitDrawerProvider.GetDrawer)
+            .Select(d => d.Pattern)
+            .Aggregate((first, second) => first.Zip(second)
+                .Select((pair) => $"{pair.First}{new string(_empty, _spaceBetweenDigits)}{pair.Second}")
+                .ToList());
 
-            DisplayPattern(values, positionLeft);
+        DisplayPattern(values, positionLeft);
 
-            UIHelper.SetCursor();
-        }
+        UIHelper.SetCursor();
     }
 
     public void DisplayMatrix(List<List<char>> matrix, int positionLeft)
@@ -54,18 +53,21 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
     public void DisplayPattern(List<string> pattern, int positionLeft)
     {
-        for (int i = 0; i < pattern.Count; i++)
+        lock (_lock)
         {
-            var column = pattern[i];
-            _patternStore.TryGetValue(positionLeft + i, out var value);
+            for (int i = 0; i < pattern.Count; i++)
+            {
+                var column = pattern[i];
+                _patternStore.TryGetValue(positionLeft + i, out var value);
 
-            if (column.Equals(value))
-                continue;
-            
-            Console.CursorTop = i;
-            Console.CursorLeft = positionLeft;
+                if (column.Equals(value))
+                    continue;
 
-            Console.WriteLine(column);
+                Console.CursorTop = i;
+                Console.CursorLeft = positionLeft;
+
+                Console.WriteLine(column);
+            }
         }
     }
 }

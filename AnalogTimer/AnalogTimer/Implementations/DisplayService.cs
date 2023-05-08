@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.DisplayHandlers;
+using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 
@@ -31,6 +32,7 @@ public class DisplayService : IDisplayService
         PrintDots(_dotsBetweenMinuteAndSecond);
         PrintDots(_dotsBetweenSecondsAndMilliseconds);
 
+        MillisecondDisplayHelper.DisplayZero();
         Display(new());
     }
 

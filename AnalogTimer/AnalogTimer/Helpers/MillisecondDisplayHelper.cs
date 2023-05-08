@@ -15,6 +15,8 @@ public static class MillisecondDisplayHelper
 
     private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
+    private const int _position = 91;
+
     public static Task BackgroundDisplay()
     {
         _tcs = new TaskCompletionSource();
@@ -64,6 +66,12 @@ public static class MillisecondDisplayHelper
         _cts?.Cancel();
     }
 
+    public static void DisplayZero()
+    {
+        var handler = new MatrixDisplayHandler();
+        handler.DisplayPattern(DigitDrawerProvider.GetDrawer(0).Pattern, _position);
+    }
+
     private static async Task Display(CancellationToken cancellationToken)
     {
         var handler = new MatrixDisplayHandler();
@@ -86,7 +94,7 @@ public static class MillisecondDisplayHelper
                 await Task.Delay(10, cancellationToken);
                 var drawer = DigitDrawerProvider.GetDrawer(digit);
                 
-                handler.DisplayPattern(drawer.Pattern, 91);
+                handler.DisplayPattern(drawer.Pattern, _position);
                 
                 snapshot = digit;
 
