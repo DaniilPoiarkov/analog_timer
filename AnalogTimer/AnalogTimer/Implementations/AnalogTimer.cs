@@ -2,6 +2,7 @@
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
+using NLog.Fluent;
 using System.Diagnostics;
 
 namespace AnalogTimer.Implementations;
@@ -145,7 +146,7 @@ public class AnalogTimer : IAnalogTimer
                 await Task.Delay(_baseDelay);
 
                 StateCallback.Invoke(TicksPerSecond);
-
+                
                 _displayService.Display(_state);
 
                 if (_state.IsZero)

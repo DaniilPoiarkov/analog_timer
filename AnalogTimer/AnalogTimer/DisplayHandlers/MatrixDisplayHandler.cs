@@ -11,7 +11,9 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
     private readonly Dictionary<int, string> _patternStore = new();
 
-    public override void Update(int digit, TimerValue value)
+    private const int _spaceBetweenDigits = 5;
+
+    public void UpdateOld(int digit, TimerValue value)
     {
         var positionLeft = GetPosition(value);
 
@@ -26,6 +28,22 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
             positionLeft += _space;
         }
+
+        UIHelper.SetCursor();
+    }
+
+    public override void Update(int digit, TimerValue value)
+    {
+        var positionLeft = GetPosition(value);
+        
+        var values = TransformToEnumerable(digit, value)
+            .Select(DigitDrawerProvider.GetDrawer)
+            .Select(d => d.Pattern)
+            .Aggregate((first, second) => first.Zip(second)
+                .Select((pair, index) => $"{pair.First}{new string(' ', _spaceBetweenDigits)}{pair.Second}")
+                .ToList());
+
+        DisplayPattern(values, positionLeft);
 
         UIHelper.SetCursor();
     }
