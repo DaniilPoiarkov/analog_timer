@@ -42,11 +42,7 @@ public class DrawerDisplayHandler : DisplayHandlerBase
         {
             var drawer = DigitDrawerProvider.GetDrawer(num);
 
-            if (needFullRewrite)
-            {
-                drawer.Draw(positionLeft, _timerTemplate);
-            }
-            else if (_mode == DisplayMode.Full)
+            if (needFullRewrite || _mode == DisplayMode.Full)
             {
                 drawer.Draw(positionLeft, _timerTemplate);
             }

@@ -20,7 +20,7 @@ public class MatrixDisplayHandler : DisplayHandlerBase
             .Select(DigitDrawerProvider.GetDrawer)
             .Select(d => d.Pattern)
             .Aggregate((first, second) => first.Zip(second)
-                .Select((pair, index) => $"{pair.First}{new string(' ', _spaceBetweenDigits)}{pair.Second}")
+                .Select((pair, index) => $"{pair.First}{new string(_empty, _spaceBetweenDigits)}{pair.Second}")
                 .ToList());
 
         DisplayPattern(values, positionLeft);
