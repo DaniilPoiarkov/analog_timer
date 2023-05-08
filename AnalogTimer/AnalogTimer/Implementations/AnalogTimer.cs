@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
@@ -123,6 +124,8 @@ public class AnalogTimer : IAnalogTimer
             _ => throw new ArgumentOutOfRangeException(),
         };
 
+        MillisecondDisplayHelper.BackgroundDisplay();
+
         IsRunning = true;
         Counter = StartTimerTemplate;
         Execution = Counter.Invoke();
@@ -160,6 +163,8 @@ public class AnalogTimer : IAnalogTimer
         {
             throw new InvalidOperationException("Timer is not running");
         }
+
+        MillisecondDisplayHelper.StopDisplay();
 
         IsRunning = false;
         await Execution;

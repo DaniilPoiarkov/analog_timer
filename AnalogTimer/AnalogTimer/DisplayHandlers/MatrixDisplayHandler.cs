@@ -14,18 +14,21 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
     public override void Update(int digit, TimerValue value)
     {
-        var positionLeft = GetPosition(value);
-        
-        var values = TransformToEnumerable(digit, value)
-            .Select(DigitDrawerProvider.GetDrawer)
-            .Select(d => d.Pattern)
-            .Aggregate((first, second) => first.Zip(second)
-                .Select((pair, index) => $"{pair.First}{new string(_empty, _spaceBetweenDigits)}{pair.Second}")
-                .ToList());
+        lock (this)
+        {
+            var positionLeft = GetPosition(value);
 
-        DisplayPattern(values, positionLeft);
+            var values = TransformToEnumerable(digit, value)
+                .Select(DigitDrawerProvider.GetDrawer)
+                .Select(d => d.Pattern)
+                .Aggregate((first, second) => first.Zip(second)
+                    .Select((pair) => $"{pair.First}{new string(_empty, _spaceBetweenDigits)}{pair.Second}")
+                    .ToList());
 
-        UIHelper.SetCursor();
+            DisplayPattern(values, positionLeft);
+
+            UIHelper.SetCursor();
+        }
     }
 
     public void DisplayMatrix(List<List<char>> matrix, int positionLeft)
