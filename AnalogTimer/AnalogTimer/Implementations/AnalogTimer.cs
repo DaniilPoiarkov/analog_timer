@@ -2,7 +2,6 @@
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
-using NLog.Fluent;
 using System.Diagnostics;
 
 namespace AnalogTimer.Implementations;

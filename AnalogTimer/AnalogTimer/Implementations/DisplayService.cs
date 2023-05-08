@@ -1,7 +1,5 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.DigitDrawers;
 using AnalogTimer.DisplayHandlers;
-using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 
@@ -81,23 +79,5 @@ public class DisplayService : IDisplayService
         Console.CursorLeft = position;
 
         Console.WriteLine(_timerTemplate.Pattern);
-    }
-
-    public async Task StartBackgroundDisplay(CancellationToken token)
-    {
-        const int position = 91;
-        var handler = new MatrixDisplayHandler();
-
-        while (!token.IsCancellationRequested)
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                await Task.Delay(10, token);
-                var drawer = DigitDrawerProvider.GetDrawer(i);
-                handler.DisplayPattern(drawer.Pattern, position);
-            }
-
-            UIHelper.SetCursor();
-        }
     }
 }
