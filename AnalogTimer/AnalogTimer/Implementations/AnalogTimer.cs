@@ -30,7 +30,7 @@ public class AnalogTimer : IAnalogTimer
     private Action<int> StateCallback { get; set; }
 
 
-    private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(90);
+    private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(95);
 
     public AnalogTimer(TimerState state, IDisplayService displayService)
     {

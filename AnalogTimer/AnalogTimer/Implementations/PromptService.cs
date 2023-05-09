@@ -99,7 +99,8 @@ public class PromptService : IPromptService
                 continue;
             }
 
-            UIHelper.Add(key.KeyChar);
+            if(!char.IsControl(key.KeyChar))
+                UIHelper.Add(key.KeyChar);
         }
 
         var input = UIHelper.GetInput();
