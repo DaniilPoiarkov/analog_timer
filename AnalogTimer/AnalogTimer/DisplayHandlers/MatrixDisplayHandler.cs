@@ -14,6 +14,12 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
     private const int _spaceBetweenDigits = 5;
 
+    private MatrixDisplayHandler() { }
+
+    private static readonly Lazy<MatrixDisplayHandler> _instance = new(() => new MatrixDisplayHandler());
+
+    public static MatrixDisplayHandler Instance => _instance.Value;
+
     public override void Update(int digit, TimerValue value)
     {
         var positionLeft = GetPosition(value);
@@ -66,7 +72,7 @@ public class MatrixDisplayHandler : DisplayHandlerBase
                 Console.CursorTop = i;
                 Console.CursorLeft = positionLeft;
 
-                Console.WriteLine(column);
+                Console.Write(column);
             }
         }
     }

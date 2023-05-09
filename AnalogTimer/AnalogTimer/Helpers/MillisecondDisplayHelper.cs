@@ -68,13 +68,12 @@ public static class MillisecondDisplayHelper
 
     public static void DisplayZero()
     {
-        var handler = new MatrixDisplayHandler();
-        handler.DisplayPattern(DigitDrawerProvider.GetDrawer(0).Pattern, _position);
+        MatrixDisplayHandler.Instance
+            .DisplayPattern(DigitDrawerProvider.GetDrawer(0).Pattern, _position);
     }
 
     private static async Task Display(CancellationToken cancellationToken)
     {
-        var handler = new MatrixDisplayHandler();
         int snapshot = 0;
 
         while (!cancellationToken.IsCancellationRequested)
@@ -93,8 +92,9 @@ public static class MillisecondDisplayHelper
 
                 await Task.Delay(10, cancellationToken);
                 var drawer = DigitDrawerProvider.GetDrawer(digit);
-                
-                handler.DisplayPattern(drawer.Pattern, _position);
+
+                MatrixDisplayHandler.Instance
+                    .DisplayPattern(drawer.Pattern, _position);
                 
                 snapshot = digit;
 
