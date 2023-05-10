@@ -166,6 +166,9 @@ public class AnalogTimer : IAnalogTimer
 
         MillisecondDisplayHelper.StopDisplay();
 
+        if(_state.IsZero)
+            MillisecondDisplayHelper.DisplayZero();
+
         IsRunning = false;
         await Execution;
         Counter = null;
