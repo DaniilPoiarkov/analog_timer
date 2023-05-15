@@ -145,7 +145,7 @@
             MinutesInput.BackColor = Color.FromArgb(57, 72, 103);
             MinutesInput.BorderStyle = BorderStyle.None;
             MinutesInput.ForeColor = Color.FromArgb(241, 246, 249);
-            MinutesInput.Location = new Point(78, 301);
+            MinutesInput.Location = new Point(88, 301);
             MinutesInput.Margin = new Padding(3, 4, 3, 4);
             MinutesInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             MinutesInput.Name = "MinutesInput";
@@ -158,7 +158,7 @@
             label1.AutoSize = true;
             label1.BackColor = Color.FromArgb(33, 42, 62);
             label1.ForeColor = Color.FromArgb(241, 246, 249);
-            label1.Location = new Point(73, 277);
+            label1.Location = new Point(83, 277);
             label1.Name = "label1";
             label1.Size = new Size(61, 20);
             label1.TabIndex = 9;
@@ -169,7 +169,7 @@
             SecondsInput.BackColor = Color.FromArgb(57, 72, 103);
             SecondsInput.BorderStyle = BorderStyle.None;
             SecondsInput.ForeColor = Color.FromArgb(241, 246, 249);
-            SecondsInput.Location = new Point(136, 301);
+            SecondsInput.Location = new Point(159, 301);
             SecondsInput.Margin = new Padding(3, 4, 3, 4);
             SecondsInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             SecondsInput.Name = "SecondsInput";
@@ -182,7 +182,7 @@
             label3.AutoSize = true;
             label3.BackColor = Color.FromArgb(33, 42, 62);
             label3.ForeColor = Color.FromArgb(241, 246, 249);
-            label3.Location = new Point(129, 277);
+            label3.Location = new Point(152, 277);
             label3.Name = "label3";
             label3.Size = new Size(64, 20);
             label3.TabIndex = 11;
