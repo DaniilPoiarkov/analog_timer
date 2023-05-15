@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalogTimerForm));
             outputLabel = new Label();
             StartBtn = new Button();
             PauseBtn = new Button();
@@ -233,6 +234,7 @@
             Controls.Add(PauseBtn);
             Controls.Add(StartBtn);
             Controls.Add(outputLabel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "AnalogTimerForm";
             Text = "Not so Analog Timer";
