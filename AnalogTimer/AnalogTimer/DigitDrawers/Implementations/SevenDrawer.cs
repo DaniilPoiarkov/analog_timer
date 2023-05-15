@@ -1,9 +1,33 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers.Implementations;
 
 public class SevenDrawer : DigitDrawerBase
 {
+    public override List<List<char>> Matrix => new()
+    {
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', ' ', ' ', ' ', ' ', ' ', ' ',},
+        new() {'█', '█', '█', '█', '█', '█', '█',},
+    };
+
+    public override List<string> Pattern => new()
+    {
+        "████████",
+        "       █",
+        "       █",
+        "       █",
+        "       █",
+        "       █",
+        "       █",
+    };
+
     public override void Draw(int positionLeft, ITimerTemplate template)
     {
         Clear(positionLeft);
@@ -13,7 +37,7 @@ public class SevenDrawer : DigitDrawerBase
         PrintHeightLine(true, positionLeft + 7, template.Pattern);
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
 
-        SetCursor();
+        UIHelper.SetCursor();
     }
 
     public override void DrawDown(int positionLeft, ITimerTemplate template)
@@ -23,7 +47,7 @@ public class SevenDrawer : DigitDrawerBase
 
         ClearWidthLines(positionLeft);
 
-        SetCursor();
+        UIHelper.SetCursor();
     }
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
@@ -34,7 +58,7 @@ public class SevenDrawer : DigitDrawerBase
 
         PrintHeightLine(true, positionLeft + 7, template.Pattern);
 
-        SetCursor();
+        UIHelper.SetCursor();
     }
 
     private static void ClearWidthLines(int positionLeft)
