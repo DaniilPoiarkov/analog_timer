@@ -1,9 +1,10 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.DigitDrawers;
+using AnalogTimer.DisplayHandlers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 
-namespace AnalogTimer.DisplayHandlers;
+namespace TimerEngine.DisplayHandlers.ConsoleHandlers;
 
 public class DrawerDisplayHandler : DisplayHandlerBase
 {

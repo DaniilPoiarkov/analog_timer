@@ -1,8 +1,9 @@
 ﻿using AnalogTimer.DigitDrawers;
+using AnalogTimer.DisplayHandlers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
 
-namespace AnalogTimer.DisplayHandlers;
+namespace TimerEngine.DisplayHandlers.ConsoleHandlers;
 
 public class MatrixDisplayHandler : DisplayHandlerBase
 {

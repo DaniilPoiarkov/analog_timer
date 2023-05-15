@@ -4,6 +4,7 @@ using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
 using System.Diagnostics;
+using TimerEngine.Implementations.DisplayServices;
 
 namespace AnalogTimer.Implementations;
 
@@ -41,12 +42,12 @@ public class AnalogTimer : IAnalogTimer
         TicksPerSecond = 1;
         Type = TimerType.Stopwatch;
 
-        StateCallback = _state.SubtractMilliseconds;
+        StateCallback = _state.AddMilliseconds;
         _displayService.SetMode(DisplayMode.Down);
     }
 
     public AnalogTimer()
-        : this(new(), new DisplayService(new DefaultTemplate())) { }
+        : this(new(), new ConsoleDisplayService(new DefaultTemplate())) { }
 
     public TimerState GetSnapshot()
     {
@@ -124,7 +125,7 @@ public class AnalogTimer : IAnalogTimer
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        MillisecondDisplayHelper.BackgroundDisplay();
+        //MillisecondDisplayHelper.BackgroundDisplay();
 
         IsRunning = true;
         Counter = StartTimerTemplate;

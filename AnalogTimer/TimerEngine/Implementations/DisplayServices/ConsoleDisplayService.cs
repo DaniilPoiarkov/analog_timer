@@ -1,12 +1,12 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.DisplayHandlers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
+using TimerEngine.DisplayHandlers.ConsoleHandlers;
 
-namespace AnalogTimer.Implementations;
+namespace TimerEngine.Implementations.DisplayServices;
 
-public class DisplayService : IDisplayService
+public class ConsoleDisplayService : IDisplayService
 {
     private readonly ITimerTemplate _timerTemplate;
 
@@ -22,7 +22,7 @@ public class DisplayService : IDisplayService
 
     private const int _dotsBetweenSecondsAndMilliseconds = 75;
 
-    public DisplayService(ITimerTemplate timerTemplate)
+    public ConsoleDisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
         Mode = DisplayMode.Full;

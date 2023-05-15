@@ -1,7 +1,7 @@
 ﻿using AnalogTimer.DigitDrawers;
-using AnalogTimer.DisplayHandlers;
 using NLog;
 using System.ComponentModel;
+using TimerEngine.DisplayHandlers.ConsoleHandlers;
 
 namespace AnalogTimer.Helpers;
 
