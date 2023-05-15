@@ -234,6 +234,7 @@
             Controls.Add(PauseBtn);
             Controls.Add(StartBtn);
             Controls.Add(outputLabel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "AnalogTimerForm";
