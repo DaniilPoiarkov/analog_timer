@@ -1,6 +1,5 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
-using NLog;
 
 namespace AnalogTimer.Implementations;
 
@@ -9,12 +8,8 @@ public class PromptService : IPromptService
     private readonly IEnumerable<IPrompt> _prompts;
 
     private readonly IAnalogTimer _analogTimer;
-
-    private const int _exceptionLine = 8;
     
     private const int _inputLine = 9;
-
-    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
     public PromptService(
         IEnumerable<IPrompt> prompts,
@@ -39,7 +34,11 @@ public class PromptService : IPromptService
         string? input = GetUserInput();
         Console.CursorTop = _inputLine;
         Console.WriteLine(new string(' ', Console.BufferWidth));
+        await Consume(input);
+    }
 
+    public async Task Consume(string input)
+    {
         var values = input?
             .TrimEnd()
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
@@ -48,8 +47,7 @@ public class PromptService : IPromptService
 
         if (values is null || !values.Any() || string.IsNullOrEmpty(input))
         {
-            PrintException("Invalid input");
-            return;
+            throw new Exception("Invalid input");
         }
 
         var prompt = _prompts.FirstOrDefault(p =>
@@ -60,23 +58,11 @@ public class PromptService : IPromptService
         {
             var name = values[0].StartsWith('-') ? "shortcut" : "name";
 
-            PrintException($"Prompt with {name} \'{values[0]}\' not found",
+            throw new Exception($"Prompt with {name} \'{values[0]}\' not found",
                 new Exception($"Input: \'{input}\', Values: {string.Join(' ', values)}"));
-
-            return;
         }
 
-        try
-        {
-            await prompt.Proceed(input, _analogTimer);
-        }
-        catch (Exception ex)
-        {
-            lock (this)
-            {
-                PrintException(ex.Message, ex);
-            }
-        }
+        await prompt.Proceed(input, _analogTimer);
     }
 
     private static string GetUserInput()
@@ -105,15 +91,5 @@ public class PromptService : IPromptService
 
         var input = UIHelper.GetInput();
         return input;
-    }
-
-    private void PrintException(string message, Exception? ex = null)
-    {
-        Console.CursorTop = _exceptionLine;
-        Console.WriteLine(new string(' ', Console.WindowWidth));
-
-        Console.CursorTop = _exceptionLine;
-        Console.WriteLine($"Exception: {message}");
-        _logger.Error(ex, message);
     }
 }

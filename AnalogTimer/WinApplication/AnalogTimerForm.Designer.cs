@@ -40,7 +40,7 @@
             SecondsInput = new NumericUpDown();
             label3 = new Label();
             OpenConsoleBtn = new Button();
-            ErrorOutput = new TextBox();
+            ConsoleInput = new TextBox();
             ((System.ComponentModel.ISupportInitialize)HoursInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinutesInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).BeginInit();
@@ -49,7 +49,7 @@
             // outputLabel
             // 
             outputLabel.AutoSize = true;
-            outputLabel.Location = new Point(148, 196);
+            outputLabel.Location = new Point(12, 183);
             outputLabel.Name = "outputLabel";
             outputLabel.Size = new Size(39, 20);
             outputLabel.TabIndex = 0;
@@ -57,7 +57,7 @@
             // 
             // StartBtn
             // 
-            StartBtn.Location = new Point(19, 503);
+            StartBtn.Location = new Point(13, 360);
             StartBtn.Margin = new Padding(3, 4, 3, 4);
             StartBtn.Name = "StartBtn";
             StartBtn.Size = new Size(86, 31);
@@ -68,7 +68,7 @@
             // 
             // PauseBtn
             // 
-            PauseBtn.Location = new Point(130, 503);
+            PauseBtn.Location = new Point(124, 360);
             PauseBtn.Margin = new Padding(3, 4, 3, 4);
             PauseBtn.Name = "PauseBtn";
             PauseBtn.Size = new Size(86, 31);
@@ -90,7 +90,7 @@
             // 
             // ResetBtn
             // 
-            ResetBtn.Location = new Point(246, 503);
+            ResetBtn.Location = new Point(240, 360);
             ResetBtn.Margin = new Padding(3, 4, 3, 4);
             ResetBtn.Name = "ResetBtn";
             ResetBtn.Size = new Size(86, 31);
@@ -102,7 +102,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(23, 277);
+            label2.Location = new Point(20, 277);
             label2.Name = "label2";
             label2.Size = new Size(48, 20);
             label2.TabIndex = 7;
@@ -131,7 +131,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(74, 277);
+            label1.Location = new Point(73, 277);
             label1.Name = "label1";
             label1.Size = new Size(61, 20);
             label1.TabIndex = 9;
@@ -150,7 +150,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(133, 277);
+            label3.Location = new Point(129, 277);
             label3.Name = "label3";
             label3.Size = new Size(64, 20);
             label3.TabIndex = 11;
@@ -158,7 +158,7 @@
             // 
             // OpenConsoleBtn
             // 
-            OpenConsoleBtn.Location = new Point(19, 553);
+            OpenConsoleBtn.Location = new Point(13, 410);
             OpenConsoleBtn.Margin = new Padding(3, 4, 3, 4);
             OpenConsoleBtn.Name = "OpenConsoleBtn";
             OpenConsoleBtn.Size = new Size(197, 31);
@@ -167,20 +167,23 @@
             OpenConsoleBtn.UseVisualStyleBackColor = true;
             OpenConsoleBtn.Click += OpenConsoleBtn_Click;
             // 
-            // ErrorOutput
+            // ConsoleInput
             // 
-            ErrorOutput.Location = new Point(203, 220);
-            ErrorOutput.Multiline = true;
-            ErrorOutput.Name = "ErrorOutput";
-            ErrorOutput.Size = new Size(309, 108);
-            ErrorOutput.TabIndex = 14;
+            ConsoleInput.Enabled = false;
+            ConsoleInput.Location = new Point(14, 458);
+            ConsoleInput.Name = "ConsoleInput";
+            ConsoleInput.PlaceholderText = "Console mode";
+            ConsoleInput.ReadOnly = true;
+            ConsoleInput.Size = new Size(509, 27);
+            ConsoleInput.TabIndex = 14;
+            ConsoleInput.KeyDown += ConsoleInputEnterKeydown;
             // 
             // AnalogTimerForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(535, 600);
-            Controls.Add(ErrorOutput);
+            ClientSize = new Size(535, 498);
+            Controls.Add(ConsoleInput);
             Controls.Add(OpenConsoleBtn);
             Controls.Add(SecondsInput);
             Controls.Add(label3);
@@ -217,6 +220,6 @@
         private NumericUpDown SecondsInput;
         private Label label3;
         private Button OpenConsoleBtn;
-        private TextBox ErrorOutput;
+        private TextBox ConsoleInput;
     }
 }

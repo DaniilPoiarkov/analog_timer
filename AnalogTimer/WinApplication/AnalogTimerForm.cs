@@ -4,6 +4,8 @@ using TimerEngine.Implementations.DisplayServices;
 using AnalogTimer.Contracts;
 using AnalogTimer.Models.Enums;
 using AnalogTimer.Models;
+using AnalogTimer.Implementations;
+using AnalogTimer.Prompts.Implementations;
 
 namespace WinApplication;
 
@@ -12,6 +14,8 @@ public partial class AnalogTimerForm : Form
     private readonly MyTimer _timer;
 
     private readonly IDisplayService _displayService;
+
+    private readonly IPromptService _promptService;
 
     private int hours;
 
@@ -22,10 +26,24 @@ public partial class AnalogTimerForm : Form
     public AnalogTimerForm()
     {
         InitializeComponent();
+
         _displayService = new WinFormDisplayService(
             () => outputLabel.Text = _timer?.GetSnapshot().ToString());
 
         _timer = new MyTimer(new(), _displayService);
+
+        _promptService = new PromptServiceBuilder(_timer)
+            .Add<StartPrompt>()
+            .Add<PausePrompt>()
+            .Add<ResetPrompt>()
+            .Add<AddSecondsPrompt>()
+            .Add<AddMinutesPrompt>()
+            .Add<AddHoursPrompt>()
+            .Add<ChangeSpeedPrompt>()
+            .Add<ChangeTimerTypePrompt>()
+            .Add<CloseTimerPrompt>()
+            //.Add<CutTimerStatePrompt>()
+            .Build();
     }
 
     private void StartBtn_Click(object sender, EventArgs e)
@@ -46,7 +64,22 @@ public partial class AnalogTimerForm : Form
             SecondsInput.Value = seconds;
         }
 
-        _timer.Start();
+        try
+        {
+            _timer.Start();
+        }
+        catch (Exception ex)
+        {
+            var result = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) switch
+            {
+                DialogResult.None => "Pressed None",
+                DialogResult.OK => "Pressed OK",
+                DialogResult.Cancel => "Pressed Cancel",
+                _ => throw new NotImplementedException(),
+            };
+
+            ConsoleInput.Text = result;
+        }
     }
 
     private async void PauseBtn_Click(object sender, EventArgs e)
@@ -57,7 +90,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            ErrorOutput.Text = ex.Message;
+            MessageBox.Show(ex.Message);
         }
     }
 
@@ -69,7 +102,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            ErrorOutput.Text = ex.Message;
+            MessageBox.Show(ex.Message);
         }
     }
 
@@ -90,10 +123,22 @@ public partial class AnalogTimerForm : Form
 
     private void OpenConsoleBtn_Click(object sender, EventArgs e)
     {
-
+        if (ConsoleInput.ReadOnly)
+        {
+            OpenConsoleBtn.Text = "Disable console mode";
+            ConsoleInput.ReadOnly = false;
+            ConsoleInput.Enabled = true;
+        }
+        else
+        {
+            OpenConsoleBtn.Text = "Enable console mode";
+            ConsoleInput.ReadOnly = true;
+            ConsoleInput.Enabled = false;
+            ConsoleInput.Text = string.Empty;
+        }
     }
 
-    private void TimerTypeChanged(object sender, EventArgs e) //+
+    private void TimerTypeChanged(object sender, EventArgs e)
     {
         var type = Enum.Parse<TimerType>(((dynamic)sender).Text);
         try
@@ -102,7 +147,25 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            ErrorOutput.Text = ex.Message;
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private async void ConsoleInputEnterKeydown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode != Keys.Enter)
+        {
+            return;
+        }
+
+        try
+        {
+            await _promptService.Consume(ConsoleInput.Text);
+            ConsoleInput.Text = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

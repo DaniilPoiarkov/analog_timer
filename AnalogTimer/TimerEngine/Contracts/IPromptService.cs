@@ -5,4 +5,6 @@ public interface IPromptService
     void DisplayPrompts();
 
     Task Run();
+
+    Task Consume(string input);
 }
