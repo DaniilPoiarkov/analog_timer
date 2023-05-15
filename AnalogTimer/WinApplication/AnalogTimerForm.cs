@@ -4,6 +4,7 @@ using TimerEngine.Implementations.DisplayServices;
 using AnalogTimer.Contracts;
 using NLog;
 using AnalogTimer.Models.Enums;
+using AnalogTimer.Models;
 
 namespace WinApplication;
 
@@ -15,6 +16,12 @@ public partial class AnalogTimerForm : Form
 
     private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+    private int hours;
+
+    private int minutes;
+
+    private int seconds;
+
     public AnalogTimerForm()
     {
         InitializeComponent();
@@ -24,7 +31,22 @@ public partial class AnalogTimerForm : Form
 
     private void StartBtn_Click(object sender, EventArgs e)
     {
-        outputLabel.Text = $"{HoursInput.Value}:{MinutesInput.Value}:{SecondsInput.Value}";
+        var state = new TimerState(hours, minutes, seconds, 0);
+
+        hours = minutes = seconds = 0;
+
+        if (!state.IsZero)
+        {
+            _timer.ResetState();
+            _timer.AddHours(state.Hours);
+            _timer.AddMinutes(state.Minutes);
+            _timer.AddSeconds(state.Seconds);
+
+            HoursInput.Value = hours;
+            MinutesInput.Value = minutes;
+            SecondsInput.Value = seconds;
+        }
+
         _timer.Start();
     }
 
@@ -44,7 +66,6 @@ public partial class AnalogTimerForm : Form
     {
         try
         {
-            outputLabel.Text = string.Empty;
             _timer.ResetState();
         }
         catch (Exception ex)
@@ -55,41 +76,17 @@ public partial class AnalogTimerForm : Form
 
     private void HoursInput_Click(object sender, EventArgs e)
     {
-        try
-        {
-            _timer.ResetState();
-            _timer.AddHours((int)((dynamic)sender).Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.Warn(ex);
-        }
+        hours = (int)((dynamic)sender).Value;
     }
 
     private void MinutesInput_Click(object sender, EventArgs e)
     {
-        try
-        {
-            _timer.ResetState();
-            _timer.AddMinutes(((dynamic)sender).Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.Warn(ex);
-        }
+        minutes = (int)((dynamic)sender).Value;
     }
 
     private void SecondsInput_Click(object sender, EventArgs e)
     {
-        try
-        {
-            _timer.ResetState();
-            _timer.AddSeconds(((dynamic)sender).Value);
-        }
-        catch (Exception ex)
-        {
-            _logger.Warn(ex);
-        }
+        seconds = (int)((dynamic)sender).Value;
     }
 
     private void OpenConsoleBtn_Click(object sender, EventArgs e)
@@ -97,7 +94,7 @@ public partial class AnalogTimerForm : Form
 
     }
 
-    private void TimerTypeChanged(object sender, EventArgs e)
+    private void TimerTypeChanged(object sender, EventArgs e) //+
     {
         var type = Enum.Parse<TimerType>(((dynamic)sender).Text);
         try
