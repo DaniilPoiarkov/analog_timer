@@ -99,17 +99,17 @@ public partial class AnalogTimerForm : Form
 
     private void HoursInput_Click(object sender, EventArgs e)
     {
-        hours = (int)((dynamic)sender).Value;
+        hours = (int)HoursInput.Value;
     }
 
     private void MinutesInput_Click(object sender, EventArgs e)
     {
-        minutes = (int)((dynamic)sender).Value;
+        minutes = (int)MinutesInput.Value;
     }
 
     private void SecondsInput_Click(object sender, EventArgs e)
     {
-        seconds = (int)((dynamic)sender).Value;
+        seconds = (int)SecondsInput.Value;
     }
 
     private void OpenConsoleBtn_Click(object sender, EventArgs e)

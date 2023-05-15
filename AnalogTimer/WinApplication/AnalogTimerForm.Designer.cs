@@ -49,6 +49,8 @@
             // outputLabel
             // 
             outputLabel.AutoSize = true;
+            outputLabel.BackColor = Color.FromArgb(33, 42, 62);
+            outputLabel.ForeColor = Color.FromArgb(241, 246, 249);
             outputLabel.Location = new Point(12, 183);
             outputLabel.Name = "outputLabel";
             outputLabel.Size = new Size(39, 20);
@@ -57,28 +59,38 @@
             // 
             // StartBtn
             // 
+            StartBtn.BackColor = Color.FromArgb(57, 72, 103);
+            StartBtn.FlatStyle = FlatStyle.Popup;
+            StartBtn.ForeColor = Color.FromArgb(241, 246, 249);
             StartBtn.Location = new Point(13, 360);
             StartBtn.Margin = new Padding(3, 4, 3, 4);
             StartBtn.Name = "StartBtn";
             StartBtn.Size = new Size(86, 31);
             StartBtn.TabIndex = 1;
             StartBtn.Text = "Start";
-            StartBtn.UseVisualStyleBackColor = true;
+            StartBtn.UseVisualStyleBackColor = false;
             StartBtn.Click += StartBtn_Click;
             // 
             // PauseBtn
             // 
+            PauseBtn.BackColor = Color.FromArgb(57, 72, 103);
+            PauseBtn.FlatStyle = FlatStyle.Popup;
+            PauseBtn.ForeColor = Color.FromArgb(241, 246, 249);
             PauseBtn.Location = new Point(124, 360);
             PauseBtn.Margin = new Padding(3, 4, 3, 4);
             PauseBtn.Name = "PauseBtn";
             PauseBtn.Size = new Size(86, 31);
             PauseBtn.TabIndex = 2;
             PauseBtn.Text = "Pause";
-            PauseBtn.UseVisualStyleBackColor = true;
+            PauseBtn.UseVisualStyleBackColor = false;
             PauseBtn.Click += PauseBtn_Click;
             // 
             // TimerTypeComboBox
             // 
+            TimerTypeComboBox.BackColor = Color.FromArgb(57, 72, 103);
+            TimerTypeComboBox.DisplayMember = "Stopwatch";
+            TimerTypeComboBox.FlatStyle = FlatStyle.Popup;
+            TimerTypeComboBox.ForeColor = Color.FromArgb(241, 246, 249);
             TimerTypeComboBox.FormattingEnabled = true;
             TimerTypeComboBox.Items.AddRange(new object[] { "Timer", "Stopwatch" });
             TimerTypeComboBox.Location = new Point(14, 220);
@@ -86,22 +98,28 @@
             TimerTypeComboBox.Name = "TimerTypeComboBox";
             TimerTypeComboBox.Size = new Size(173, 28);
             TimerTypeComboBox.TabIndex = 4;
+            TimerTypeComboBox.Text = "Stopwatch";
             TimerTypeComboBox.SelectedValueChanged += TimerTypeChanged;
             // 
             // ResetBtn
             // 
+            ResetBtn.BackColor = Color.FromArgb(57, 72, 103);
+            ResetBtn.FlatStyle = FlatStyle.Popup;
+            ResetBtn.ForeColor = Color.FromArgb(241, 246, 249);
             ResetBtn.Location = new Point(240, 360);
             ResetBtn.Margin = new Padding(3, 4, 3, 4);
             ResetBtn.Name = "ResetBtn";
             ResetBtn.Size = new Size(86, 31);
             ResetBtn.TabIndex = 5;
             ResetBtn.Text = "Reset";
-            ResetBtn.UseVisualStyleBackColor = true;
+            ResetBtn.UseVisualStyleBackColor = false;
             ResetBtn.Click += ResetBtn_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(33, 42, 62);
+            label2.ForeColor = Color.FromArgb(241, 246, 249);
             label2.Location = new Point(20, 277);
             label2.Name = "label2";
             label2.Size = new Size(48, 20);
@@ -110,27 +128,35 @@
             // 
             // HoursInput
             // 
+            HoursInput.BackColor = Color.FromArgb(57, 72, 103);
+            HoursInput.BorderStyle = BorderStyle.None;
+            HoursInput.ForeColor = Color.FromArgb(241, 246, 249);
             HoursInput.Location = new Point(19, 301);
             HoursInput.Margin = new Padding(3, 4, 3, 4);
             HoursInput.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
             HoursInput.Name = "HoursInput";
-            HoursInput.Size = new Size(51, 27);
+            HoursInput.Size = new Size(51, 23);
             HoursInput.TabIndex = 8;
             HoursInput.Click += HoursInput_Click;
             // 
             // MinutesInput
             // 
+            MinutesInput.BackColor = Color.FromArgb(57, 72, 103);
+            MinutesInput.BorderStyle = BorderStyle.None;
+            MinutesInput.ForeColor = Color.FromArgb(241, 246, 249);
             MinutesInput.Location = new Point(78, 301);
             MinutesInput.Margin = new Padding(3, 4, 3, 4);
             MinutesInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             MinutesInput.Name = "MinutesInput";
-            MinutesInput.Size = new Size(51, 27);
+            MinutesInput.Size = new Size(51, 23);
             MinutesInput.TabIndex = 10;
             MinutesInput.Click += MinutesInput_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.BackColor = Color.FromArgb(33, 42, 62);
+            label1.ForeColor = Color.FromArgb(241, 246, 249);
             label1.Location = new Point(73, 277);
             label1.Name = "label1";
             label1.Size = new Size(61, 20);
@@ -139,17 +165,22 @@
             // 
             // SecondsInput
             // 
+            SecondsInput.BackColor = Color.FromArgb(57, 72, 103);
+            SecondsInput.BorderStyle = BorderStyle.None;
+            SecondsInput.ForeColor = Color.FromArgb(241, 246, 249);
             SecondsInput.Location = new Point(136, 301);
             SecondsInput.Margin = new Padding(3, 4, 3, 4);
             SecondsInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             SecondsInput.Name = "SecondsInput";
-            SecondsInput.Size = new Size(51, 27);
+            SecondsInput.Size = new Size(51, 23);
             SecondsInput.TabIndex = 12;
             SecondsInput.Click += SecondsInput_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
+            label3.BackColor = Color.FromArgb(33, 42, 62);
+            label3.ForeColor = Color.FromArgb(241, 246, 249);
             label3.Location = new Point(129, 277);
             label3.Name = "label3";
             label3.Size = new Size(64, 20);
@@ -158,22 +189,28 @@
             // 
             // OpenConsoleBtn
             // 
+            OpenConsoleBtn.BackColor = Color.FromArgb(57, 72, 103);
+            OpenConsoleBtn.FlatStyle = FlatStyle.Popup;
+            OpenConsoleBtn.ForeColor = Color.FromArgb(241, 246, 249);
             OpenConsoleBtn.Location = new Point(13, 410);
             OpenConsoleBtn.Margin = new Padding(3, 4, 3, 4);
             OpenConsoleBtn.Name = "OpenConsoleBtn";
             OpenConsoleBtn.Size = new Size(197, 31);
             OpenConsoleBtn.TabIndex = 13;
             OpenConsoleBtn.Text = "Open native console";
-            OpenConsoleBtn.UseVisualStyleBackColor = true;
+            OpenConsoleBtn.UseVisualStyleBackColor = false;
             OpenConsoleBtn.Click += OpenConsoleBtn_Click;
             // 
             // ConsoleInput
             // 
+            ConsoleInput.BackColor = Color.FromArgb(57, 72, 103);
+            ConsoleInput.BorderStyle = BorderStyle.None;
             ConsoleInput.Enabled = false;
+            ConsoleInput.ForeColor = Color.FromArgb(241, 246, 249);
             ConsoleInput.Location = new Point(14, 458);
             ConsoleInput.Name = "ConsoleInput";
             ConsoleInput.PlaceholderText = "Console mode";
-            ConsoleInput.Size = new Size(509, 27);
+            ConsoleInput.Size = new Size(509, 20);
             ConsoleInput.TabIndex = 14;
             ConsoleInput.KeyDown += ConsoleInputEnterKeydown;
             // 
@@ -181,6 +218,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(33, 42, 62);
             ClientSize = new Size(535, 498);
             Controls.Add(ConsoleInput);
             Controls.Add(OpenConsoleBtn);
