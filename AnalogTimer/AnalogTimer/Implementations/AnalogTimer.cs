@@ -39,7 +39,7 @@ public class AnalogTimer : IAnalogTimer
 
         IsRunning = false;
         TicksPerSecond = 1;
-        Type = TimerType.Timer;
+        Type = TimerType.Stopwatch;
 
         StateCallback = _state.SubtractMilliseconds;
         _displayService.SetMode(DisplayMode.Down);
