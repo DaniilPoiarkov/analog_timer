@@ -2,7 +2,6 @@ using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using System.Diagnostics;
 using TimerEngine.Implementations.DisplayServices;
 using AnalogTimer.Contracts;
-using NLog;
 using AnalogTimer.Models.Enums;
 using AnalogTimer.Models;
 
@@ -14,8 +13,6 @@ public partial class AnalogTimerForm : Form
 
     private readonly IDisplayService _displayService;
 
-    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
     private int hours;
 
     private int minutes;
@@ -25,7 +22,9 @@ public partial class AnalogTimerForm : Form
     public AnalogTimerForm()
     {
         InitializeComponent();
-        _displayService = new WinFormDisplayService(() => outputLabel.Text = _timer?.GetSnapshot().ToString());
+        _displayService = new WinFormDisplayService(
+            () => outputLabel.Text = _timer?.GetSnapshot().ToString());
+
         _timer = new MyTimer(new(), _displayService);
     }
 
@@ -58,7 +57,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            _logger.Error(ex);
+            ErrorOutput.Text = ex.Message;
         }
     }
 
@@ -70,7 +69,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            _logger.Error(ex);
+            ErrorOutput.Text = ex.Message;
         }
     }
 
@@ -101,9 +100,9 @@ public partial class AnalogTimerForm : Form
         {
             _timer.SetTimerType(type);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            _logger.Warn(ex);
+            ErrorOutput.Text = ex.Message;
         }
     }
 }
