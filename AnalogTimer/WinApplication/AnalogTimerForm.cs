@@ -42,7 +42,6 @@ public partial class AnalogTimerForm : Form
             .Add<ChangeSpeedPrompt>()
             .Add<ChangeTimerTypePrompt>()
             .Add<CloseTimerPrompt>()
-            //.Add<CutTimerStatePrompt>()
             .Build();
     }
 
@@ -70,15 +69,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            var result = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) switch
-            {
-                DialogResult.None => "Pressed None",
-                DialogResult.OK => "Pressed OK",
-                DialogResult.Cancel => "Pressed Cancel",
-                _ => throw new NotImplementedException(),
-            };
-
-            ConsoleInput.Text = result;
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -90,7 +81,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -102,7 +93,7 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -123,16 +114,14 @@ public partial class AnalogTimerForm : Form
 
     private void OpenConsoleBtn_Click(object sender, EventArgs e)
     {
-        if (ConsoleInput.ReadOnly)
+        if (!ConsoleInput.Enabled)
         {
             OpenConsoleBtn.Text = "Disable console mode";
-            ConsoleInput.ReadOnly = false;
             ConsoleInput.Enabled = true;
         }
         else
         {
             OpenConsoleBtn.Text = "Enable console mode";
-            ConsoleInput.ReadOnly = true;
             ConsoleInput.Enabled = false;
             ConsoleInput.Text = string.Empty;
         }
@@ -140,14 +129,14 @@ public partial class AnalogTimerForm : Form
 
     private void TimerTypeChanged(object sender, EventArgs e)
     {
-        var type = Enum.Parse<TimerType>(((dynamic)sender).Text);
         try
         {
+            var type = Enum.Parse<TimerType>(TimerTypeComboBox.Text);
             _timer.SetTimerType(type);
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

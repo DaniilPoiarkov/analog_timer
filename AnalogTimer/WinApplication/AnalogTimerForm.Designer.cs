@@ -173,7 +173,6 @@
             ConsoleInput.Location = new Point(14, 458);
             ConsoleInput.Name = "ConsoleInput";
             ConsoleInput.PlaceholderText = "Console mode";
-            ConsoleInput.ReadOnly = true;
             ConsoleInput.Size = new Size(509, 27);
             ConsoleInput.TabIndex = 14;
             ConsoleInput.KeyDown += ConsoleInputEnterKeydown;
