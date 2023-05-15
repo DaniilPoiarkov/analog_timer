@@ -1,8 +1,10 @@
+using System.Diagnostics;
+
 namespace WinApplication;
 
-public partial class Form1 : Form
+public partial class AnalogTimerForm : Form
 {
-    public Form1()
+    public AnalogTimerForm()
     {
         InitializeComponent();
     }
@@ -24,17 +26,17 @@ public partial class Form1 : Form
 
     private void HoursInput_Click(object sender, EventArgs e)
     {
-        
+
     }
 
     private void MinutesInput_Click(object sender, EventArgs e)
     {
-        
+
     }
 
     private void SecondsInput_Click(object sender, EventArgs e)
     {
-        
+
     }
 
     private void OpenConsoleBtn_Click(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 ﻿namespace WinApplication
 {
-    partial class Form1
+    partial class AnalogTimerForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -31,7 +31,7 @@
             outputLabel = new Label();
             StartBtn = new Button();
             PauseBtn = new Button();
-            comboBox1 = new ComboBox();
+            TimerTypeComboBox = new ComboBox();
             ResetBtn = new Button();
             label2 = new Label();
             HoursInput = new NumericUpDown();
@@ -48,7 +48,7 @@
             // outputLabel
             // 
             outputLabel.AutoSize = true;
-            outputLabel.Location = new Point(12, 62);
+            outputLabel.Location = new Point(187, 72);
             outputLabel.Name = "outputLabel";
             outputLabel.Size = new Size(32, 15);
             outputLabel.TabIndex = 0;
@@ -74,14 +74,14 @@
             PauseBtn.UseVisualStyleBackColor = true;
             PauseBtn.Click += PauseBtn_Click;
             // 
-            // comboBox1
+            // TimerTypeComboBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Timer", "Stopwatch" });
-            comboBox1.Location = new Point(12, 165);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(172, 23);
-            comboBox1.TabIndex = 4;
+            TimerTypeComboBox.FormattingEnabled = true;
+            TimerTypeComboBox.Items.AddRange(new object[] { "Timer", "Stopwatch" });
+            TimerTypeComboBox.Location = new Point(12, 165);
+            TimerTypeComboBox.Name = "TimerTypeComboBox";
+            TimerTypeComboBox.Size = new Size(152, 23);
+            TimerTypeComboBox.TabIndex = 4;
             // 
             // ResetBtn
             // 
@@ -105,6 +105,7 @@
             // HoursInput
             // 
             HoursInput.Location = new Point(17, 226);
+            HoursInput.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
             HoursInput.Name = "HoursInput";
             HoursInput.Size = new Size(45, 23);
             HoursInput.TabIndex = 8;
@@ -113,6 +114,7 @@
             // MinutesInput
             // 
             MinutesInput.Location = new Point(68, 226);
+            MinutesInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             MinutesInput.Name = "MinutesInput";
             MinutesInput.Size = new Size(45, 23);
             MinutesInput.TabIndex = 10;
@@ -130,6 +132,7 @@
             // SecondsInput
             // 
             SecondsInput.Location = new Point(119, 226);
+            SecondsInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             SecondsInput.Name = "SecondsInput";
             SecondsInput.Size = new Size(45, 23);
             SecondsInput.TabIndex = 12;
@@ -154,7 +157,7 @@
             OpenConsoleBtn.UseVisualStyleBackColor = true;
             OpenConsoleBtn.Click += OpenConsoleBtn_Click;
             // 
-            // Form1
+            // AnalogTimerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -167,12 +170,12 @@
             Controls.Add(HoursInput);
             Controls.Add(label2);
             Controls.Add(ResetBtn);
-            Controls.Add(comboBox1);
+            Controls.Add(TimerTypeComboBox);
             Controls.Add(PauseBtn);
             Controls.Add(StartBtn);
             Controls.Add(outputLabel);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "AnalogTimerForm";
+            Text = "Not so Analog Timer";
             ((System.ComponentModel.ISupportInitialize)HoursInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)MinutesInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).EndInit();
@@ -185,7 +188,7 @@
         private Label outputLabel;
         private Button StartBtn;
         private Button PauseBtn;
-        private ComboBox comboBox1;
+        private ComboBox TimerTypeComboBox;
         private Button ResetBtn;
         private Label label2;
         private NumericUpDown HoursInput;
