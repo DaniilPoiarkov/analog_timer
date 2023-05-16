@@ -1,5 +1,4 @@
 using MyTimer = AnalogTimer.Implementations.AnalogTimer;
-using System.Diagnostics;
 using TimerEngine.Implementations.DisplayServices;
 using AnalogTimer.Contracts;
 using AnalogTimer.Models.Enums;
@@ -41,15 +40,12 @@ public partial class AnalogTimerForm : Form
             .Add<AddHoursPrompt>()
             .Add<ChangeSpeedPrompt>()
             .Add<ChangeTimerTypePrompt>()
-            .Add<CloseTimerPrompt>()
             .Build();
     }
 
     private void StartBtn_Click(object sender, EventArgs e)
     {
         var state = new TimerState(hours, minutes, seconds, 0);
-
-        hours = minutes = seconds = 0;
 
         if (!state.IsZero)
         {
@@ -58,58 +54,22 @@ public partial class AnalogTimerForm : Form
             _timer.AddMinutes(state.Minutes);
             _timer.AddSeconds(state.Seconds);
 
-            HoursInput.Value = hours;
-            MinutesInput.Value = minutes;
-            SecondsInput.Value = seconds;
+            HoursInput.Value = 0;
+            MinutesInput.Value = 0;
+            SecondsInput.Value = 0;
         }
 
-        try
-        {
-            _timer.Start();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        UpdateTimerState(timer => timer.Start());
     }
 
     private async void PauseBtn_Click(object sender, EventArgs e)
     {
-        try
-        {
-            await _timer.Stop();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        await UpdateTimerState(async timer => await timer.Stop());
     }
 
     private void ResetBtn_Click(object sender, EventArgs e)
     {
-        try
-        {
-            _timer.ResetState();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    private void HoursInput_Click(object sender, EventArgs e)
-    {
-        hours = (int)HoursInput.Value;
-    }
-
-    private void MinutesInput_Click(object sender, EventArgs e)
-    {
-        minutes = (int)MinutesInput.Value;
-    }
-
-    private void SecondsInput_Click(object sender, EventArgs e)
-    {
-        seconds = (int)SecondsInput.Value;
+        UpdateTimerState(timer => timer.ResetState());
     }
 
     private void OpenConsoleBtn_Click(object sender, EventArgs e)
@@ -129,15 +89,11 @@ public partial class AnalogTimerForm : Form
 
     private void TimerTypeChanged(object sender, EventArgs e)
     {
-        try
+        UpdateTimerState(timer =>
         {
             var type = Enum.Parse<TimerType>(TimerTypeComboBox.Text);
-            _timer.SetTimerType(type);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+            timer.SetTimerType(type);
+        });
     }
 
     private async void ConsoleInputEnterKeydown(object sender, KeyEventArgs e)
@@ -154,7 +110,68 @@ public partial class AnalogTimerForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            DisplayError(ex.Message);
         }
     }
+
+    private void SpeedChangedEvent(object sender, EventArgs e)
+    {
+        var speedCoef = (int)ChangeSpeedInput.Value;
+
+        UpdateTimerState(timer => timer.ChangeTicksPerSecond(speedCoef));
+    }
+
+    private async Task UpdateTimerState(Func<MyTimer, Task> action)
+    {
+        try
+        {
+            await action.Invoke(_timer);
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    private void UpdateTimerState(Action<MyTimer> action)
+    {
+        try
+        {
+            action.Invoke(_timer);
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    private void NumericInput_Click(object sender, EventArgs e)
+    {
+        if (sender is not NumericUpDown numeric)
+        {
+            return;
+        }
+
+        Action<AnalogTimerForm, int> propertyAccessor = numeric.Name switch
+        {
+            "HoursInput" => (form, value) => form.hours = value,
+            "MinutesInput" => (form, value) => form.minutes = value,
+            "SecondsInput" => (form, value) => form.seconds = value,
+            _ => (form, value) => { }
+        };
+
+        try
+        {
+            propertyAccessor.Invoke(this, (int)numeric.Value);
+        }
+        catch(Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    private static DialogResult DisplayError(string error)
+    {
+        return MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    } 
 }
