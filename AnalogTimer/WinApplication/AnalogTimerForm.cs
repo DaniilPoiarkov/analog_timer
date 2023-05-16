@@ -57,14 +57,26 @@ public partial class AnalogTimerForm : Form
             HoursInput.Value = 0;
             MinutesInput.Value = 0;
             SecondsInput.Value = 0;
+
+            NumericInput_Click(HoursInput, new());
+            NumericInput_Click(MinutesInput, new());
+            NumericInput_Click(SecondsInput, new());
         }
 
         UpdateTimerState(timer => timer.Start());
+
+        StartBtn.Enabled = false;
+        ResetBtn.Enabled = false;
+        PauseBtn.Enabled = true;
     }
 
     private async void PauseBtn_Click(object sender, EventArgs e)
     {
         await UpdateTimerState(async timer => await timer.Stop());
+
+        StartBtn.Enabled = true;
+        PauseBtn.Enabled = false;
+        ResetBtn.Enabled = true;
     }
 
     private void ResetBtn_Click(object sender, EventArgs e)
@@ -91,7 +103,7 @@ public partial class AnalogTimerForm : Form
     {
         UpdateTimerState(timer =>
         {
-            var type = Enum.Parse<TimerType>(TimerTypeComboBox.Text);
+            var type = Enum.Parse<TimerType>(TimerTypeComboBox.SelectedItem.ToString()!);
             timer.SetTimerType(type);
         });
     }
@@ -152,7 +164,7 @@ public partial class AnalogTimerForm : Form
             return;
         }
 
-        Action<AnalogTimerForm, int> propertyAccessor = numeric.Name switch
+        Action<AnalogTimerForm, int> propertyChanger = numeric.Name switch
         {
             "HoursInput" => (form, value) => form.hours = value,
             "MinutesInput" => (form, value) => form.minutes = value,
@@ -162,9 +174,9 @@ public partial class AnalogTimerForm : Form
 
         try
         {
-            propertyAccessor.Invoke(this, (int)numeric.Value);
+            propertyChanger.Invoke(this, (int)numeric.Value);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             DisplayError(ex.Message);
         }
@@ -173,5 +185,5 @@ public partial class AnalogTimerForm : Form
     private static DialogResult DisplayError(string error)
     {
         return MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    } 
+    }
 }

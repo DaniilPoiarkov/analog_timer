@@ -216,7 +216,7 @@
             ChangeSpeedInput.BackColor = Color.FromArgb(57, 72, 103);
             ChangeSpeedInput.BorderStyle = BorderStyle.None;
             ChangeSpeedInput.ForeColor = Color.FromArgb(241, 246, 249);
-            ChangeSpeedInput.Location = new Point(193, 226);
+            ChangeSpeedInput.Location = new Point(210, 226);
             ChangeSpeedInput.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             ChangeSpeedInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             ChangeSpeedInput.Name = "ChangeSpeedInput";
@@ -230,11 +230,11 @@
             label4.AutoSize = true;
             label4.BackColor = Color.FromArgb(33, 42, 62);
             label4.ForeColor = Color.FromArgb(241, 246, 249);
-            label4.Location = new Point(196, 208);
+            label4.Location = new Point(185, 208);
             label4.Name = "label4";
-            label4.Size = new Size(39, 15);
+            label4.Size = new Size(94, 15);
             label4.TabIndex = 16;
-            label4.Text = "Speed";
+            label4.Text = "Ticks per second";
             // 
             // AnalogTimerForm
             // 
