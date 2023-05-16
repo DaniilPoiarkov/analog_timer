@@ -157,7 +157,7 @@ public partial class AnalogTimerForm : Form
             "HoursInput" => (form, value) => form.hours = value,
             "MinutesInput" => (form, value) => form.minutes = value,
             "SecondsInput" => (form, value) => form.seconds = value,
-            _ => (form, value) => { }
+            _ => (form, value) => { throw new Exception("Something going wrong, try again."); }
         };
 
         try
