@@ -63,20 +63,21 @@ public partial class AnalogTimerForm : Form
             NumericInput_Click(SecondsInput, new());
         }
 
-        UpdateTimerState(timer => timer.Start());
-
-        StartBtn.Enabled = false;
-        ResetBtn.Enabled = false;
-        PauseBtn.Enabled = true;
+        UpdateTimerState(timer => timer.Start(), SwitchControlsAccessability);
     }
 
     private async void PauseBtn_Click(object sender, EventArgs e)
     {
-        await UpdateTimerState(async timer => await timer.Stop());
+        await UpdateTimerState(async timer => await timer.Stop(), SwitchControlsAccessability);
+    }
 
-        StartBtn.Enabled = true;
-        PauseBtn.Enabled = false;
-        ResetBtn.Enabled = true;
+    private void SwitchControlsAccessability()
+    {
+        StartBtn.Enabled = !StartBtn.Enabled;
+        PauseBtn.Enabled = !PauseBtn.Enabled;
+        ResetBtn.Enabled = !ResetBtn.Enabled;
+        TimerTypeComboBox.Enabled = !TimerTypeComboBox.Enabled;
+        ChangeSpeedInput.Enabled = !ChangeSpeedInput.Enabled;
     }
 
     private void ResetBtn_Click(object sender, EventArgs e)
@@ -133,11 +134,12 @@ public partial class AnalogTimerForm : Form
         UpdateTimerState(timer => timer.ChangeTicksPerSecond(speedCoef));
     }
 
-    private async Task UpdateTimerState(Func<MyTimer, Task> action)
+    private async Task UpdateTimerState(Func<MyTimer, Task> action, Action? onSuccess = null)
     {
         try
         {
             await action.Invoke(_timer);
+            onSuccess?.Invoke();
         }
         catch (Exception ex)
         {
@@ -145,11 +147,12 @@ public partial class AnalogTimerForm : Form
         }
     }
 
-    private void UpdateTimerState(Action<MyTimer> action)
+    private void UpdateTimerState(Action<MyTimer> action, Action? onSuccess = null)
     {
         try
         {
             action.Invoke(_timer);
+            onSuccess?.Invoke();
         }
         catch (Exception ex)
         {

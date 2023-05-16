@@ -77,6 +77,7 @@
             // PauseBtn
             // 
             PauseBtn.BackColor = Color.FromArgb(57, 72, 103);
+            PauseBtn.Enabled = false;
             PauseBtn.FlatStyle = FlatStyle.Popup;
             PauseBtn.ForeColor = Color.FromArgb(241, 246, 249);
             PauseBtn.Location = new Point(108, 270);
