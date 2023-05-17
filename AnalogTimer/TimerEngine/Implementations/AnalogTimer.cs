@@ -4,7 +4,6 @@ using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
 using System.Diagnostics;
-using TimerEngine.Implementations.DisplayServices;
 
 namespace AnalogTimer.Implementations;
 
@@ -46,8 +45,8 @@ public class AnalogTimer : IAnalogTimer
         _displayService.SetMode(DisplayMode.Down);
     }
 
-    public AnalogTimer()
-        : this(new(), new ConsoleDisplayService(new DefaultTemplate())) { }
+    public AnalogTimer(IDisplayService service)
+        : this(new(), service) { }
 
     public TimerState GetSnapshot()
     {

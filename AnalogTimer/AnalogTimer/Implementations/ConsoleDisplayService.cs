@@ -4,7 +4,7 @@ using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using TimerEngine.DisplayHandlers.ConsoleHandlers;
 
-namespace TimerEngine.Implementations.DisplayServices;
+namespace AnalogTimer.Implementations;
 
 public class ConsoleDisplayService : IDisplayService
 {

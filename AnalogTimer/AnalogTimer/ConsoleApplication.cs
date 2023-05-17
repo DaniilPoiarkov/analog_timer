@@ -15,7 +15,7 @@ internal class ConsoleApplication
 
     public ConsoleApplication()
     {
-        var timer = new Implementations.AnalogTimer();
+        var timer = new Implementations.AnalogTimer(new ConsoleDisplayService(new DefaultTemplate()));
 
         _promptService = new PromptServiceBuilder(timer)
             .Add<StartPrompt>()
