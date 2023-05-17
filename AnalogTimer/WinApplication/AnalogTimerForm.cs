@@ -26,8 +26,7 @@ public partial class AnalogTimerForm : Form
     {
         InitializeComponent();
 
-        _displayService = new WinFormDisplayService(
-            () => outputLabel.Text = _timer?.GetSnapshot().ToString());
+        _displayService = new WinFormDisplayService(CreateGraphics());
 
         _timer = new MyTimer(new(), _displayService);
 
