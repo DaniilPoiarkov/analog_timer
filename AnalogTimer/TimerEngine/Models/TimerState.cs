@@ -34,7 +34,7 @@ public class TimerState
     public TimerState()
         : this(_zero, _zero) { }
 
-    public void SubtractMilliseconds(int milliseconds)
+    internal void SubtractMilliseconds(int milliseconds)
     {
         Milliseconds -= milliseconds;
 
@@ -61,7 +61,7 @@ public class TimerState
         CheckIsZero();
     }
 
-    public void SubtractSeconds(int seconds)
+    internal void SubtractSeconds(int seconds)
     {
         Seconds -= seconds;
 
@@ -88,7 +88,7 @@ public class TimerState
         CheckIsZero();
     }
 
-    public void SubtractMinutes(int minutes)
+    internal void SubtractMinutes(int minutes)
     {
         Minutes -= minutes;
 
@@ -113,7 +113,7 @@ public class TimerState
         CheckIsZero();
     }
 
-    public void SubtractHours(int hours)
+    internal void SubtractHours(int hours)
     {
         Hours -= hours;
 
@@ -133,7 +133,7 @@ public class TimerState
             && Hours == _zero;
     }
 
-    public void AddMilliseconds(int ms)
+    internal void AddMilliseconds(int ms)
     {
         Milliseconds += ms;
 
@@ -154,7 +154,7 @@ public class TimerState
         AddSeconds(seconds);
     }
 
-    public void AddSeconds(int seconds)
+    internal void AddSeconds(int seconds)
     {
         if (seconds < _zero)
             throw new ArgumentException("Seconds cannot be below 0", nameof(seconds));
@@ -178,7 +178,7 @@ public class TimerState
         AddMinutes(minutes);
     }
 
-    public void AddMinutes(int minutes)
+    internal void AddMinutes(int minutes)
     {
         if (minutes < _zero)
             throw new ArgumentException("Minutes cannot be below 0", nameof(minutes));
@@ -202,7 +202,7 @@ public class TimerState
         AddHours(hours);
     }
 
-    public void AddHours(int hours)
+    internal void AddHours(int hours)
     {
         if (hours < _zero)
             throw new ArgumentException("Hours cannot be below 0", nameof(hours));
@@ -223,7 +223,7 @@ public class TimerState
         return $"{hours}:{minutes}:{seconds}:{ms}";
     }
 
-    public void Reset()
+    internal void Reset()
     {
         Hours = _zero;
         Minutes = _zero;
