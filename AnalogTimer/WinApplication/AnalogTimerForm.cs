@@ -31,6 +31,7 @@ public partial class AnalogTimerForm : Form
 
         _timer.Tick += displayService.Display;
         _timer.Updated += displayService.HandleTimerUpdated;
+
         MillisecondDisplayHelper.SetOutputHandler(digit =>
         {
             millisecondsOutput.Text = digit.ToString();

@@ -59,9 +59,10 @@
             outputLabel.ForeColor = Color.FromArgb(241, 246, 249);
             outputLabel.Location = new Point(12, 83);
             outputLabel.Name = "outputLabel";
-            outputLabel.Size = new Size(370, 100);
+            outputLabel.Size = new Size(367, 113);
             outputLabel.TabIndex = 0;
             outputLabel.Text = "00:00:00:0";
+            outputLabel.UseCompatibleTextRendering = true;
             // 
             // StartBtn
             // 
@@ -256,11 +257,12 @@
             millisecondsOutput.BackColor = Color.FromArgb(33, 42, 62);
             millisecondsOutput.Font = new Font("Segoe UI", 45F, FontStyle.Regular, GraphicsUnit.Point);
             millisecondsOutput.ForeColor = Color.FromArgb(241, 246, 249);
-            millisecondsOutput.Location = new Point(356, 83);
+            millisecondsOutput.Location = new Point(342, 83);
             millisecondsOutput.Name = "millisecondsOutput";
-            millisecondsOutput.Size = new Size(82, 100);
+            millisecondsOutput.Size = new Size(67, 113);
             millisecondsOutput.TabIndex = 17;
             millisecondsOutput.Text = "0";
+            millisecondsOutput.UseCompatibleTextRendering = true;
             // 
             // AnalogTimerForm
             // 
@@ -269,6 +271,7 @@
             BackColor = Color.FromArgb(33, 42, 62);
             ClientSize = new Size(535, 499);
             Controls.Add(millisecondsOutput);
+            Controls.Add(outputLabel);
             Controls.Add(label4);
             Controls.Add(ChangeSpeedInput);
             Controls.Add(ConsoleInput);
@@ -283,7 +286,6 @@
             Controls.Add(TimerTypeComboBox);
             Controls.Add(PauseBtn);
             Controls.Add(StartBtn);
-            Controls.Add(outputLabel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
