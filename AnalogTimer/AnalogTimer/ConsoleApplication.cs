@@ -21,22 +21,9 @@ internal class ConsoleApplication
         var timer = new Implementations.AnalogTimer();
 
         timer.Tick += displayService.Display;
-        timer.TimerStarted += args =>
-        {
-            var mode = args.TimerType switch
-            {
-                TimerType.Timer => DisplayMode.Down,
-                TimerType.Stopwatch => DisplayMode.Up,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
-
-            displayService.SetMode(mode);
-        };
 
         timer.Updated += args =>
         {
-            displayService.SetMode(DisplayMode.Full);
-
             if(args.State is not null)
                 displayService.Display(args.State);
         };

@@ -12,9 +12,8 @@ public class ConsoleDisplayService : IDisplayService
 
     private TimerState? _snapshot;
 
-    private IDisplayHandler _handler;
+    private readonly IDisplayHandler _handler;
 
-    private DisplayMode Mode { get; set; }
 
     private const int _dotsBetweenHourAndMinute = 23;
 
@@ -25,7 +24,6 @@ public class ConsoleDisplayService : IDisplayService
     public ConsoleDisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
-        Mode = DisplayMode.Full;
         _handler = MatrixDisplayHandler.Instance;
 
         PrintDots(_dotsBetweenHourAndMinute);
@@ -51,23 +49,6 @@ public class ConsoleDisplayService : IDisplayService
             _handler.Update(state.Milliseconds, TimerValue.Millisecond);
 
         _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
-    }
-
-    public void SetMode(DisplayMode mode)
-    {
-        Mode = mode;
-    }
-
-    public void ChangeHandler(DisplayHandler handler)
-    {
-        if (handler == DisplayHandler.ViaDrawer)
-        {
-            _handler = new DrawerDisplayHandler(_timerTemplate, _snapshot, Mode);
-        }
-        else
-        {
-            _handler = MatrixDisplayHandler.Instance;
-        }
     }
 
     private void PrintDots(int position)
