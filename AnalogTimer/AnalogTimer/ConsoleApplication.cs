@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
+using AnalogTimer.Models.Enums;
 using AnalogTimer.Prompts.Implementations;
 using NLog;
 
@@ -15,7 +16,30 @@ internal class ConsoleApplication
 
     public ConsoleApplication()
     {
-        var timer = new Implementations.AnalogTimer(new ConsoleDisplayService(new DefaultTemplate()));
+        var displayService = new ConsoleDisplayService(new DefaultTemplate());
+
+        var timer = new Implementations.AnalogTimer();
+
+        timer.Tick += displayService.Display;
+        timer.TimerStarted += args =>
+        {
+            var mode = args.TimerType switch
+            {
+                TimerType.Timer => DisplayMode.Down,
+                TimerType.Stopwatch => DisplayMode.Up,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+
+            displayService.SetMode(mode);
+        };
+
+        timer.Updated += args =>
+        {
+            displayService.SetMode(DisplayMode.Full);
+
+            if(args.State is not null)
+                displayService.Display(args.State);
+        };
 
         _promptService = new PromptServiceBuilder(timer)
             .Add<StartPrompt>()

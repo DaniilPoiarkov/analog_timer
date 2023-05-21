@@ -4,6 +4,7 @@ using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
 using System.Diagnostics;
+using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Implementations;
 
@@ -11,9 +12,18 @@ public class AnalogTimer : IAnalogTimer
 {
     private readonly TimerState _state;
 
-    private readonly IDisplayService _displayService;
-
     private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+
+    public event TimerTick? Tick;
+
+    public event TimerUpdated? Updated;
+
+    public event TimerUpdated? TimerStarted;
+
+    public delegate void TimerTick(TimerState state);
+
+    public delegate void TimerUpdated(TimerEventArgs state);
 
 
     public bool IsRunning { get; private set; }
@@ -32,21 +42,19 @@ public class AnalogTimer : IAnalogTimer
 
     private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(95);
 
-    public AnalogTimer(TimerState state, IDisplayService displayService)
+    public AnalogTimer(TimerState state)
     {
         _state = state;
-        _displayService = displayService;
 
         IsRunning = false;
         TicksPerSecond = 1;
         Type = TimerType.Stopwatch;
 
         StateCallback = _state.AddMilliseconds;
-        _displayService.SetMode(DisplayMode.Down);
     }
 
-    public AnalogTimer(IDisplayService service)
-        : this(new(), service) { }
+    public AnalogTimer()
+        : this(new()) { }
 
     public TimerState GetSnapshot()
     {
@@ -92,8 +100,12 @@ public class AnalogTimer : IAnalogTimer
 
         stateUpdateAction?.Invoke(this);
 
-        _displayService.SetMode(DisplayMode.Full);
-        _displayService.Display(_state);
+        var args = new TimerEventArgs()
+        {
+            State = _state,
+        };
+
+        Updated?.Invoke(args);
     }
 
     public void Start()
@@ -108,14 +120,11 @@ public class AnalogTimer : IAnalogTimer
             throw new InvalidOperationException("Timer state consist of zeros. Set time before starting timer");
         }
 
-        var mode = Type switch
+        TimerStarted?.Invoke(new TimerEventArgs()
         {
-            TimerType.Timer => DisplayMode.Down,
-            TimerType.Stopwatch => DisplayMode.Up,
-            _ => throw new ArgumentOutOfRangeException(),
-        };
-
-        _displayService.SetMode(mode);
+            State = _state,
+            TimerType = Type,
+        });
 
         StateCallback = Type switch
         {
@@ -133,7 +142,7 @@ public class AnalogTimer : IAnalogTimer
 
     private async Task StartTimerTemplate()
     {
-        _displayService.Display(_state);
+        Tick?.Invoke(_state);
         
         while (IsRunning)
         {
@@ -143,7 +152,7 @@ public class AnalogTimer : IAnalogTimer
 
                 StateCallback.Invoke(TicksPerSecond);
                 
-                _displayService.Display(_state);
+                Tick?.Invoke(_state);
 
                 if (_state.IsZero)
                 {

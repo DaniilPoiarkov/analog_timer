@@ -26,9 +26,11 @@ public partial class AnalogTimerForm : Form
     {
         InitializeComponent();
 
-        _displayService = new WinFormDisplayService(CreateGraphics());
+        _displayService = new WinFormDisplayService();
 
-        _timer = new MyTimer(new(), _displayService);
+        _timer = new MyTimer();
+
+        _timer.Tick += _displayService.Display;
 
         _promptService = new PromptServiceBuilder(_timer)
             .Add<StartPrompt>()
