@@ -133,7 +133,7 @@ public class AnalogTimer : IAnalogTimer
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        //MillisecondDisplayHelper.BackgroundDisplay();
+        MillisecondDisplayHelper.BackgroundDisplay();
 
         IsRunning = true;
         Counter = StartTimerTemplate;

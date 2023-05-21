@@ -1,7 +1,5 @@
-﻿using AnalogTimer.DigitDrawers;
-using NLog;
+﻿using NLog;
 using System.ComponentModel;
-using TimerEngine.DisplayHandlers.ConsoleHandlers;
 
 namespace AnalogTimer.Helpers;
 
@@ -15,7 +13,9 @@ public static class MillisecondDisplayHelper
 
     private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-    private const int _position = 91;
+    private static Action<int>? _outputHandler;
+
+    public static void SetOutputHandler(Action<int> handler) => _outputHandler = handler;
 
     public static Task BackgroundDisplay()
     {
@@ -68,8 +68,7 @@ public static class MillisecondDisplayHelper
 
     public static void DisplayZero()
     {
-        MatrixDisplayHandler.Instance
-            .DisplayPattern(DigitDrawerProvider.GetDrawer(0).Pattern, _position);
+        _outputHandler?.Invoke(0);
     }
 
     private static async Task Display(CancellationToken cancellationToken)
@@ -91,14 +90,10 @@ public static class MillisecondDisplayHelper
                     continue;
 
                 await Task.Delay(10, cancellationToken);
-                var drawer = DigitDrawerProvider.GetDrawer(digit);
-
-                MatrixDisplayHandler.Instance
-                    .DisplayPattern(drawer.Pattern, _position);
+                
+                _outputHandler?.Invoke(i);
                 
                 snapshot = digit;
-
-                UIHelper.SetCursor();
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.DigitDrawers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
@@ -21,10 +22,19 @@ public class ConsoleDisplayService : IDisplayService
 
     private const int _dotsBetweenSecondsAndMilliseconds = 75;
 
+    private const int _position = 91;
+
     public ConsoleDisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
         _handler = MatrixDisplayHandler.Instance;
+
+        MillisecondDisplayHelper.SetOutputHandler(digit =>
+        {
+            MatrixDisplayHandler.Instance
+                .DisplayPattern(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
+            UIHelper.SetCursor();
+        });
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);

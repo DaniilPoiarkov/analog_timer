@@ -44,6 +44,7 @@
             ConsoleInput = new TextBox();
             ChangeSpeedInput = new NumericUpDown();
             label4 = new Label();
+            millisecondsOutput = new Label();
             ((System.ComponentModel.ISupportInitialize)HoursInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinutesInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).BeginInit();
@@ -58,9 +59,9 @@
             outputLabel.ForeColor = Color.FromArgb(241, 246, 249);
             outputLabel.Location = new Point(12, 83);
             outputLabel.Name = "outputLabel";
-            outputLabel.Size = new Size(410, 100);
+            outputLabel.Size = new Size(370, 100);
             outputLabel.TabIndex = 0;
-            outputLabel.Text = "00:00:00:00";
+            outputLabel.Text = "00:00:00:0";
             // 
             // StartBtn
             // 
@@ -249,12 +250,25 @@
             label4.TabIndex = 16;
             label4.Text = "Ticks per second";
             // 
+            // millisecondsOutput
+            // 
+            millisecondsOutput.AutoSize = true;
+            millisecondsOutput.BackColor = Color.FromArgb(33, 42, 62);
+            millisecondsOutput.Font = new Font("Segoe UI", 45F, FontStyle.Regular, GraphicsUnit.Point);
+            millisecondsOutput.ForeColor = Color.FromArgb(241, 246, 249);
+            millisecondsOutput.Location = new Point(356, 83);
+            millisecondsOutput.Name = "millisecondsOutput";
+            millisecondsOutput.Size = new Size(82, 100);
+            millisecondsOutput.TabIndex = 17;
+            millisecondsOutput.Text = "0";
+            // 
             // AnalogTimerForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
             ClientSize = new Size(535, 499);
+            Controls.Add(millisecondsOutput);
             Controls.Add(label4);
             Controls.Add(ChangeSpeedInput);
             Controls.Add(ConsoleInput);
@@ -300,5 +314,6 @@
         private TextBox ConsoleInput;
         private NumericUpDown ChangeSpeedInput;
         private Label label4;
+        private Label millisecondsOutput;
     }
 }

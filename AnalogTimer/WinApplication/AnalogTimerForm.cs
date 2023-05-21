@@ -5,6 +5,7 @@ using AnalogTimer.Models.Enums;
 using AnalogTimer.Models;
 using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
+using AnalogTimer.Helpers;
 
 namespace WinApplication;
 
@@ -30,6 +31,10 @@ public partial class AnalogTimerForm : Form
 
         _timer.Tick += displayService.Display;
         _timer.Updated += displayService.HandleTimerUpdated;
+        MillisecondDisplayHelper.SetOutputHandler(digit =>
+        {
+            millisecondsOutput.Text = digit.ToString();
+        });
 
         _promptService = new PromptServiceBuilder(_timer)
             .Add<StartPrompt>()
