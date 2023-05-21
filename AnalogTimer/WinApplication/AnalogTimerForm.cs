@@ -5,7 +5,6 @@ using AnalogTimer.Models.Enums;
 using AnalogTimer.Models;
 using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
-using TimerEngine.Models.TimerEventArgs;
 
 namespace WinApplication;
 
@@ -25,12 +24,12 @@ public partial class AnalogTimerForm : Form
     {
         InitializeComponent();
 
-        var displayService = new WinFormDisplayService();
+        var displayService = new WinFormDisplayService(outputLabel);
 
         _timer = new MyTimer();
 
-        _timer.Tick += HandleTimerTick;
-        _timer.Updated += HandleTimerUpdated;
+        _timer.Tick += displayService.Display;
+        _timer.Updated += displayService.HandleTimerUpdated;
 
         _promptService = new PromptServiceBuilder(_timer)
             .Add<StartPrompt>()
@@ -42,16 +41,6 @@ public partial class AnalogTimerForm : Form
             .Add<ChangeSpeedPrompt>()
             .Add<ChangeTimerTypePrompt>()
             .Build();
-    }
-
-    private void HandleTimerUpdated(TimerEventArgs args)
-    {
-        outputLabel.Text = args.State?.ToString();
-    }
-
-    private void HandleTimerTick(TimerState state)
-    {
-        outputLabel.Text = state.ToString();
     }
 
     private void StartBtn_Click(object sender, EventArgs e)

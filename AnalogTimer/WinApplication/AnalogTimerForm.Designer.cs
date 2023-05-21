@@ -54,12 +54,13 @@
             // 
             outputLabel.AutoSize = true;
             outputLabel.BackColor = Color.FromArgb(33, 42, 62);
+            outputLabel.Font = new Font("Segoe UI", 45F, FontStyle.Regular, GraphicsUnit.Point);
             outputLabel.ForeColor = Color.FromArgb(241, 246, 249);
-            outputLabel.Location = new Point(170, 116);
+            outputLabel.Location = new Point(12, 83);
             outputLabel.Name = "outputLabel";
-            outputLabel.Size = new Size(39, 20);
+            outputLabel.Size = new Size(410, 100);
             outputLabel.TabIndex = 0;
-            outputLabel.Text = "_____";
+            outputLabel.Text = "00:00:00:00";
             // 
             // StartBtn
             // 
