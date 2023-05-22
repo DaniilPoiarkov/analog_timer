@@ -6,6 +6,7 @@ using AnalogTimer.Models.Enums;
 
 namespace TimerEngine.DisplayHandlers.ConsoleHandlers;
 
+[Obsolete("Use MatrixDisplayHandler instead")]
 public class DrawerDisplayHandler : DisplayHandlerBase
 {
     private readonly DisplayMode _mode;
