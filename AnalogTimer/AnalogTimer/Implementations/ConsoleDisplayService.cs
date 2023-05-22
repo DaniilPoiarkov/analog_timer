@@ -1,9 +1,9 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.DigitDrawers;
+using AnalogTimer.DisplayHandlers.ConsoleHandlers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
-using TimerEngine.DisplayHandlers.ConsoleHandlers;
 
 namespace AnalogTimer.Implementations;
 
