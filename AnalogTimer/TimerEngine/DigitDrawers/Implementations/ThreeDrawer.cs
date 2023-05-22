@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 
 namespace AnalogTimer.DigitDrawers.Implementations;
 
@@ -38,8 +37,6 @@ public class ThreeDrawer : DigitDrawerBase
 
         PrintHeightLine(true, positionLeft + 7, template.Pattern);
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
-
-        UIHelper.SetCursor();
     }
 
     public override void DrawDown(int positionLeft, ITimerTemplate template)
@@ -48,8 +45,6 @@ public class ThreeDrawer : DigitDrawerBase
 
         PrintWidthLine(0, positionLeft, template.Pattern);
         PrintWidthLine(6, positionLeft, template.Pattern);
-
-        UIHelper.SetCursor();
     }
 
     public override void DrawUp(int positionLeft, ITimerTemplate template)
@@ -57,7 +52,5 @@ public class ThreeDrawer : DigitDrawerBase
         ClearHeightLine(false, positionLeft);
 
         PrintHeightLine(false, positionLeft + 7, template.Pattern);
-
-        UIHelper.SetCursor();
     }
 }
