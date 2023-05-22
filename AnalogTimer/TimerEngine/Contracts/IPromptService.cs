@@ -2,9 +2,7 @@
 
 public interface IPromptService
 {
-    void DisplayPrompts();
-
-    Task Run();
+    IReadOnlyCollection<IPrompt> Prompts { get; }
 
     Task Consume(string input);
 }

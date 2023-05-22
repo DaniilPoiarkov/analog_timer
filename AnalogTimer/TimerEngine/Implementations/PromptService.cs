@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 
 namespace AnalogTimer.Implementations;
 
@@ -8,8 +7,8 @@ public class PromptService : IPromptService
     private readonly IEnumerable<IPrompt> _prompts;
 
     private readonly IAnalogTimer _analogTimer;
-    
-    private const int _inputLine = 9;
+
+    public IReadOnlyCollection<IPrompt> Prompts => _prompts.ToList();
 
     public PromptService(
         IEnumerable<IPrompt> prompts,
@@ -17,24 +16,6 @@ public class PromptService : IPromptService
     {
         _prompts = prompts;
         _analogTimer = analogTimer;
-    }
-
-    public void DisplayPrompts()
-    {
-        Console.CursorTop = 12;
-
-        foreach (var prompt in _prompts)
-        {
-            Console.WriteLine(prompt.Instruction);
-        }
-    }
-
-    public async Task Run()
-    {
-        string? input = GetUserInput();
-        Console.CursorTop = _inputLine;
-        Console.WriteLine(new string(' ', Console.BufferWidth));
-        await Consume(input);
     }
 
     public async Task Consume(string input)
@@ -63,33 +44,5 @@ public class PromptService : IPromptService
         }
 
         await prompt.Proceed(input, _analogTimer);
-    }
-
-    private static string GetUserInput()
-    {
-        Console.CursorTop = _inputLine;
-
-        while (true)
-        {
-            var key = Console.ReadKey();
-
-            if (key.Key == ConsoleKey.Enter)
-                break;
-
-            if (key.Key == ConsoleKey.Backspace)
-            {
-                UIHelper.RemoveLast();
-                Console.CursorLeft = UIHelper.CursorPosition;
-                Console.Write(' ');
-                Console.CursorLeft = UIHelper.CursorPosition;
-                continue;
-            }
-
-            if(!char.IsControl(key.KeyChar))
-                UIHelper.Add(key.KeyChar);
-        }
-
-        var input = UIHelper.GetInput();
-        return input;
     }
 }
