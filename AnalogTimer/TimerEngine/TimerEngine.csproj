@@ -10,4 +10,8 @@
     <PackageReference Include="NLog" Version="5.1.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Prompts\RunningLinePrompts\" />
+  </ItemGroup>
+
 </Project>

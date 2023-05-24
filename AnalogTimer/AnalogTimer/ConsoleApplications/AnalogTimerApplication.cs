@@ -1,14 +1,15 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
+using TimerEngine.Prompts.AnalogTimerPrompts.Implementations;
 
 namespace AnalogTimer.ConsoleApplications;
 
-internal class AnalogTimerConsoleApplication : ConsoleApplication
+internal class AnalogTimerApplication : ConsoleApplication
 {
     private readonly IPromptService _promptService;
 
-    public AnalogTimerConsoleApplication()
+    public AnalogTimerApplication()
     {
         var displayService = new ConsoleDisplayService(new DefaultTemplate());
         var timer = new Implementations.AnalogTimer();

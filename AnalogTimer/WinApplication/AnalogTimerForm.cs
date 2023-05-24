@@ -6,6 +6,7 @@ using AnalogTimer.Models;
 using AnalogTimer.Implementations;
 using AnalogTimer.Prompts.Implementations;
 using AnalogTimer.Helpers;
+using TimerEngine.Prompts.AnalogTimerPrompts.Implementations;
 
 namespace WinApplication;
 
