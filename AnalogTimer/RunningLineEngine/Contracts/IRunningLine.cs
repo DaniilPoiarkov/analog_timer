@@ -1,8 +1,9 @@
-﻿using ConsoleInterface.EntityContracts;
+﻿using ConsoleInterface.Contracts;
+using ConsoleInterface.EntityContracts;
 
 namespace RunningLineEngine.Contracts;
 
-public interface IRunningLine : ISpeedChangable
+public interface IRunningLine : ISpeedChangable, IAsyncRunnable
 {
-    Task Run(string sentence);
+    void Set(string sentence);
 }

@@ -7,7 +7,7 @@ using AnalogTimer.Helpers;
 using TimerEngine.Prompts.Implementations;
 using TimerEngine.Models.Enums;
 using ConsoleInterface.Contracts;
-using ConsoleInterface.Prompts;
+using ConsoleInterface.Prompts.Implementations;
 
 namespace WinApplication;
 
@@ -42,7 +42,7 @@ public partial class AnalogTimerForm : Form
 
         _promptService = new AnalogTimerPromptServiceBuilder(_timer)
             .Add<StartPrompt>()
-            .Add<PausePrompt>()
+            .Add<PausePrompt<IAnalogTimer>>()
             .Add<ResetPrompt>()
             .Add<AddSecondsPrompt>()
             .Add<AddMinutesPrompt>()

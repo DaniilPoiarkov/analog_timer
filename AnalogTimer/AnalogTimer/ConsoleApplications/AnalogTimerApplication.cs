@@ -1,7 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
 using TimerEngine.Prompts.Implementations;
-using ConsoleInterface.Prompts;
+using ConsoleInterface.Prompts.Implementations;
 
 namespace AnalogTimer.ConsoleApplications;
 
@@ -18,7 +18,7 @@ internal class AnalogTimerApplication : ConsoleApplication<IAnalogTimer>
 
         PromptService = new AnalogTimerPromptServiceBuilder(Entity)
             .Add<StartPrompt>()
-            .Add<PausePrompt>()
+            .Add<PausePrompt<IAnalogTimer>>()
             .Add<ResetPrompt>()
             .Add<AddSecondsPrompt>()
             .Add<AddMinutesPrompt>()

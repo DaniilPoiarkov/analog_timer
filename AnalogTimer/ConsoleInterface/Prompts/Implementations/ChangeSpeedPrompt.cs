@@ -1,6 +1,6 @@
 ﻿using ConsoleInterface.EntityContracts;
 
-namespace ConsoleInterface.Prompts;
+namespace ConsoleInterface.Prompts.Implementations;
 
 public class ChangeSpeedPrompt<TEntity> : PromptBase<TEntity>
     where TEntity : ISpeedChangable
