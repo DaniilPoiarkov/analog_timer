@@ -1,7 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
-using AnalogTimer.Prompts.Implementations;
-using TimerEngine.Prompts.AnalogTimerPrompts.Implementations;
+using TimerEngine.Prompts.Implementations;
 
 namespace AnalogTimer.ConsoleApplications;
 

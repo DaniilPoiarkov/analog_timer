@@ -1,7 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Prompts;
 
-namespace TimerEngine.Prompts.AnalogTimerPrompts.Implementations;
+namespace TimerEngine.Prompts.Implementations;
 
 public class ResetPrompt : PromptBase
 {

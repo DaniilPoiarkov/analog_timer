@@ -1,7 +1,8 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Models.Enums;
+using AnalogTimer.Prompts;
 
-namespace AnalogTimer.Prompts.Implementations;
+namespace TimerEngine.Prompts.Implementations;
 
 public class ChangeTimerTypePrompt : PromptBase
 {
@@ -35,7 +36,7 @@ public class ChangeTimerTypePrompt : PromptBase
         var exists = Enum.GetNames<TimerType>()
             .Any(n => n.Equals(providedValue));
 
-        if(!exists)
+        if (!exists)
         {
             throw new ArgumentException($"Invalid type \'{value}\'", nameof(input));
         }

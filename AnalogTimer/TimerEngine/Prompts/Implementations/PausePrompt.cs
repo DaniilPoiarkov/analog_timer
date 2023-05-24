@@ -1,5 +1,7 @@
 ﻿using AnalogTimer.Contracts;
-namespace AnalogTimer.Prompts.Implementations;
+using AnalogTimer.Prompts;
+
+namespace TimerEngine.Prompts.Implementations;
 
 public class PausePrompt : PromptBase
 {

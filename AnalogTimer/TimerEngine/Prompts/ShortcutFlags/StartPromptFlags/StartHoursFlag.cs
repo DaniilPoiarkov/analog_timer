@@ -1,6 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 
-namespace AnalogTimer.Prompts.ShortcutFlags.StartPromptFlags;
+namespace TimerEngine.Prompts.ShortcutFlags.StartPromptFlags;
 
 public class StartHoursFlag : IShortcutFlag
 {

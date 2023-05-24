@@ -1,8 +1,9 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.InputFlyweight;
-using AnalogTimer.Prompts.ShortcutFlags.StartPromptFlags;
+using AnalogTimer.Prompts;
+using TimerEngine.Prompts.ShortcutFlags.StartPromptFlags;
 
-namespace AnalogTimer.Prompts.Implementations;
+namespace TimerEngine.Prompts.Implementations;
 
 public class StartPrompt : PromptBase
 {

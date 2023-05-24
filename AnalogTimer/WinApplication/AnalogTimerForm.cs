@@ -4,9 +4,8 @@ using AnalogTimer.Contracts;
 using AnalogTimer.Models.Enums;
 using AnalogTimer.Models;
 using AnalogTimer.Implementations;
-using AnalogTimer.Prompts.Implementations;
 using AnalogTimer.Helpers;
-using TimerEngine.Prompts.AnalogTimerPrompts.Implementations;
+using TimerEngine.Prompts.Implementations;
 
 namespace WinApplication;
 
