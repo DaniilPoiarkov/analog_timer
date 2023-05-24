@@ -57,23 +57,4 @@ public abstract class PromptBase
             .Select(v => (Flag: v[0], Value: v[1]))
             .ToList();
     }
-
-    //protected static void ValidateFlags(IEnumerable<(string Flag, string Value)> flags, IEnumerable<IShortcutFlag> shortcuts)
-    //{
-    //    if (!flags.All(f => shortcuts.Any(s => s.Shortcut.Equals(f.Flag))))
-    //    {
-    //        var unexpected = flags.Where(f =>
-    //            !shortcuts.Any(s => s.Shortcut.Equals(f.Flag)))
-    //            .Select(f => $"-{f.Flag}");
-
-    //        throw new InvalidOperationException($"Unexpected flag(s) {string.Join(", ", unexpected)}");
-    //    }
-    //}
-
-    //protected static IEnumerable<(string Flag, string Value)> GenerateFlags(UserInput userInput, IEnumerable<IShortcutFlag> shortcuts)
-    //{
-    //    var flags = ParseUserInput(userInput);
-    //    ValidateFlags(flags, shortcuts);
-    //    return flags;
-    //}
 }
