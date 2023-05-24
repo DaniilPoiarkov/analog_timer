@@ -19,16 +19,11 @@ internal class ConsoleApplication
     public ConsoleApplication()
     {
         var displayService = new ConsoleDisplayService(new DefaultTemplate());
-
         var timer = new Implementations.AnalogTimer();
 
-        timer.Tick += displayService.Display;
-
-        timer.Updated += args =>
-        {
-            if(args.State is not null)
-                displayService.Display(args.State);
-        };
+        timer.Tick += displayService.DisplayTick;
+        timer.Updated += displayService.DisplayUpdated;
+        timer.TimerCut += displayService.DisplayCut;
 
         _promptService = new PromptServiceBuilder(timer)
             .Add<StartPrompt>()

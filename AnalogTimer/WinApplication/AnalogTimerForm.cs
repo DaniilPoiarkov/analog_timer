@@ -25,12 +25,13 @@ public partial class AnalogTimerForm : Form
     {
         InitializeComponent();
 
-        var displayService = new WinFormDisplayService(outputLabel);
+        var displayService = new WinFormDisplayService(outputLabel, cutOutput);
 
         _timer = new MyTimer();
 
-        _timer.Tick += displayService.Display;
-        _timer.Updated += displayService.HandleTimerUpdated;
+        _timer.Tick += displayService.DisplayTick;
+        _timer.Updated += displayService.DisplayUpdated;
+        _timer.TimerCut += displayService.DisplayCut;
 
         MillisecondDisplayHelper.SetOutputHandler(digit =>
         {
@@ -194,5 +195,10 @@ public partial class AnalogTimerForm : Form
     private static DialogResult DisplayError(string error)
     {
         return MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    private void CutBtn_click(object sender, EventArgs e)
+    {
+        _timer.Cut();
     }
 }

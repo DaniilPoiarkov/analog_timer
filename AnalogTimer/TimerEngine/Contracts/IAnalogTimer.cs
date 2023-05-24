@@ -1,9 +1,10 @@
 ﻿using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
+using TimerEngine.Contracts;
 
 namespace AnalogTimer.Contracts;
 
-public interface IAnalogTimer
+public interface IAnalogTimer : ITimerEvents
 {
     bool IsRunning { get; }
 
@@ -24,4 +25,6 @@ public interface IAnalogTimer
     void SetTimerType(TimerType type);
 
     TimerState GetSnapshot();
+
+    void Cut();
 }

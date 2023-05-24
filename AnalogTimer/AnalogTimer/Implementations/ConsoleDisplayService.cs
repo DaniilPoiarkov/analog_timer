@@ -4,6 +4,7 @@ using AnalogTimer.DisplayHandlers.ConsoleHandlers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
+using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Implementations;
 
@@ -24,6 +25,22 @@ public class ConsoleDisplayService : IDisplayService
 
     private const int _position = 91;
 
+    private const int _maxPositionLeft = 104;
+
+    private const int _maxPositionTop = 29;
+
+    private const int _space = 23;
+
+    private const int _startPositionTop = 25;
+
+    private const int _startPositionLeft = 0;
+
+
+    private static int PositionTop = _startPositionTop;
+
+    private static int PositionLeft = _startPositionLeft;
+
+
     public ConsoleDisplayService(ITimerTemplate timerTemplate)
     {
         _timerTemplate = timerTemplate;
@@ -41,10 +58,10 @@ public class ConsoleDisplayService : IDisplayService
         PrintDots(_dotsBetweenSecondsAndMilliseconds);
 
         MillisecondDisplayHelper.DisplayZero();
-        Display(new());
+        DisplayTick(new());
     }
 
-    public void Display(TimerState state)
+    public void DisplayTick(TimerState state)
     {
         if (state.Hours != _snapshot?.Hours)
             _handler.Update(state.Hours, TimerValue.Hour);
@@ -72,5 +89,32 @@ public class ConsoleDisplayService : IDisplayService
         Console.CursorLeft = position;
 
         Console.WriteLine(_timerTemplate.Pattern);
+    }
+
+    public void DisplayUpdated(TimerEventArgs args)
+    {
+        if (args.State is not null)
+            DisplayTick(args.State);
+    }
+
+    public void DisplayCut(TimerEventArgs args)
+    {
+        if (PositionTop >= _maxPositionTop)
+        {
+            PositionTop = _startPositionTop;
+            PositionLeft += _space;
+        }
+
+        if (PositionLeft >= _maxPositionLeft)
+        {
+            PositionTop = _startPositionTop;
+            PositionLeft = _startPositionLeft;
+        }
+
+        Console.CursorTop = PositionTop;
+        Console.CursorLeft = PositionLeft;
+
+        Console.WriteLine($"|{DateTime.UtcNow.ToShortTimeString()} => {args.State}|");
+        PositionTop++;
     }
 }

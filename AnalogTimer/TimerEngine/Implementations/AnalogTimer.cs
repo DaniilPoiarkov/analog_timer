@@ -5,6 +5,7 @@ using AnalogTimer.Models.Enums;
 using NLog;
 using System.Diagnostics;
 using TimerEngine.Models.TimerEventArgs;
+using static TimerEngine.Contracts.ITimerEvents;
 
 namespace AnalogTimer.Implementations;
 
@@ -21,9 +22,13 @@ public class AnalogTimer : IAnalogTimer
 
     public event TimerUpdated? TimerStarted;
 
-    public delegate void TimerTick(TimerState state);
+    public event TimerUpdated? TimerCut;
 
-    public delegate void TimerUpdated(TimerEventArgs state);
+    private TimerEventArgs TimerEventArgs => new()
+    {
+        State = GetSnapshot(),
+        TimerType = Type,
+    };
 
 
     public bool IsRunning { get; private set; }
@@ -59,6 +64,11 @@ public class AnalogTimer : IAnalogTimer
     public TimerState GetSnapshot()
     {
         return new TimerState(_state.Hours, _state.Minutes, _state.Seconds, _state.Milliseconds);
+    }
+
+    public void Cut()
+    {
+        TimerCut?.Invoke(TimerEventArgs);
     }
 
     public void SetTimerType(TimerType type)
@@ -100,12 +110,7 @@ public class AnalogTimer : IAnalogTimer
 
         stateUpdateAction?.Invoke(this);
 
-        var args = new TimerEventArgs()
-        {
-            State = _state,
-        };
-
-        Updated?.Invoke(args);
+        Updated?.Invoke(TimerEventArgs);
     }
 
     public void Start()
@@ -120,11 +125,7 @@ public class AnalogTimer : IAnalogTimer
             throw new InvalidOperationException("Timer state consist of zeros. Set time before starting timer");
         }
 
-        TimerStarted?.Invoke(new TimerEventArgs()
-        {
-            State = _state,
-            TimerType = Type,
-        });
+        TimerStarted?.Invoke(TimerEventArgs);
 
         StateCallback = Type switch
         {

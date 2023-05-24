@@ -46,6 +46,8 @@
             label4 = new Label();
             millisecondsOutput = new Label();
             colorDialog1 = new ColorDialog();
+            cutOutput = new TextBox();
+            cutBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)HoursInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinutesInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).BeginInit();
@@ -257,12 +259,36 @@
             millisecondsOutput.Text = "0";
             millisecondsOutput.UseCompatibleTextRendering = true;
             // 
+            // cutOutput
+            // 
+            cutOutput.Enabled = false;
+            cutOutput.Location = new Point(322, 184);
+            cutOutput.Multiline = true;
+            cutOutput.Name = "cutOutput";
+            cutOutput.Size = new Size(134, 61);
+            cutOutput.TabIndex = 18;
+            // 
+            // cutBtn
+            // 
+            cutBtn.BackColor = Color.FromArgb(57, 72, 103);
+            cutBtn.FlatStyle = FlatStyle.Popup;
+            cutBtn.ForeColor = Color.FromArgb(241, 246, 249);
+            cutBtn.Location = new Point(210, 308);
+            cutBtn.Name = "cutBtn";
+            cutBtn.Size = new Size(75, 23);
+            cutBtn.TabIndex = 19;
+            cutBtn.Text = "Cut";
+            cutBtn.UseVisualStyleBackColor = false;
+            cutBtn.Click += CutBtn_click;
+            // 
             // AnalogTimerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
             ClientSize = new Size(468, 374);
+            Controls.Add(cutBtn);
+            Controls.Add(cutOutput);
             Controls.Add(millisecondsOutput);
             Controls.Add(outputLabel);
             Controls.Add(label4);
@@ -310,5 +336,7 @@
         private Label label4;
         private Label millisecondsOutput;
         private ColorDialog colorDialog1;
+        private TextBox cutOutput;
+        private Button cutBtn;
     }
 }

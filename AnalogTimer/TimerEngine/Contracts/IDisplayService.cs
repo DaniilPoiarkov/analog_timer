@@ -1,9 +1,13 @@
 ﻿using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
+using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Contracts;
 
 public interface IDisplayService
 {
-    void Display(TimerState state);
+    void DisplayTick(TimerState state);
+
+    void DisplayUpdated(TimerEventArgs args);
+
+    void DisplayCut(TimerEventArgs args);
 }
