@@ -1,12 +1,13 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
+using ConsoleInterface.Contracts;
 using TimerEngine.Prompts.Implementations;
 
 namespace AnalogTimer.ConsoleApplications;
 
 internal class AnalogTimerApplication : ConsoleApplication
 {
-    private readonly IPromptService _promptService;
+    private readonly IPromptService<IAnalogTimer> _promptService;
 
     public AnalogTimerApplication()
     {
@@ -17,7 +18,7 @@ internal class AnalogTimerApplication : ConsoleApplication
         timer.Updated += displayService.DisplayUpdated;
         timer.TimerCut += displayService.DisplayCut;
 
-        _promptService = new PromptServiceBuilder(timer)
+        _promptService = new AnalogTimerPromptServiceBuilder(timer)
             .Add<StartPrompt>()
             .Add<PausePrompt>()
             .Add<ResetPrompt>()

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsleInterface\ConsleInterface.csproj" />
+    <ProjectReference Include="..\ConsoleInterface\ConsoleInterface.csproj" />
   </ItemGroup>
 
 </Project>

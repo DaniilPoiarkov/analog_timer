@@ -1,13 +1,9 @@
 ﻿
+using ConsoleInterface.Contracts;
+
 namespace AnalogTimer.Contracts;
 
-public interface IAnalogTimerPrompt
+public interface IAnalogTimerPrompt : IPrompt<IAnalogTimer>
 {
-    string Name { get; }
 
-    string Shortcut { get; }
-
-    string Instruction { get; }
-
-    Task Proceed(string input, IAnalogTimer timer);
 }

@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Implementations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ConsoleInterface\ConsoleInterface.csproj" />
-  </ItemGroup>
-
 </Project>

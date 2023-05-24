@@ -1,8 +1,8 @@
-﻿namespace AnalogTimer.Contracts;
+﻿using ConsoleInterface.Contracts;
 
-public interface IAnalogTimerShortcutFlag
+namespace AnalogTimer.Contracts;
+
+public interface IAnalogTimerShortcutFlag : IShortcutFlag<IAnalogTimer>
 {
-    string Shortcut { get; }
 
-    Task Handle(string value, IAnalogTimer timer);
 }
