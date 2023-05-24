@@ -1,7 +1,9 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using NLog;
+using System.Diagnostics;
 
 namespace AnalogTimer.Implementations;
 
@@ -25,8 +27,10 @@ public class AnalogTimer : IAnalogTimer
 
     private Task? Execution { get; set; }
 
+    private Action<int> StateCallback { get; set; }
 
-    private const int _baseDelay = 100;
+
+    private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(95);
 
     public AnalogTimer(TimerState state, IDisplayService displayService)
     {
@@ -36,6 +40,8 @@ public class AnalogTimer : IAnalogTimer
         IsRunning = false;
         TicksPerSecond = 1;
         Type = TimerType.Timer;
+
+        StateCallback = _state.SubtractMilliseconds;
         _displayService.SetMode(DisplayMode.Down);
     }
 
@@ -111,6 +117,15 @@ public class AnalogTimer : IAnalogTimer
 
         _displayService.SetMode(mode);
 
+        StateCallback = Type switch
+        {
+            TimerType.Timer => _state.SubtractMilliseconds,
+            TimerType.Stopwatch => _state.AddMilliseconds,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        MillisecondDisplayHelper.BackgroundDisplay();
+
         IsRunning = true;
         Counter = StartTimerTemplate;
         Execution = Counter.Invoke();
@@ -119,22 +134,15 @@ public class AnalogTimer : IAnalogTimer
     private async Task StartTimerTemplate()
     {
         _displayService.Display(_state);
-
+        
         while (IsRunning)
         {
             try
             {
                 await Task.Delay(_baseDelay);
-                
-                if (Type == TimerType.Timer)
-                {
-                    _state.SubtractMilliseconds(TicksPerSecond);
-                }
-                else
-                {
-                    _state.AddMilliseconds(TicksPerSecond);
-                }
 
+                StateCallback.Invoke(TicksPerSecond);
+                
                 _displayService.Display(_state);
 
                 if (_state.IsZero)
@@ -155,6 +163,11 @@ public class AnalogTimer : IAnalogTimer
         {
             throw new InvalidOperationException("Timer is not running");
         }
+
+        MillisecondDisplayHelper.StopDisplay();
+
+        if(_state.IsZero)
+            MillisecondDisplayHelper.DisplayZero();
 
         IsRunning = false;
         await Execution;
