@@ -47,6 +47,7 @@ public partial class AnalogTimerForm : Form
             .Add<AddHoursPrompt>()
             .Add<ChangeSpeedPrompt>()
             .Add<ChangeTimerTypePrompt>()
+            .Add<CutTimerStatePrompt>()
             .Build();
     }
 
