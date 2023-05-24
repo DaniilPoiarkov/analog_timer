@@ -4,13 +4,49 @@ namespace RunningLineEngine.Implementations;
 
 public class RunningLine : IRunningLine
 {
-    public void ChangeSpeed(int coefficient)
+    private int _speedCoefficient;
+
+    public RunningLine()
     {
-        throw new NotImplementedException();
+        _speedCoefficient = 100;
     }
 
-    public Task Run(string sentence)
+    public void ChangeSpeed(int coefficient)
     {
-        throw new NotImplementedException();
+        _speedCoefficient = coefficient;
+    }
+
+    public async Task Run(string sentence)
+    {
+        var width = Console.BufferWidth - sentence.Length;
+
+        while (width != 0)
+        {
+            await Task.Delay(_speedCoefficient);
+            DisplaySentence(sentence, width);
+
+            width--;
+        }
+
+        while (width > sentence.Length)
+        {
+            await Task.Delay(_speedCoefficient);
+
+            sentence = sentence[1..];
+            DisplaySentence(sentence, width);
+
+            width--;
+        }
+    }
+
+    private static void DisplaySentence(string sentence, int width)
+    {
+        Console.CursorTop = 1;
+        Console.CursorLeft = width;
+        Console.Write(new string(' ', width + 1));
+
+        Console.CursorTop = 1;
+        Console.CursorLeft = width;
+        Console.Write(sentence);
     }
 }

@@ -18,20 +18,20 @@ public abstract class PromptBase<TEntity> : IPrompt<TEntity>
         .Split(' ', StringSplitOptions.RemoveEmptyEntries)
         .Select(v => v.ToLower());
 
-    protected static void ValidateInput(List<string> values)
+    protected virtual void ValidateInput(List<string> values)
     {
         if (!values.Any() || values.Count != 2)
             throw new ArgumentException("Invalid input");
     }
 
-    protected static List<string> ParseAndValidateInput(string input)
+    protected virtual List<string> ParseAndValidateInput(string input)
     {
         var values = SplitInput(input).ToList();
         ValidateInput(values);
         return values;
     }
 
-    protected static IEnumerable<(string Flag, string Value)> ParseUserInput(UserInput userInput)
+    protected virtual IEnumerable<(string Flag, string Value)> ParseUserInput(UserInput userInput)
     {
         var parsed = userInput.Tokens
             .Where(t => t.Type == TokenType.Flag)
@@ -73,7 +73,7 @@ public abstract class PromptBase<TEntity> : IPrompt<TEntity>
         }
     }
 
-    protected static IEnumerable<(string Flag, string Value)> GenerateFlags(UserInput userInput, IEnumerable<IShortcutFlag<TEntity>> shortcuts)
+    protected virtual IEnumerable<(string Flag, string Value)> GenerateFlags(UserInput userInput, IEnumerable<IShortcutFlag<TEntity>> shortcuts)
     {
         var flags = ParseUserInput(userInput);
         ValidateFlags(flags, shortcuts);
