@@ -1,0 +1,20 @@
+﻿using AnalogTimer.Models;
+using TimerEngine.Models.TimerEventArgs;
+
+namespace TimerEngine.Contracts;
+
+public interface ITimerEvents
+{
+    event TimerTick? Tick;
+
+    event TimerUpdated? Updated;
+
+    event TimerUpdated? TimerStarted;
+
+    event TimerUpdated? TimerCut;
+
+
+    public delegate void TimerTick(TimerState state);
+
+    public delegate void TimerUpdated(TimerEventArgs state);
+}

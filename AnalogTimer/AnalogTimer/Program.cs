@@ -1,24 +1,5 @@
-﻿using AnalogTimer.Implementations;
-using AnalogTimer.Prompts.Implementations;
+﻿using AnalogTimer;
 
-var timer = new AnalogTimer.Implementations.AnalogTimer();
+var app = new ConsoleApplication();
 
-var promptService = new PromptServiceBuilder(timer)
-    .Add<StartPrompt>()
-    .Add<PausePrompt>()
-    .Add<ResetPrompt>()
-    .Add<AddSecondsPrompt>()
-    .Add<AddMinutesPrompt>()
-    .Add<AddHoursPrompt>()
-    .Add<ChangeSpeedPrompt>()
-    .Add<ChangeTimerTypePrompt>()
-    .Add<CloseTimerPrompt>()
-    .Add<CutTimerStatePrompt>()
-    .Build();
-
-promptService.DisplayPrompts();
-
-while (true)
-{
-    await promptService.Run();
-}
+await app.Run();
