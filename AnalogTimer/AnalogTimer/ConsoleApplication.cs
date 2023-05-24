@@ -1,55 +1,17 @@
-﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
-using AnalogTimer.Implementations;
-using AnalogTimer.Prompts.Implementations;
+﻿using AnalogTimer.Helpers;
 using NLog;
 
 namespace AnalogTimer;
 
-internal class ConsoleApplication
+internal abstract class ConsoleApplication
 {
-    private readonly IPromptService _promptService;
+    protected const int _inputLine = 9;
 
-    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+    protected const int _exceptionLine = 8;
 
-    private const int _exceptionLine = 8;
+    protected readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-    private const int _inputLine = 9;
-
-    public ConsoleApplication()
-    {
-        var displayService = new ConsoleDisplayService(new DefaultTemplate());
-        var timer = new Implementations.AnalogTimer();
-
-        timer.Tick += displayService.DisplayTick;
-        timer.Updated += displayService.DisplayUpdated;
-        timer.TimerCut += displayService.DisplayCut;
-
-        _promptService = new PromptServiceBuilder(timer)
-            .Add<StartPrompt>()
-            .Add<PausePrompt>()
-            .Add<ResetPrompt>()
-            .Add<AddSecondsPrompt>()
-            .Add<AddMinutesPrompt>()
-            .Add<AddHoursPrompt>()
-            .Add<ChangeSpeedPrompt>()
-            .Add<ChangeTimerTypePrompt>()
-            .Add<CloseTimerPrompt>()
-            .Add<CutTimerStatePrompt>()
-            .Build();
-    }
-
-    public void DisplayPrompts()
-    {
-        Console.CursorTop = 12;
-
-        foreach (var prompt in _promptService.Prompts)
-        {
-            Console.WriteLine(prompt.Instruction);
-        }
-    }
-
-    private static string GetUserInput()
+    protected static string GetUserInput()
     {
         Console.CursorTop = _inputLine;
 
@@ -76,9 +38,19 @@ internal class ConsoleApplication
         return UIHelper.GetInput();
     }
 
+    protected void PrintException(string message, Exception? ex = null)
+    {
+        Console.CursorTop = _exceptionLine;
+        Console.WriteLine(new string(' ', Console.WindowWidth));
+
+        Console.CursorTop = _exceptionLine;
+        Console.WriteLine($"Exception: {message}");
+        _logger.Error(ex, message);
+    }
+
     public async Task Run()
     {
-        DisplayPrompts();
+        DisplayInstruction();
 
         while (true)
         {
@@ -87,7 +59,7 @@ internal class ConsoleApplication
                 string? input = GetUserInput();
                 Console.CursorTop = _inputLine;
                 Console.WriteLine(new string(' ', Console.BufferWidth));
-                await _promptService.Consume(input);
+                await HandleUserInput(input);
             }
             catch (Exception ex)
             {
@@ -99,13 +71,7 @@ internal class ConsoleApplication
         }
     }
 
-    private void PrintException(string message, Exception? ex = null)
-    {
-        Console.CursorTop = _exceptionLine;
-        Console.WriteLine(new string(' ', Console.WindowWidth));
+    protected abstract void DisplayInstruction();
 
-        Console.CursorTop = _exceptionLine;
-        Console.WriteLine($"Exception: {message}");
-        _logger.Error(ex, message);
-    }
+    protected abstract Task HandleUserInput(string? input);
 }

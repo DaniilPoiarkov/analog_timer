@@ -18,7 +18,7 @@ public class PromptService : IPromptService
         _analogTimer = analogTimer;
     }
 
-    public async Task Consume(string input)
+    public async Task Consume(string? input)
     {
         var values = input?
             .TrimEnd()
