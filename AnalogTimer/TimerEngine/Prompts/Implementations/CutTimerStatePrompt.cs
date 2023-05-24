@@ -3,7 +3,7 @@ using AnalogTimer.Prompts;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class CutTimerStatePrompt : PromptBase
+public class CutTimerStatePrompt : AnalogTimerPromptBase
 {
     public override string Name => "cut";
 

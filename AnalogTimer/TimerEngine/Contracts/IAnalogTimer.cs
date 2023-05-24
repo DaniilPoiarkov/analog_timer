@@ -1,6 +1,6 @@
 ﻿using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
 using TimerEngine.Contracts;
+using TimerEngine.Models.Enums;
 
 namespace AnalogTimer.Contracts;
 

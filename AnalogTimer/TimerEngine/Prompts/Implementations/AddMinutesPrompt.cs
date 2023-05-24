@@ -3,7 +3,7 @@ using AnalogTimer.Prompts;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class AddMinutesPrompt : PromptBase
+public class AddMinutesPrompt : AnalogTimerPromptBase
 {
     public override string Name => "minutes";
 

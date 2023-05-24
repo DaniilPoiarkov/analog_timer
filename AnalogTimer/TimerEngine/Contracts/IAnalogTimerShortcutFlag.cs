@@ -1,6 +1,6 @@
 ﻿namespace AnalogTimer.Contracts;
 
-public interface IShortcutFlag
+public interface IAnalogTimerShortcutFlag
 {
     string Shortcut { get; }
 

@@ -3,7 +3,7 @@ using AnalogTimer.Prompts;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class PausePrompt : PromptBase
+public class PausePrompt : AnalogTimerPromptBase
 {
     public override string Name => "pause";
 

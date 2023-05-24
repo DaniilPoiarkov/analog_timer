@@ -2,7 +2,7 @@
 
 namespace TimerEngine.Prompts.ShortcutFlags.StartPromptFlags;
 
-internal class StartMinutesFlag : IShortcutFlag
+internal class StartMinutesFlag : IAnalogTimerShortcutFlag
 {
     public string Shortcut => "m";
 

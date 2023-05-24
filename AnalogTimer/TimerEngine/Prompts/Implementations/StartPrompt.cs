@@ -1,11 +1,11 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.InputFlyweight;
 using AnalogTimer.Prompts;
+using ConsoleInterface.InputFlyweight;
 using TimerEngine.Prompts.ShortcutFlags.StartPromptFlags;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class StartPrompt : PromptBase
+public class StartPrompt : AnalogTimerPromptBase
 {
     public override string Instruction => "Write \'start\' to start timer.\n\t" +
         "Flags: \'-h\', \'-m\', \'-s\' allows you to add hours, minutes and seconds accordingly.\n\t\t" +
@@ -15,11 +15,11 @@ public class StartPrompt : PromptBase
 
     public override string Shortcut => Name;
 
-    private readonly List<IShortcutFlag> _shortcutFlags;
+    private readonly List<IAnalogTimerShortcutFlag> _shortcutFlags;
 
     public StartPrompt()
     {
-        _shortcutFlags = new List<IShortcutFlag>()
+        _shortcutFlags = new List<IAnalogTimerShortcutFlag>()
         {
             new StartSecondsFlag(),
             new StartMinutesFlag(),

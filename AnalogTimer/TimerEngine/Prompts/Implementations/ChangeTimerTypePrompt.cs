@@ -1,10 +1,10 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Models.Enums;
 using AnalogTimer.Prompts;
+using TimerEngine.Models.Enums;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class ChangeTimerTypePrompt : PromptBase
+public class ChangeTimerTypePrompt : AnalogTimerPromptBase
 {
     public override string Name => "type";
 

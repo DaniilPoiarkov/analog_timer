@@ -1,7 +1,7 @@
 ﻿
 namespace AnalogTimer.Contracts;
 
-public interface IPrompt
+public interface IAnalogTimerPrompt
 {
     string Name { get; }
 

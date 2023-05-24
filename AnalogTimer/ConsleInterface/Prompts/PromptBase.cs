@@ -1,17 +1,15 @@
-﻿using AnalogTimer.Contracts;
-using AnalogTimer.InputFlyweight;
+﻿using ConsoleInterface.InputFlyweight;
+using ConsoleInterface.Models.Enums;
 
-namespace AnalogTimer.Prompts;
+namespace ConsoleInterface.Prompts;
 
-public abstract class PromptBase : IPrompt
+public abstract class PromptBase
 {
     public abstract string Name { get; }
 
     public abstract string Instruction { get; }
 
     public abstract string Shortcut { get; }
-
-    public abstract Task Proceed(string input, IAnalogTimer timer);
 
     protected static IEnumerable<string> SplitInput(string input) => input
         .Split(' ', StringSplitOptions.RemoveEmptyEntries)
@@ -33,7 +31,7 @@ public abstract class PromptBase : IPrompt
     protected static IEnumerable<(string Flag, string Value)> ParseUserInput(UserInput userInput)
     {
         var parsed = userInput.Tokens
-            .Where(t => t.Type == Models.Enums.TokenType.Flag)
+            .Where(t => t.Type == TokenType.Flag)
             .Select(t => t.Value
                 .Trim()
                 .Split(' '));
@@ -60,22 +58,22 @@ public abstract class PromptBase : IPrompt
             .ToList();
     }
 
-    protected static void ValidateFlags(IEnumerable<(string Flag, string Value)> flags, IEnumerable<IShortcutFlag> shortcuts)
-    {
-        if (!flags.All(f => shortcuts.Any(s => s.Shortcut.Equals(f.Flag))))
-        {
-            var unexpected = flags.Where(f =>
-                !shortcuts.Any(s => s.Shortcut.Equals(f.Flag)))
-                .Select(f => $"-{f.Flag}");
+    //protected static void ValidateFlags(IEnumerable<(string Flag, string Value)> flags, IEnumerable<IShortcutFlag> shortcuts)
+    //{
+    //    if (!flags.All(f => shortcuts.Any(s => s.Shortcut.Equals(f.Flag))))
+    //    {
+    //        var unexpected = flags.Where(f =>
+    //            !shortcuts.Any(s => s.Shortcut.Equals(f.Flag)))
+    //            .Select(f => $"-{f.Flag}");
 
-            throw new InvalidOperationException($"Unexpected flag(s) {string.Join(", ", unexpected)}");
-        }
-    }
+    //        throw new InvalidOperationException($"Unexpected flag(s) {string.Join(", ", unexpected)}");
+    //    }
+    //}
 
-    protected static IEnumerable<(string Flag, string Value)> GenerateFlags(UserInput userInput, IEnumerable<IShortcutFlag> shortcuts)
-    {
-        var flags = ParseUserInput(userInput);
-        ValidateFlags(flags, shortcuts);
-        return flags;
-    }
+    //protected static IEnumerable<(string Flag, string Value)> GenerateFlags(UserInput userInput, IEnumerable<IShortcutFlag> shortcuts)
+    //{
+    //    var flags = ParseUserInput(userInput);
+    //    ValidateFlags(flags, shortcuts);
+    //    return flags;
+    //}
 }

@@ -2,7 +2,7 @@
 
 public interface IPromptService
 {
-    IReadOnlyCollection<IPrompt> Prompts { get; }
+    IReadOnlyCollection<IAnalogTimerPrompt> Prompts { get; }
 
     Task Consume(string? input);
 }

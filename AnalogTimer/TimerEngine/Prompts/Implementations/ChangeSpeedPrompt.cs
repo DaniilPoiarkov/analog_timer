@@ -3,7 +3,7 @@ using AnalogTimer.Prompts;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class ChangeSpeedPrompt : PromptBase
+public class ChangeSpeedPrompt : AnalogTimerPromptBase
 {
     public override string Name => "speed";
 

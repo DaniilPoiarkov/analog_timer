@@ -1,6 +1,6 @@
-﻿using AnalogTimer.Models.Enums;
+﻿using ConsoleInterface.Models.Enums;
 
-namespace AnalogTimer.InputFlyweight;
+namespace ConsoleInterface.InputFlyweight;
 
 public class InputToken
 {

@@ -4,14 +4,14 @@ namespace AnalogTimer.Implementations;
 
 public class PromptService : IPromptService
 {
-    private readonly IEnumerable<IPrompt> _prompts;
+    private readonly IEnumerable<IAnalogTimerPrompt> _prompts;
 
     private readonly IAnalogTimer _analogTimer;
 
-    public IReadOnlyCollection<IPrompt> Prompts => _prompts.ToList();
+    public IReadOnlyCollection<IAnalogTimerPrompt> Prompts => _prompts.ToList();
 
     public PromptService(
-        IEnumerable<IPrompt> prompts,
+        IEnumerable<IAnalogTimerPrompt> prompts,
         IAnalogTimer analogTimer)
     {
         _prompts = prompts;

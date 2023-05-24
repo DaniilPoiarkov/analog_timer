@@ -3,7 +3,7 @@ using AnalogTimer.Prompts;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class CloseTimerPrompt : PromptBase
+public class CloseTimerPrompt : AnalogTimerPromptBase
 {
     public override string Name => "close";
 
@@ -15,7 +15,7 @@ public class CloseTimerPrompt : PromptBase
     {
         Console.CursorTop += GetType().Assembly
             .GetTypes()
-            .Where(t => t.IsAssignableTo(typeof(IPrompt))
+            .Where(t => t.IsAssignableTo(typeof(IAnalogTimerPrompt))
                 && !t.IsAbstract
                 && !t.IsInterface)
             .Count() + 5;

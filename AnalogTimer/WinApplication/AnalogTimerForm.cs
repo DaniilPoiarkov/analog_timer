@@ -1,11 +1,11 @@
 using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using TimerEngine.Implementations.DisplayServices;
 using AnalogTimer.Contracts;
-using AnalogTimer.Models.Enums;
 using AnalogTimer.Models;
 using AnalogTimer.Implementations;
 using AnalogTimer.Helpers;
 using TimerEngine.Prompts.Implementations;
+using TimerEngine.Models.Enums;
 
 namespace WinApplication;
 

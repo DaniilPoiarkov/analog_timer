@@ -3,7 +3,7 @@ using AnalogTimer.Prompts;
 
 namespace TimerEngine.Prompts.Implementations;
 
-public class ResetPrompt : PromptBase
+public class ResetPrompt : AnalogTimerPromptBase
 {
     public override string Name => "reset";
 
