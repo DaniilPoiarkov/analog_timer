@@ -15,6 +15,8 @@ internal class RunningLineApplication : ConsoleApplication
             return Task.CompletedTask;
         }
 
+
+
         return Task.CompletedTask;
     }
 }
