@@ -1,30 +1,19 @@
-﻿namespace AnalogTimer.ConsoleApplications;
+﻿using ConsoleInterface.Contracts;
+using ConsoleInterface.Prompts;
+using RunningLineEngine.Contracts;
+using RunningLineEngine.Implementations;
+using RunningLineEngine.Prompts.Implementations;
 
-internal class RunningLineApplication : ConsoleApplication
+namespace AnalogTimer.ConsoleApplications;
+
+internal class RunningLineApplication : ConsoleApplication<IRunningLine>
 {
-    protected override void DisplayInstruction()
+    public RunningLineApplication()
     {
-        Console.WriteLine("Write any sentence and watch how it's going!");
-    }
-
-    protected override async Task HandleUserInput(string? input)
-    {
-        if (string.IsNullOrEmpty(input))
-        {
-            Console.WriteLine("Invalid input!");
-            return;
-        }
-
-        var consoleWidth = Console.BufferWidth - input.Length;
-
-        while (consoleWidth != 0)
-        {
-            Console.CursorTop = 2;
-            Console.Write(input);
-            consoleWidth--;
-            await Task.Delay(100);
-            Console.CursorLeft = consoleWidth;
-            Console.Write(new string(' ', consoleWidth));
-        }
+        Entity = new RunningLine();
+        PromptService = new RunningLinePromptServiceBuilder(Entity)
+            .Add<ChangeSpeedPrompt<IRunningLine>>()
+            .Add<RunPrompt>()
+            .Build();
     }
 }

@@ -1,15 +1,20 @@
 ﻿using AnalogTimer.Helpers;
+using ConsoleInterface.Contracts;
 using NLog;
 
 namespace AnalogTimer;
 
-internal abstract class ConsoleApplication
+internal abstract class ConsoleApplication<TEntity>
 {
     protected const int _inputLine = 9;
 
     protected const int _exceptionLine = 8;
 
     protected readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+    protected IPromptService<TEntity>? PromptService;
+
+    protected TEntity? Entity;
 
     protected static string GetUserInput()
     {
@@ -38,7 +43,7 @@ internal abstract class ConsoleApplication
         return UIHelper.GetInput();
     }
 
-    protected void PrintException(string message, Exception? ex = null)
+    protected virtual void PrintException(string message, Exception? ex = null)
     {
         Console.CursorTop = _exceptionLine;
         Console.WriteLine(new string(' ', Console.WindowWidth));
@@ -48,8 +53,13 @@ internal abstract class ConsoleApplication
         _logger.Error(ex, message);
     }
 
-    public async Task Run()
+    public virtual async Task Run()
     {
+        if (PromptService is null || Entity is null)
+        {
+            throw new InvalidOperationException();
+        }
+
         DisplayInstruction();
 
         while (true)
@@ -71,7 +81,23 @@ internal abstract class ConsoleApplication
         }
     }
 
-    protected abstract void DisplayInstruction();
+    protected virtual async Task HandleUserInput(string input)
+    {
+        await PromptService!.Consume(input);
+    }
 
-    protected abstract Task HandleUserInput(string? input);
+    protected virtual void DisplayInstruction()
+    {
+        if (PromptService is null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        Console.CursorTop = 12;
+
+        foreach (var prompt in PromptService.Prompts)
+        {
+            Console.WriteLine(prompt.Instruction);
+        }
+    }
 }

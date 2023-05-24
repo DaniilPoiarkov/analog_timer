@@ -6,8 +6,8 @@ using AnalogTimer.Implementations;
 using AnalogTimer.Helpers;
 using TimerEngine.Prompts.Implementations;
 using TimerEngine.Models.Enums;
-using ConsoleInterface.EntityImplementations;
 using ConsoleInterface.Contracts;
+using ConsoleInterface.Prompts;
 
 namespace WinApplication;
 

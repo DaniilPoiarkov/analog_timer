@@ -1,14 +1,13 @@
 ﻿using ConsoleInterface.EntityContracts;
-using ConsoleInterface.Prompts;
 
-namespace ConsoleInterface.EntityImplementations;
+namespace ConsoleInterface.Prompts;
 
 public class ChangeSpeedPrompt<TEntity> : PromptBase<TEntity>
     where TEntity : ISpeedChangable
 {
     public override string Name => "speed";
 
-    public override string Instruction => "Write \'speed x\' where \'x\' represents ticks per second.";
+    public override string Instruction => "Write \'speed x\' where \'x\' represents speed coefficient.";
 
     public override string Shortcut => Name;
 

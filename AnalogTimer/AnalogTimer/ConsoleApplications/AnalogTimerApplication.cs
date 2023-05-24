@@ -1,25 +1,22 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
-using ConsoleInterface.EntityImplementations;
-using ConsoleInterface.Contracts;
 using TimerEngine.Prompts.Implementations;
+using ConsoleInterface.Prompts;
 
 namespace AnalogTimer.ConsoleApplications;
 
-internal class AnalogTimerApplication : ConsoleApplication
+internal class AnalogTimerApplication : ConsoleApplication<IAnalogTimer>
 {
-    private readonly IPromptService<IAnalogTimer> _promptService;
-
     public AnalogTimerApplication()
     {
         var displayService = new ConsoleDisplayService(new DefaultTemplate());
-        var timer = new Implementations.AnalogTimer();
+        Entity = new Implementations.AnalogTimer();
 
-        timer.Tick += displayService.DisplayTick;
-        timer.Updated += displayService.DisplayUpdated;
-        timer.TimerCut += displayService.DisplayCut;
+        Entity.Tick += displayService.DisplayTick;
+        Entity.Updated += displayService.DisplayUpdated;
+        Entity.TimerCut += displayService.DisplayCut;
 
-        _promptService = new AnalogTimerPromptServiceBuilder(timer)
+        PromptService = new AnalogTimerPromptServiceBuilder(Entity)
             .Add<StartPrompt>()
             .Add<PausePrompt>()
             .Add<ResetPrompt>()
@@ -31,20 +28,5 @@ internal class AnalogTimerApplication : ConsoleApplication
             .Add<CloseTimerPrompt>()
             .Add<CutTimerStatePrompt>()
             .Build();
-    }
-
-    protected override void DisplayInstruction()
-    {
-        Console.CursorTop = 12;
-
-        foreach (var prompt in _promptService.Prompts)
-        {
-            Console.WriteLine(prompt.Instruction);
-        }
-    }
-
-    protected override async Task HandleUserInput(string? input)
-    {
-        await _promptService.Consume(input);
     }
 }
