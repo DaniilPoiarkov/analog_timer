@@ -1,9 +1,10 @@
-﻿using AnalogTimer.Contracts;
-using AnalogTimer.Prompts;
+﻿using ConsoleInterface.EntityContracts;
+using ConsoleInterface.Prompts;
 
-namespace TimerEngine.Prompts.Implementations;
+namespace ConsoleInterface.EntityImplementations;
 
-public class ChangeSpeedPrompt : AnalogTimerPromptBase
+public class ChangeSpeedPrompt<TEntity> : PromptBase<TEntity>
+    where TEntity : ISpeedChangable
 {
     public override string Name => "speed";
 
@@ -11,13 +12,13 @@ public class ChangeSpeedPrompt : AnalogTimerPromptBase
 
     public override string Shortcut => Name;
 
-    public override Task Proceed(string input, IAnalogTimer timer)
+    public override Task Proceed(string input, TEntity timer)
     {
         var values = ParseAndValidateInput(input);
 
         var ticksPerSecond = int.Parse(values[1]);
 
-        timer.ChangeTicksPerSecond(ticksPerSecond);
+        timer.ChangeSpeed(ticksPerSecond);
 
         return Task.CompletedTask;
     }

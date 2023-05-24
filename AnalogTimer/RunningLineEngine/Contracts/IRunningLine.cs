@@ -1,6 +1,8 @@
-﻿namespace RunningLineEngine.Contracts;
+﻿using ConsoleInterface.EntityContracts;
 
-public interface IRunningLine
+namespace RunningLineEngine.Contracts;
+
+public interface IRunningLine : ISpeedChangable
 {
 
 }

@@ -1,10 +1,11 @@
 ﻿using AnalogTimer.Models;
+using ConsoleInterface.EntityContracts;
 using TimerEngine.Contracts;
 using TimerEngine.Models.Enums;
 
 namespace AnalogTimer.Contracts;
 
-public interface IAnalogTimer : ITimerEvents
+public interface IAnalogTimer : ITimerEvents, ISpeedChangable
 {
     bool IsRunning { get; }
 
@@ -17,8 +18,6 @@ public interface IAnalogTimer : ITimerEvents
     void AddMinutes(int minutes);
 
     void AddHours(int hours);
-
-    void ChangeTicksPerSecond(int ticksPerSecond);
 
     void ResetState();
 

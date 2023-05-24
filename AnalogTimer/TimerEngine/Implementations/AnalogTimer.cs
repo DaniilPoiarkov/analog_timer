@@ -76,7 +76,7 @@ public class AnalogTimer : IAnalogTimer
         UpdateState(timer => timer.Type = type);
     }
 
-    public void ChangeTicksPerSecond(int ticksPerSecond)
+    public void ChangeSpeed(int ticksPerSecond)
     {
         UpdateState(timer => timer.TicksPerSecond = ticksPerSecond);
     }

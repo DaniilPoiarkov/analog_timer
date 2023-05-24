@@ -6,6 +6,8 @@ using AnalogTimer.Implementations;
 using AnalogTimer.Helpers;
 using TimerEngine.Prompts.Implementations;
 using TimerEngine.Models.Enums;
+using ConsoleInterface.EntityImplementations;
+using ConsoleInterface.Contracts;
 
 namespace WinApplication;
 
@@ -13,7 +15,7 @@ public partial class AnalogTimerForm : Form
 {
     private readonly MyTimer _timer;
 
-    private readonly IPromptService _promptService;
+    private readonly IPromptService<IAnalogTimer> _promptService;
 
     private int hours;
 
@@ -38,14 +40,14 @@ public partial class AnalogTimerForm : Form
             millisecondsOutput.Text = digit.ToString();
         });
 
-        _promptService = new PromptServiceBuilder(_timer)
+        _promptService = new AnalogTimerPromptServiceBuilder(_timer)
             .Add<StartPrompt>()
             .Add<PausePrompt>()
             .Add<ResetPrompt>()
             .Add<AddSecondsPrompt>()
             .Add<AddMinutesPrompt>()
             .Add<AddHoursPrompt>()
-            .Add<ChangeSpeedPrompt>()
+            .Add<ChangeSpeedPrompt<IAnalogTimer>>()
             .Add<ChangeTimerTypePrompt>()
             .Add<CutTimerStatePrompt>()
             .Build();
@@ -139,7 +141,7 @@ public partial class AnalogTimerForm : Form
     {
         var speedCoef = (int)ChangeSpeedInput.Value;
 
-        UpdateTimerState(timer => timer.ChangeTicksPerSecond(speedCoef));
+        UpdateTimerState(timer => timer.ChangeSpeed(speedCoef));
     }
 
     private async Task UpdateTimerState(Func<MyTimer, Task> action, Action? onSuccess = null)

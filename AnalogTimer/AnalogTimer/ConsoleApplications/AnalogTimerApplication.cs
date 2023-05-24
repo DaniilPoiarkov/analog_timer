@@ -1,5 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
+using ConsoleInterface.EntityImplementations;
 using ConsoleInterface.Contracts;
 using TimerEngine.Prompts.Implementations;
 
@@ -25,7 +26,7 @@ internal class AnalogTimerApplication : ConsoleApplication
             .Add<AddSecondsPrompt>()
             .Add<AddMinutesPrompt>()
             .Add<AddHoursPrompt>()
-            .Add<ChangeSpeedPrompt>()
+            .Add<ChangeSpeedPrompt<IAnalogTimer>>()
             .Add<ChangeTimerTypePrompt>()
             .Add<CloseTimerPrompt>()
             .Add<CutTimerStatePrompt>()
