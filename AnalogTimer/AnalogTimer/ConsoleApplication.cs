@@ -70,6 +70,7 @@ internal abstract class ConsoleApplication<TEntity>
                 Console.CursorTop = _inputLine;
                 Console.WriteLine(new string(' ', Console.BufferWidth));
                 await HandleUserInput(input);
+                UIHelper.SetCursor();
             }
             catch (Exception ex)
             {

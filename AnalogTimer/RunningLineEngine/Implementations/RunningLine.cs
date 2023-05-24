@@ -14,9 +14,13 @@ public class RunningLine : IRunningLine
 
     private string? Sentence { get; set; }
 
-    public RunningLine()
+    private readonly ILineDisplay _lineDisplay;
+
+    public RunningLine(ILineDisplay lineDisplay)
     {
         _speedCoefficient = 50;
+        _lineDisplay = lineDisplay;
+
     }
 
     public void ChangeSpeed(int coefficient)
@@ -26,63 +30,53 @@ public class RunningLine : IRunningLine
 
     private async Task RunTemplate(string sentence)
     {
-        Console.CursorVisible = false;
-
         var width = Console.BufferWidth - 1;
 
         var index = 1;
         var start = 0;
 
-        while (start != sentence.Length)
+        while (start != sentence.Length && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
 
             var partial = sentence[..index];
-            DisplaySentence(partial, width);
+            _lineDisplay.Display(partial, width);
 
             start++;
             index++;
             width--;
         }
 
-        while (width != 0)
+        while (width != 0 && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
-            DisplaySentence(sentence, width);
+            _lineDisplay.Display(sentence, width);
 
             width--;
         }
 
         index = 1;
 
-        while (width > sentence.Length * -1)
+        while (width > sentence.Length * -1 && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
 
             sentence = sentence[index..];
-            DisplaySentence(sentence, 0);
+            _lineDisplay.Display(sentence, 0);
 
             width--;
             index++;
         }
+
+        if (!IsRunning)
+        {
+            return;
+        }
         
         await Task.Delay(_speedCoefficient);
-        DisplaySentence(string.Empty, 0);
+        _lineDisplay.Display(string.Empty, 0);
 
         Console.CursorLeft = 0;
-        Console.CursorVisible = true;
-    }
-
-    private static void DisplaySentence(string sentence, int positionLeft)
-    {
-        Console.CursorTop = 1;
-        Console.CursorLeft = positionLeft;
-        var toClean = Console.BufferWidth - positionLeft;
-        Console.Write(new string(' ', toClean));
-
-        Console.CursorTop = 1;
-        Console.CursorLeft = positionLeft;
-        Console.Write(sentence);
     }
 
     public async Task Stop()
@@ -92,11 +86,12 @@ public class RunningLine : IRunningLine
             throw new InvalidOperationException("Line is not running");
         }
 
+        IsRunning = false;
+
         await Execution;
 
         Runner = null;
         Execution = null;
-        IsRunning = false;
     }
 
     public void Set(string sentence)
@@ -117,8 +112,15 @@ public class RunningLine : IRunningLine
         }
 
         Runner = RunTemplate;
-        Execution = Runner.Invoke(Sentence);
-
         IsRunning = true;
+
+        Execution = Runner.Invoke(Sentence);
+    }
+
+    public void Clean()
+    {
+        Console.CursorLeft = 0;
+        Console.CursorTop = 1;
+        Console.Write(new string(' ', Console.BufferWidth));
     }
 }
