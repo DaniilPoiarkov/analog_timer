@@ -8,7 +8,7 @@ public class InputToken
 
     public TokenType Type { get; init; }
 
-    public InputToken(string value)
+    internal InputToken(string value)
     {
         if (value.Contains(' '))
         {

@@ -16,6 +16,8 @@ public class RunningLine : IRunningLine
 
     private readonly ILineDisplay _lineDisplay;
 
+    private bool IsCleaned = false;
+
     public RunningLine(ILineDisplay lineDisplay)
     {
         _speedCoefficient = 50;
@@ -30,53 +32,55 @@ public class RunningLine : IRunningLine
 
     private async Task RunTemplate(string sentence)
     {
-        var width = Console.BufferWidth - 1;
-
-        var index = 1;
-        var start = 0;
-
-        while (start != sentence.Length && IsRunning)
+        while (IsRunning)
         {
-            await Task.Delay(_speedCoefficient);
+            var width = Console.BufferWidth - 1;
 
-            var partial = sentence[..index];
-            _lineDisplay.Display(partial, width);
+            var index = 1;
+            var start = 0;
 
-            start++;
-            index++;
-            width--;
+            while (start != sentence.Length && IsRunning)
+            {
+                await Task.Delay(_speedCoefficient);
+
+                var partial = sentence[..index];
+                _lineDisplay.Display(partial, width);
+
+                start++;
+                index++;
+                width--;
+            }
+
+            while (width != 0 && IsRunning)
+            {
+                await Task.Delay(_speedCoefficient);
+                _lineDisplay.Display(sentence, width);
+
+                width--;
+            }
+
+            index = 1;
+
+            while (width > sentence.Length * -1 && IsRunning)
+            {
+                await Task.Delay(_speedCoefficient);
+
+                var partial = sentence[index..];
+                _lineDisplay.Display(partial, 0);
+
+                width--;
+                index++;
+            }
+
+            if (IsRunning)
+            {
+                await Task.Delay(_speedCoefficient);
+                _lineDisplay.Display(string.Empty, 0);
+
+                Console.CursorLeft = 0;
+                await RunTemplate(sentence);
+            }
         }
-
-        while (width != 0 && IsRunning)
-        {
-            await Task.Delay(_speedCoefficient);
-            _lineDisplay.Display(sentence, width);
-
-            width--;
-        }
-
-        index = 1;
-
-        while (width > sentence.Length * -1 && IsRunning)
-        {
-            await Task.Delay(_speedCoefficient);
-
-            sentence = sentence[index..];
-            _lineDisplay.Display(sentence, 0);
-
-            width--;
-            index++;
-        }
-
-        if (!IsRunning)
-        {
-            return;
-        }
-        
-        await Task.Delay(_speedCoefficient);
-        _lineDisplay.Display(string.Empty, 0);
-
-        Console.CursorLeft = 0;
     }
 
     public async Task Stop()
@@ -90,7 +94,8 @@ public class RunningLine : IRunningLine
 
         await Execution;
 
-        Runner = null;
+        Clean(); // TODO: Rework and remove
+
         Execution = null;
     }
 
@@ -111,8 +116,13 @@ public class RunningLine : IRunningLine
             throw new InvalidDataException("No sentence provided");
         }
 
-        Runner = RunTemplate;
         IsRunning = true;
+
+        if (IsCleaned || Runner is null)
+        {
+            Runner = RunTemplate;
+            IsCleaned = false;
+        }
 
         Execution = Runner.Invoke(Sentence);
     }
@@ -122,5 +132,8 @@ public class RunningLine : IRunningLine
         Console.CursorLeft = 0;
         Console.CursorTop = 1;
         Console.Write(new string(' ', Console.BufferWidth));
+
+        Runner = null;
+        IsCleaned = true;
     }
 }

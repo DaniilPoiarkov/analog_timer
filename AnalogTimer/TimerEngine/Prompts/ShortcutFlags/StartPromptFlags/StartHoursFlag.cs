@@ -4,7 +4,7 @@ namespace TimerEngine.Prompts.ShortcutFlags.StartPromptFlags;
 
 public class StartHoursFlag : IAnalogTimerShortcutFlag
 {
-    public string Shortcut => "h";
+    public string Shortcut => "-h";
 
     public Task Handle(string value, IAnalogTimer timer)
     {

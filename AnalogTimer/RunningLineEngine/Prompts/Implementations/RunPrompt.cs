@@ -1,4 +1,5 @@
-﻿using RunningLineEngine.Contracts;
+﻿using ConsoleInterface.InputFlyweight;
+using RunningLineEngine.Contracts;
 
 namespace RunningLineEngine.Prompts.Implementations;
 
@@ -12,9 +13,19 @@ public class RunPrompt : RunningLinePromptBase
 
     public override Task Proceed(string input, IRunningLine entity)
     {
-        var args = ParseAndValidateInput(input);
+        var userInput = new UserInput(input);
 
-        entity.Set(args[1]);
+        if(userInput.Tokens.Count() == 1)
+        {
+            entity.Start();
+            return Task.CompletedTask;
+        }
+
+        var sentence = string.Join(' ', userInput.Tokens
+            .Skip(1)
+            .Select(t => t.Value));
+
+        entity.Set(sentence[1..^1]);
         entity.Start();
 
         return Task.CompletedTask;

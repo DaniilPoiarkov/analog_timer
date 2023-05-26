@@ -1,4 +1,5 @@
 ﻿using ConsoleInterface.Models.Enums;
+using ConsoleInterface.Models.Exceptions;
 
 namespace ConsoleInterface.InputFlyweight;
 
@@ -24,10 +25,33 @@ public class UserInput
                 continue;
             }
 
-            if (!token.StartsWith('-'))
+            if (NotStartWithSpecialSymbol(token))
             {
                 tokens.Add(new InputToken(token));
                 continue;
+            }
+
+            if (token.StartsWith('\'') || token.StartsWith("\""))
+            {
+                var closure = token.StartsWith('\'') ? '\'' : '\"';
+                var indexToAdd = 1;
+
+                var multiToken = new List<string>();
+
+                while (token.EndsWith(closure))
+                {
+                    multiToken.Add(token);
+
+                    if (splitted.Count == tokens.Count + multiToken.Count)
+                    {
+                        throw new InvalidInputException(InputExceptionType.ClosureTag);
+                    }
+
+                    token = splitted[i + indexToAdd];
+                    indexToAdd++;
+                }
+
+                splitted.RemoveRange(i, multiToken.Count);
             }
 
             if (i == splitted.Count)
@@ -35,17 +59,20 @@ public class UserInput
                 throw new ArgumentException("Invalid input", input);
             }
 
-            tokens.Add(new InputToken($"{token[1..]} {splitted[i + 1]}"));
+            tokens.Add(new InputToken($"{token} {splitted[i + 1]}"));
             splitted.RemoveAt(i + 1);
         }
 
         Tokens = tokens;
     }
 
+    private static bool NotStartWithSpecialSymbol(string token)
+    {
+        return !token.StartsWith('-') && !token.StartsWith('\'') || !token.StartsWith('\"');
+    }
+
     public override string ToString()
     {
-        return string.Join(" ", Tokens.Select(t => t.Type == TokenType.Flag
-            ? $"-{t.Value}"
-            : t.Value));
+        return string.Join(" ", Tokens.Select(t => t.Value));
     }
 }
