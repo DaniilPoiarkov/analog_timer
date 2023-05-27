@@ -1,6 +1,6 @@
 ﻿using ConsoleInterface.Contracts;
-using ConsoleInterface.InputFlyweight;
 using ConsoleInterface.Models.Enums;
+using ConsoleInterface.UserInputInterpreter;
 
 namespace ConsoleInterface.Prompts;
 
@@ -51,7 +51,6 @@ public abstract class PromptBase<TEntity> : IPrompt<TEntity>
         {
             var unexpected = parsed.Where(p => p.Length != 2)
                 .Select(p => string.Join(" ", p));
-                //.Select(v => $"\'-{v}\'");
 
             throw new InvalidOperationException($"Unexpected value(s) {string.Join(' ', unexpected)}");
         }

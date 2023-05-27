@@ -30,9 +30,8 @@ public class UserInput
                 continue;
             }
 
-            if (token.StartsWith('\'') || token.StartsWith("\""))
+            if (HasOpenTag(token, out var closure))
             {
-                var closure = token.StartsWith('\'') ? '\'' : '\"';
                 var indexToAdd = 1;
 
                 var multiToken = new List<string>();
@@ -86,6 +85,19 @@ public class UserInput
         }
 
         return tokens;
+    }
+
+    private static bool HasOpenTag(string token, out char closure)
+    {
+        closure = new char();
+        var hasOpenFlag = token.StartsWith('\'') || token.StartsWith("\"");
+
+        if (hasOpenFlag)
+        {
+            closure = token.StartsWith('\'') ? '\'' : '\"';
+        }
+
+        return hasOpenFlag;
     }
 
     private static bool StartWithSpecialSymbol(string token)
