@@ -1,6 +1,6 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Prompts;
-using ConsoleInterface.InputFlyweight;
+using ConsoleInterface.UserInputInterpreter;
 using TimerEngine.Prompts.ShortcutFlags.StartPromptFlags;
 
 namespace TimerEngine.Prompts.Implementations;

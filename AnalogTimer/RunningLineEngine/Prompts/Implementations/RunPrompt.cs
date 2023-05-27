@@ -1,4 +1,5 @@
-﻿using ConsoleInterface.InputFlyweight;
+﻿using ConsoleInterface.UserInputInterpreter;
+using ConsoleInterface.Models.Enums;
 using RunningLineEngine.Contracts;
 
 namespace RunningLineEngine.Prompts.Implementations;
@@ -15,10 +16,18 @@ public class RunPrompt : RunningLinePromptBase
     {
         var userInput = new UserInput(input);
 
-        if(userInput.Tokens.Count() == 1)
+        var firstToken = userInput.Tokens.First();
+        var tokensCount = userInput.Tokens.Count();
+
+        if (tokensCount == 1 && firstToken.Type == TokenType.Key)
         {
             entity.Start();
             return Task.CompletedTask;
+        }
+
+        if (firstToken.Type != TokenType.Key)
+        {
+            throw new Exception("Invalid format. If you want to specify a sentence put it in quotes.");
         }
 
         var sentence = string.Join(' ', userInput.Tokens

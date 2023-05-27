@@ -3,4 +3,5 @@
 internal enum InputExceptionType
 {
     ClosureTag,
+    Lex,
 }

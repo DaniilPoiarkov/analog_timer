@@ -3,5 +3,7 @@
 public enum TokenType
 {
     String,
-    Flag
+    Flag,
+    Sentence,
+    Key
 }

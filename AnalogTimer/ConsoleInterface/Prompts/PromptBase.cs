@@ -50,8 +50,8 @@ public abstract class PromptBase<TEntity> : IPrompt<TEntity>
         if (parsed.Any(p => p.Length != 2))
         {
             var unexpected = parsed.Where(p => p.Length != 2)
-                .Select(p => string.Join(" ", p))
-                .Select(v => $"\'-{v}\'");
+                .Select(p => string.Join(" ", p));
+                //.Select(v => $"\'-{v}\'");
 
             throw new InvalidOperationException($"Unexpected value(s) {string.Join(' ', unexpected)}");
         }
@@ -67,7 +67,7 @@ public abstract class PromptBase<TEntity> : IPrompt<TEntity>
         {
             var unexpected = flags.Where(f =>
                 !shortcuts.Any(s => s.Shortcut.Equals(f.Flag)))
-                .Select(f => $"-{f.Flag}");
+                .Select(f => f.Flag);
 
             throw new InvalidOperationException($"Unexpected flag(s) {string.Join(", ", unexpected)}");
         }
