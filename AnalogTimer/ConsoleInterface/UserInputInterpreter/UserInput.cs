@@ -7,17 +7,16 @@ public class UserInput
 {
     public IEnumerable<InputToken> Tokens { get; init; }
 
-    // TODO: Rework as an Interpreter
     public UserInput(string input)
     {
         var splitted = input.Trim()
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .ToList();
 
-        Tokens = GetTokens(input, splitted);
+        Tokens = GetTokens(splitted);
     }
 
-    private static IEnumerable<InputToken> GetTokens(string input, List<string> splitted)
+    private static IEnumerable<InputToken> GetTokens(List<string> splitted)
     {
         var tokens = new List<InputToken>(splitted.Count);
 
