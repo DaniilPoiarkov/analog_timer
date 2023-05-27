@@ -10,12 +10,11 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
 {
     public RunningLineApplication()
     {
-        Entity = new RunningLine(new DefauldDisplayHandler());
+        Entity = new RunningLine(new DefaultDisplayHandler());
         PromptService = new RunningLinePromptServiceBuilder(Entity)
             .Add<ChangeSpeedPrompt<IRunningLine>>()
             .Add<PausePrompt<IRunningLine>>()
             .Add<RunPrompt>()
-            .Add<CleanLinePrompt>()
             .Build();
     }
 }

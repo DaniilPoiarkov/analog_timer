@@ -94,7 +94,7 @@ public class RunningLine : IRunningLine
 
         await Execution;
 
-        Clean(); // TODO: Rework and remove
+        Clean();
 
         Execution = null;
     }

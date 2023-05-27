@@ -3,7 +3,7 @@ using RunningLineEngine.Contracts;
 
 namespace AnalogTimer.RunningLineDisplayHandlers;
 
-internal class DefauldDisplayHandler : ILineDisplay
+internal class DefaultDisplayHandler : ILineDisplay
 {
     public void Display(string text, int position)
     {
