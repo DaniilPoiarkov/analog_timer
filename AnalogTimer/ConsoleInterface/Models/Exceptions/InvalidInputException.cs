@@ -9,7 +9,7 @@ internal class InvalidInputException : Exception
         (exceptionType switch
         {
             InputExceptionType.ClosureTag => $"Invalid or missing closure tag. Expected: {info!.Closure}.",
-            InputExceptionType.Lex => $"Mistake when parsing word in {info!.Position!.Value} position.",
+            InputExceptionType.Lex => $"An error occured when parsing word in {info!.Position!.Value} position.",
             _ => throw new ArgumentOutOfRangeException(nameof(exceptionType))
         }, inner) { }
 

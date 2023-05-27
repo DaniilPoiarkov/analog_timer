@@ -13,10 +13,10 @@ public class UserInput
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .ToList();
 
-        Tokens = GetTokens(splitted);
+        Tokens = LexAnalysis(splitted);
     }
 
-    private static IEnumerable<InputToken> GetTokens(List<string> splitted)
+    private static IEnumerable<InputToken> LexAnalysis(List<string> splitted)
     {
         var tokens = new List<InputToken>(splitted.Count);
 
@@ -30,10 +30,26 @@ public class UserInput
                 continue;
             }
 
+            if (token.StartsWith('-'))
+            {
+                if (i + 1 < splitted.Count)
+                {
+                    var nextToken = splitted[i + 1];
+
+                    if (!StartWithSpecialSymbol(nextToken))
+                    {
+                        tokens.Add(new InputToken($"{token} {nextToken}", TokenType.Flag));
+                        continue;
+                    }
+                }
+
+                tokens.Add(new InputToken(token, TokenType.Key));
+                continue;
+            }
+
             if (HasOpenTag(token, out var closure))
             {
                 var indexToAdd = 1;
-
                 var multiToken = new List<string>();
 
                 while (!token.EndsWith(closure))
@@ -61,27 +77,7 @@ public class UserInput
                 continue;
             }
 
-            if (i == splitted.Count - 1 && splitted.Count != 1)
-            {
-                throw new LexException(i);
-            }
-
-            if (splitted.Count == 1)
-            {
-                tokens.Add(new InputToken(token, TokenType.Key));
-                break;
-            }
-
-            var nextToken = splitted[i + 1];
-
-            if (nextToken.StartsWith('\'') || nextToken.StartsWith('\"'))
-            {
-                tokens.Add(new InputToken(token, TokenType.Key));
-                continue;
-            }
-
-            tokens.Add(new InputToken($"{token} {nextToken}", TokenType.Flag));
-            splitted.RemoveAt(i + 1);
+            throw new LexException(i);
         }
 
         return tokens;
