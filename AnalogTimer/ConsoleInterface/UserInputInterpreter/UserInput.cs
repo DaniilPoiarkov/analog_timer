@@ -24,6 +24,12 @@ public class UserInput
         {
             var token = splitted[i];
 
+            if (!StartWithSpecialSymbol(token) && i == 0)
+            {
+                tokens.Add(new InputToken(token, TokenType.Key));
+                continue;
+            }
+
             if (!StartWithSpecialSymbol(token))
             {
                 tokens.Add(new InputToken(token, TokenType.String));
