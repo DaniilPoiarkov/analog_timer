@@ -14,27 +14,18 @@ public class RunPrompt : RunningLinePromptBase
 
     public override Task Proceed(string input, IRunningLine entity)
     {
-        var userInput = new UserInput(input);
+        var splitted = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        var firstToken = userInput.Tokens.First();
-        var tokensCount = userInput.Tokens.Count();
-
-        if (tokensCount == 1 && firstToken.Type == TokenType.Key)
+        if (splitted.Length == 1)
         {
             entity.Start();
             return Task.CompletedTask;
         }
 
-        if (firstToken.Type != TokenType.Key)
-        {
-            throw new Exception("Invalid format. If you want to specify a sentence put it in quotes.");
-        }
+        var sentence = string.Join(' ', splitted
+            .Skip(1));
 
-        var sentence = string.Join(' ', userInput.Tokens
-            .Skip(1)
-            .Select(t => t.Value));
-
-        entity.Set(sentence[1..^1]);
+        entity.Set(sentence);
         entity.Start();
 
         return Task.CompletedTask;

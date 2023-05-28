@@ -1,5 +1,6 @@
 ﻿using ConsoleInterface.Models.Enums;
 using ConsoleInterface.Models.Exceptions;
+using ConsoleInterface.UserInputInterpreter.Handlers;
 
 namespace ConsoleInterface.UserInputInterpreter;
 
@@ -7,16 +8,23 @@ public class UserInput
 {
     public IEnumerable<InputToken> Tokens { get; init; }
 
+    private readonly TokenHandlerBase _rootHandler;
+
     public UserInput(string input)
     {
         var splitted = input.Trim()
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .ToList();
 
+        _rootHandler = new();
+        _rootHandler.Add(new KeyInputTokenHandler());
+        _rootHandler.Add(new StringInputTokenHandler());
+        _rootHandler.Add(new FlagOrKeyInputTokenHandler());
+
         Tokens = LexAnalysis(splitted);
     }
 
-    private static IEnumerable<InputToken> LexAnalysis(List<string> splitted)
+    private IEnumerable<InputToken> LexAnalysis(List<string> splitted)
     {
         var tokens = new List<InputToken>(splitted.Count);
 
@@ -24,32 +32,11 @@ public class UserInput
         {
             var token = splitted[i];
 
-            if (!StartWithSpecialSymbol(token) && i == 0)
+            var inputToken = _rootHandler.Handle(token, i, splitted);
+
+            if (inputToken is not null)
             {
-                tokens.Add(new InputToken(token, TokenType.Key));
-                continue;
-            }
-
-            if (!StartWithSpecialSymbol(token))
-            {
-                tokens.Add(new InputToken(token, TokenType.String));
-                continue;
-            }
-
-            if (token.StartsWith('-'))
-            {
-                if (i + 1 < splitted.Count)
-                {
-                    var nextToken = splitted[i + 1];
-
-                    if (!StartWithSpecialSymbol(nextToken))
-                    {
-                        tokens.Add(new InputToken($"{token} {nextToken}", TokenType.Flag));
-                        continue;
-                    }
-                }
-
-                tokens.Add(new InputToken(token, TokenType.Key));
+                tokens.Add(inputToken);
                 continue;
             }
 
@@ -100,11 +87,6 @@ public class UserInput
         }
 
         return hasOpenFlag;
-    }
-
-    private static bool StartWithSpecialSymbol(string token)
-    {
-        return token.StartsWith('-') || token.StartsWith('\'') || token.StartsWith('\"');
     }
 
     public override string ToString()
