@@ -14,7 +14,9 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
         PromptService = new RunningLinePromptServiceBuilder(Entity)
             .Add<ChangeSpeedPrompt<IRunningLine>>()
             .Add<PausePrompt<IRunningLine>>()
+            .Add<CleanLinePrompt>()
             .Add<RunPrompt>()
+            .Add<CLosePromp>()
             .Build();
     }
 }

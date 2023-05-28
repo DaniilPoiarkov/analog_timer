@@ -18,11 +18,13 @@ public class RunningLine : IRunningLine
 
     private bool IsCleaned = false;
 
+    private int Position { get; set; }
+
     public RunningLine(ILineDisplay lineDisplay)
     {
         _speedCoefficient = 50;
         _lineDisplay = lineDisplay;
-
+        Position = Console.BufferWidth - 1;
     }
 
     public void ChangeSpeed(int coefficient)
@@ -34,41 +36,37 @@ public class RunningLine : IRunningLine
     {
         while (IsRunning)
         {
-            var width = Console.BufferWidth - 1;
-
             var index = 1;
-            var start = 0;
 
-            while (start != sentence.Length && IsRunning)
+            while (IsRunning && Console.BufferWidth - 1 - sentence.Length < Position)
             {
                 await Task.Delay(_speedCoefficient);
 
                 var partial = sentence[..index];
-                _lineDisplay.Display(partial, width);
+                _lineDisplay.Display(partial, Position);
 
-                start++;
                 index++;
-                width--;
+                Position--;
             }
 
-            while (width != 0 && IsRunning)
+            while (Position != 0 && IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(sentence, width);
+                _lineDisplay.Display(sentence, Position);
 
-                width--;
+                Position--;
             }
 
             index = 1;
 
-            while (width > sentence.Length * -1 && IsRunning)
+            while (Position > sentence.Length * -1 && IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
 
                 var partial = sentence[index..];
                 _lineDisplay.Display(partial, 0);
 
-                width--;
+                Position--;
                 index++;
             }
 
@@ -78,6 +76,7 @@ public class RunningLine : IRunningLine
                 _lineDisplay.Display(string.Empty, 0);
 
                 Console.CursorLeft = 0;
+                Position = Console.BufferWidth - 1;
                 await RunTemplate(sentence);
             }
         }
@@ -93,8 +92,6 @@ public class RunningLine : IRunningLine
         IsRunning = false;
 
         await Execution;
-
-        Clean();
 
         Execution = null;
     }
@@ -129,11 +126,17 @@ public class RunningLine : IRunningLine
 
     public void Clean()
     {
+        if (IsRunning)
+        {
+            throw new InvalidOperationException("Cannot clean line when it's running.");
+        }
+
         Console.CursorLeft = 0;
         Console.CursorTop = 1;
         Console.Write(new string(' ', Console.BufferWidth));
 
         Runner = null;
+        Position = Console.BufferWidth - 1;
         IsCleaned = true;
     }
 }
