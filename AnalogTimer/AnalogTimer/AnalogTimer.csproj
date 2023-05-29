@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RunningLineEngine\RunningLineEngine.csproj" />
     <ProjectReference Include="..\TimerEngine\TimerEngine.csproj" />
   </ItemGroup>
 

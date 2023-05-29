@@ -1,4 +1,4 @@
-﻿namespace AnalogTimer.Models.Enums;
+﻿namespace ConsoleInterface.Models.Enums;
 
 public enum TokenType
 {

@@ -1,7 +1,9 @@
 ﻿using AnalogTimer.Contracts;
-namespace AnalogTimer.Prompts.Implementations;
+using AnalogTimer.Prompts;
 
-public class AddHoursPrompt : PromptBase
+namespace TimerEngine.Prompts.Implementations;
+
+public class AddHoursPrompt : AnalogTimerPromptBase
 {
     public override string Name => "hours";
 

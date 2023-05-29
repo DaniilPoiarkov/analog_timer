@@ -1,24 +1,24 @@
-﻿using AnalogTimer.Contracts;
+﻿using ConsoleInterface.Contracts;
 
-namespace AnalogTimer.Implementations;
+namespace ConsoleInterface.Prompts;
 
-public class PromptService : IPromptService
+public class PromptService<TEntity> : IPromptService<TEntity>
 {
-    private readonly IEnumerable<IPrompt> _prompts;
+    private readonly IEnumerable<IPrompt<TEntity>> _prompts;
 
-    private readonly IAnalogTimer _analogTimer;
+    private readonly TEntity _entity;
 
-    public IReadOnlyCollection<IPrompt> Prompts => _prompts.ToList();
+    public IReadOnlyCollection<IPrompt<TEntity>> Prompts => _prompts.ToList();
 
     public PromptService(
-        IEnumerable<IPrompt> prompts,
-        IAnalogTimer analogTimer)
+        IEnumerable<IPrompt<TEntity>> prompts,
+        TEntity entity)
     {
         _prompts = prompts;
-        _analogTimer = analogTimer;
+        _entity = entity;
     }
 
-    public async Task Consume(string input)
+    public async Task Consume(string? input)
     {
         var values = input?
             .TrimEnd()
@@ -43,6 +43,6 @@ public class PromptService : IPromptService
                 new Exception($"Input: \'{input}\', Values: {string.Join(' ', values)}"));
         }
 
-        await prompt.Proceed(input, _analogTimer);
+        await prompt.Proceed(input, _entity);
     }
 }

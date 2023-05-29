@@ -1,8 +1,9 @@
 ﻿using AnalogTimer.Contracts;
+using AnalogTimer.Prompts;
 
-namespace AnalogTimer.Prompts.Implementations;
+namespace TimerEngine.Prompts.Implementations;
 
-public class CutTimerStatePrompt : PromptBase
+public class CutTimerStatePrompt : AnalogTimerPromptBase
 {
     public override string Name => "cut";
 

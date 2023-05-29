@@ -1,5 +1,5 @@
 ﻿using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
+using TimerEngine.Models.Enums;
 
 namespace TimerEngine.Models.TimerEventArgs;
 

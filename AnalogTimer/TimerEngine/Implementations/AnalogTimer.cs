@@ -1,9 +1,9 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
 using NLog;
 using System.Diagnostics;
+using TimerEngine.Models.Enums;
 using TimerEngine.Models.TimerEventArgs;
 using static TimerEngine.Contracts.ITimerEvents;
 
@@ -76,7 +76,7 @@ public class AnalogTimer : IAnalogTimer
         UpdateState(timer => timer.Type = type);
     }
 
-    public void ChangeTicksPerSecond(int ticksPerSecond)
+    public void ChangeSpeed(int ticksPerSecond)
     {
         UpdateState(timer => timer.TicksPerSecond = ticksPerSecond);
     }
