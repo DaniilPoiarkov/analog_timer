@@ -129,7 +129,16 @@ public partial class AnalogTimerForm : Form
         try
         {
             await _promptService.Consume(ConsoleInput.Text);
+            
+            if (ConsoleInput.Text.StartsWith("start")
+                || ConsoleInput.Text.StartsWith("pause")
+                || ConsoleInput.Text.StartsWith("-p"))
+            {
+                SwitchControlsAccessability();
+            }
+
             ConsoleInput.Text = string.Empty;
+
         }
         catch (Exception ex)
         {
