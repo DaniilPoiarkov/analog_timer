@@ -25,13 +25,6 @@ public class WinFormDisplayService : IDisplayService
 
     public void DisplayCut(TimerEventArgs args)
     {
-        if (_cutClicks == 3)
-        {
-            _cutClicks = 0;
-            _cutOutput.Text = string.Empty;
-        }
-
-        _cutClicks++;
         _cutOutput.Text += $"|{DateTime.UtcNow.ToShortTimeString()} => {args.State}{Environment.NewLine}";
     }
 
