@@ -15,9 +15,16 @@ public class ChangeSpeedPrompt<TEntity> : PromptBase<TEntity>
     {
         var values = ParseAndValidateInput(input);
 
-        var ticksPerSecond = int.Parse(values[1]);
+        try
+        {
+            var ticksPerSecond = int.Parse(values[1]);
+            timer.ChangeSpeed(ticksPerSecond);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"\'{values[1]}\' is not correct value for speed. Use only integers, also fractions are not allowed.", ex);
+        }
 
-        timer.ChangeSpeed(ticksPerSecond);
 
         return Task.CompletedTask;
     }
