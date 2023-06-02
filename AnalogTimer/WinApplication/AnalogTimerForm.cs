@@ -17,6 +17,8 @@ public partial class AnalogTimerForm : Form
 
     private readonly IPromptService<IAnalogTimer> _promptService;
 
+    delegate void SetMillisecondCallback(string text);
+
     private int hours;
 
     private int minutes;
@@ -34,11 +36,15 @@ public partial class AnalogTimerForm : Form
         _timer.Tick += displayService.DisplayTick;
         _timer.Updated += displayService.DisplayUpdated;
         _timer.TimerCut += displayService.DisplayCut;
-
-        MillisecondDisplayHelper.SetOutputHandler(digit =>
+        _timer.Stopeed += _ =>
         {
-            millisecondsOutput.Text = digit.ToString();
-        });
+            SwitchControlsAccessability();
+        };
+
+        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        {
+            SetMillisecond(digit.ToString());
+        };
 
         _promptService = new AnalogTimerPromptServiceBuilder(_timer)
             .Add<StartPrompt>()
@@ -51,6 +57,21 @@ public partial class AnalogTimerForm : Form
             .Add<ChangeTimerTypePrompt>()
             .Add<CutTimerStatePrompt>()
             .Build();
+
+        TimerTypeComboBox.SelectedItem = Enum.GetName(TimerType.Stopwatch);
+    }
+
+    private void SetMillisecond(string digit)
+    {
+        if (millisecondsOutput.InvokeRequired)
+        {
+            var setMillisecond = new SetMillisecondCallback(SetMillisecond);
+            Invoke(setMillisecond, digit);
+        }
+        else
+        {
+            millisecondsOutput.Text = digit;
+        }
     }
 
     private void StartBtn_Click(object sender, EventArgs e)
@@ -78,7 +99,7 @@ public partial class AnalogTimerForm : Form
 
     private async void PauseBtn_Click(object sender, EventArgs e)
     {
-        await UpdateTimerState(async timer => await timer.Stop(), SwitchControlsAccessability);
+        await UpdateTimerState(async timer => await timer.Stop());
     }
 
     private void SwitchControlsAccessability()
@@ -129,21 +150,33 @@ public partial class AnalogTimerForm : Form
         try
         {
             await _promptService.Consume(ConsoleInput.Text);
-            
-            if (ConsoleInput.Text.StartsWith("start")
-                || ConsoleInput.Text.StartsWith("pause")
-                || ConsoleInput.Text.StartsWith("-p"))
+
+            if (NeedsSwitchButtonsAccessability())
             {
                 SwitchControlsAccessability();
             }
 
-            ConsoleInput.Text = string.Empty;
+            TimerTypeComboBox.SelectedItem = Enum.GetName(_timer.Type);
 
+            if (ConsoleInput.Text.StartsWith("speed") && _timer.TicksPerSecond > 10)
+            {
+                ChangeSpeedInput.Value = 10;
+                SpeedChangedEvent(this, EventArgs.Empty);
+            }
+
+            ConsoleInput.Text = string.Empty;
         }
         catch (Exception ex)
         {
             DisplayError(ex.Message);
         }
+    }
+
+    private bool NeedsSwitchButtonsAccessability()
+    {
+        var input = ConsoleInput.Text.ToLower();
+
+        return input.StartsWith("start");
     }
 
     private void SpeedChangedEvent(object sender, EventArgs e)
@@ -212,5 +245,10 @@ public partial class AnalogTimerForm : Form
     private void CutBtn_click(object sender, EventArgs e)
     {
         _timer.Cut();
+    }
+
+    private void ClearOutputButton_Click(object sender, EventArgs e)
+    {
+        cutOutput.Text = string.Empty;
     }
 }

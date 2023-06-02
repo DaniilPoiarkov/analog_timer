@@ -1,5 +1,4 @@
-﻿using ConsoleInterface.Contracts;
-using ConsoleInterface.EntityContracts;
+﻿using ConsoleInterface.EntityContracts;
 
 namespace RunningLineEngine.Contracts;
 

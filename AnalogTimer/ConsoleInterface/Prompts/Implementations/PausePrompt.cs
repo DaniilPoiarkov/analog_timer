@@ -1,4 +1,5 @@
 ﻿using ConsoleInterface.Contracts;
+using ConsoleInterface.EntityContracts;
 
 namespace ConsoleInterface.Prompts.Implementations;
 

@@ -46,12 +46,12 @@ public class ConsoleDisplayService : IDisplayService
         _timerTemplate = timerTemplate;
         _handler = MatrixDisplayHandler.Instance;
 
-        MillisecondDisplayHelper.SetOutputHandler(digit =>
+        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             MatrixDisplayHandler.Instance
                 .DisplayPattern(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
             UIHelper.SetCursor();
-        });
+        };
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);

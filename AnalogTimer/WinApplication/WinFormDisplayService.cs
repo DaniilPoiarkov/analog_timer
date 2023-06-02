@@ -10,8 +10,6 @@ public class WinFormDisplayService : IDisplayService
 
     private readonly TextBox _cutOutput;
 
-    private int _cutClicks;
-
     public WinFormDisplayService(Label outputLabel, TextBox cutOutput)
     {
         _output = outputLabel;

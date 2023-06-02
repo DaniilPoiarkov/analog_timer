@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Models;
-using ConsoleInterface.Contracts;
 using ConsoleInterface.EntityContracts;
 using TimerEngine.Contracts;
 using TimerEngine.Models.Enums;

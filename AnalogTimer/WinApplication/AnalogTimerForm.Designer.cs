@@ -48,6 +48,8 @@
             colorDialog1 = new ColorDialog();
             cutOutput = new TextBox();
             cutBtn = new Button();
+            ClearCutOutput = new Button();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)HoursInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinutesInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).BeginInit();
@@ -60,9 +62,9 @@
             outputLabel.BackColor = Color.FromArgb(33, 42, 62);
             outputLabel.Font = new Font("Segoe UI", 45F, FontStyle.Regular, GraphicsUnit.Point);
             outputLabel.ForeColor = Color.FromArgb(241, 246, 249);
-            outputLabel.Location = new Point(11, 83);
+            outputLabel.Location = new Point(10, 62);
             outputLabel.Name = "outputLabel";
-            outputLabel.Size = new Size(367, 113);
+            outputLabel.Size = new Size(294, 91);
             outputLabel.TabIndex = 0;
             outputLabel.Text = "00:00:00:0";
             outputLabel.UseCompatibleTextRendering = true;
@@ -72,10 +74,9 @@
             StartBtn.BackColor = Color.FromArgb(57, 72, 103);
             StartBtn.FlatStyle = FlatStyle.Popup;
             StartBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            StartBtn.Location = new Point(13, 360);
-            StartBtn.Margin = new Padding(3, 4, 3, 4);
+            StartBtn.Location = new Point(11, 270);
             StartBtn.Name = "StartBtn";
-            StartBtn.Size = new Size(86, 31);
+            StartBtn.Size = new Size(75, 23);
             StartBtn.TabIndex = 1;
             StartBtn.Text = "Start";
             StartBtn.UseVisualStyleBackColor = false;
@@ -87,10 +88,9 @@
             PauseBtn.Enabled = false;
             PauseBtn.FlatStyle = FlatStyle.Popup;
             PauseBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            PauseBtn.Location = new Point(123, 360);
-            PauseBtn.Margin = new Padding(3, 4, 3, 4);
+            PauseBtn.Location = new Point(108, 270);
             PauseBtn.Name = "PauseBtn";
-            PauseBtn.Size = new Size(86, 31);
+            PauseBtn.Size = new Size(75, 23);
             PauseBtn.TabIndex = 2;
             PauseBtn.Text = "Pause";
             PauseBtn.UseVisualStyleBackColor = false;
@@ -100,16 +100,15 @@
             // 
             TimerTypeComboBox.BackColor = Color.FromArgb(57, 72, 103);
             TimerTypeComboBox.DisplayMember = "Stopwatch";
+            TimerTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             TimerTypeComboBox.FlatStyle = FlatStyle.Popup;
             TimerTypeComboBox.ForeColor = Color.FromArgb(241, 246, 249);
             TimerTypeComboBox.FormattingEnabled = true;
             TimerTypeComboBox.Items.AddRange(new object[] { "Timer", "Stopwatch" });
-            TimerTypeComboBox.Location = new Point(14, 220);
-            TimerTypeComboBox.Margin = new Padding(3, 4, 3, 4);
+            TimerTypeComboBox.Location = new Point(12, 165);
             TimerTypeComboBox.Name = "TimerTypeComboBox";
-            TimerTypeComboBox.Size = new Size(173, 28);
+            TimerTypeComboBox.Size = new Size(152, 23);
             TimerTypeComboBox.TabIndex = 4;
-            TimerTypeComboBox.Text = "Stopwatch";
             TimerTypeComboBox.SelectedValueChanged += TimerTypeChanged;
             // 
             // ResetBtn
@@ -117,10 +116,9 @@
             ResetBtn.BackColor = Color.FromArgb(57, 72, 103);
             ResetBtn.FlatStyle = FlatStyle.Popup;
             ResetBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            ResetBtn.Location = new Point(240, 360);
-            ResetBtn.Margin = new Padding(3, 4, 3, 4);
+            ResetBtn.Location = new Point(210, 270);
             ResetBtn.Name = "ResetBtn";
-            ResetBtn.Size = new Size(86, 31);
+            ResetBtn.Size = new Size(75, 23);
             ResetBtn.TabIndex = 5;
             ResetBtn.Text = "Reset";
             ResetBtn.UseVisualStyleBackColor = false;
@@ -131,9 +129,9 @@
             label2.AutoSize = true;
             label2.BackColor = Color.FromArgb(33, 42, 62);
             label2.ForeColor = Color.FromArgb(241, 246, 249);
-            label2.Location = new Point(23, 277);
+            label2.Location = new Point(20, 208);
             label2.Name = "label2";
-            label2.Size = new Size(48, 20);
+            label2.Size = new Size(39, 15);
             label2.TabIndex = 7;
             label2.Text = "Hours";
             // 
@@ -142,11 +140,10 @@
             HoursInput.BackColor = Color.FromArgb(57, 72, 103);
             HoursInput.BorderStyle = BorderStyle.None;
             HoursInput.ForeColor = Color.FromArgb(241, 246, 249);
-            HoursInput.Location = new Point(19, 301);
-            HoursInput.Margin = new Padding(3, 4, 3, 4);
+            HoursInput.Location = new Point(17, 226);
             HoursInput.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
             HoursInput.Name = "HoursInput";
-            HoursInput.Size = new Size(51, 23);
+            HoursInput.Size = new Size(45, 19);
             HoursInput.TabIndex = 8;
             HoursInput.ValueChanged += NumericInput_Click;
             HoursInput.Click += NumericInput_Click;
@@ -156,11 +153,10 @@
             MinutesInput.BackColor = Color.FromArgb(57, 72, 103);
             MinutesInput.BorderStyle = BorderStyle.None;
             MinutesInput.ForeColor = Color.FromArgb(241, 246, 249);
-            MinutesInput.Location = new Point(88, 301);
-            MinutesInput.Margin = new Padding(3, 4, 3, 4);
+            MinutesInput.Location = new Point(77, 226);
             MinutesInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             MinutesInput.Name = "MinutesInput";
-            MinutesInput.Size = new Size(51, 23);
+            MinutesInput.Size = new Size(45, 19);
             MinutesInput.TabIndex = 10;
             MinutesInput.ValueChanged += NumericInput_Click;
             MinutesInput.Click += NumericInput_Click;
@@ -170,9 +166,9 @@
             label1.AutoSize = true;
             label1.BackColor = Color.FromArgb(33, 42, 62);
             label1.ForeColor = Color.FromArgb(241, 246, 249);
-            label1.Location = new Point(85, 277);
+            label1.Location = new Point(74, 208);
             label1.Name = "label1";
-            label1.Size = new Size(61, 20);
+            label1.Size = new Size(50, 15);
             label1.TabIndex = 9;
             label1.Text = "Minutes";
             // 
@@ -181,11 +177,10 @@
             SecondsInput.BackColor = Color.FromArgb(57, 72, 103);
             SecondsInput.BorderStyle = BorderStyle.None;
             SecondsInput.ForeColor = Color.FromArgb(241, 246, 249);
-            SecondsInput.Location = new Point(159, 301);
-            SecondsInput.Margin = new Padding(3, 4, 3, 4);
+            SecondsInput.Location = new Point(139, 226);
             SecondsInput.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             SecondsInput.Name = "SecondsInput";
-            SecondsInput.Size = new Size(51, 23);
+            SecondsInput.Size = new Size(45, 19);
             SecondsInput.TabIndex = 12;
             SecondsInput.ValueChanged += NumericInput_Click;
             SecondsInput.Click += NumericInput_Click;
@@ -195,9 +190,9 @@
             label3.AutoSize = true;
             label3.BackColor = Color.FromArgb(33, 42, 62);
             label3.ForeColor = Color.FromArgb(241, 246, 249);
-            label3.Location = new Point(155, 277);
+            label3.Location = new Point(136, 208);
             label3.Name = "label3";
-            label3.Size = new Size(64, 20);
+            label3.Size = new Size(51, 15);
             label3.TabIndex = 11;
             label3.Text = "Seconds";
             // 
@@ -206,12 +201,11 @@
             OpenConsoleBtn.BackColor = Color.FromArgb(57, 72, 103);
             OpenConsoleBtn.FlatStyle = FlatStyle.Popup;
             OpenConsoleBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            OpenConsoleBtn.Location = new Point(13, 411);
-            OpenConsoleBtn.Margin = new Padding(3, 4, 3, 4);
+            OpenConsoleBtn.Location = new Point(11, 308);
             OpenConsoleBtn.Name = "OpenConsoleBtn";
-            OpenConsoleBtn.Size = new Size(197, 31);
+            OpenConsoleBtn.Size = new Size(274, 23);
             OpenConsoleBtn.TabIndex = 13;
-            OpenConsoleBtn.Text = "Open native console";
+            OpenConsoleBtn.Text = "Enable console";
             OpenConsoleBtn.UseVisualStyleBackColor = false;
             OpenConsoleBtn.Click += OpenConsoleBtn_Click;
             // 
@@ -221,10 +215,11 @@
             ConsoleInput.BorderStyle = BorderStyle.None;
             ConsoleInput.Enabled = false;
             ConsoleInput.ForeColor = Color.FromArgb(241, 246, 249);
-            ConsoleInput.Location = new Point(14, 459);
+            ConsoleInput.Location = new Point(12, 344);
+            ConsoleInput.Margin = new Padding(3, 2, 3, 2);
             ConsoleInput.Name = "ConsoleInput";
             ConsoleInput.PlaceholderText = "Console mode";
-            ConsoleInput.Size = new Size(569, 20);
+            ConsoleInput.Size = new Size(275, 16);
             ConsoleInput.TabIndex = 14;
             ConsoleInput.KeyDown += ConsoleInputEnterKeydown;
             // 
@@ -233,12 +228,11 @@
             ChangeSpeedInput.BackColor = Color.FromArgb(57, 72, 103);
             ChangeSpeedInput.BorderStyle = BorderStyle.None;
             ChangeSpeedInput.ForeColor = Color.FromArgb(241, 246, 249);
-            ChangeSpeedInput.Location = new Point(250, 301);
-            ChangeSpeedInput.Margin = new Padding(3, 4, 3, 4);
+            ChangeSpeedInput.Location = new Point(219, 226);
             ChangeSpeedInput.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             ChangeSpeedInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             ChangeSpeedInput.Name = "ChangeSpeedInput";
-            ChangeSpeedInput.Size = new Size(51, 23);
+            ChangeSpeedInput.Size = new Size(45, 19);
             ChangeSpeedInput.TabIndex = 15;
             ChangeSpeedInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
             ChangeSpeedInput.ValueChanged += SpeedChangedEvent;
@@ -248,9 +242,9 @@
             label4.AutoSize = true;
             label4.BackColor = Color.FromArgb(33, 42, 62);
             label4.ForeColor = Color.FromArgb(241, 246, 249);
-            label4.Location = new Point(221, 277);
+            label4.Location = new Point(193, 208);
             label4.Name = "label4";
-            label4.Size = new Size(118, 20);
+            label4.Size = new Size(94, 15);
             label4.TabIndex = 16;
             label4.Text = "Ticks per second";
             // 
@@ -260,22 +254,21 @@
             millisecondsOutput.BackColor = Color.FromArgb(33, 42, 62);
             millisecondsOutput.Font = new Font("Segoe UI", 45F, FontStyle.Regular, GraphicsUnit.Point);
             millisecondsOutput.ForeColor = Color.FromArgb(241, 246, 249);
-            millisecondsOutput.Location = new Point(352, 83);
+            millisecondsOutput.Location = new Point(308, 62);
             millisecondsOutput.Name = "millisecondsOutput";
-            millisecondsOutput.Size = new Size(67, 113);
+            millisecondsOutput.Size = new Size(54, 91);
             millisecondsOutput.TabIndex = 17;
             millisecondsOutput.Text = "0";
             millisecondsOutput.UseCompatibleTextRendering = true;
             // 
             // cutOutput
             // 
-            cutOutput.Location = new Point(368, 245);
-            cutOutput.Margin = new Padding(3, 4, 3, 4);
+            cutOutput.Location = new Point(322, 184);
             cutOutput.Multiline = true;
             cutOutput.Name = "cutOutput";
             cutOutput.ReadOnly = true;
             cutOutput.ScrollBars = ScrollBars.Vertical;
-            cutOutput.Size = new Size(215, 197);
+            cutOutput.Size = new Size(189, 149);
             cutOutput.TabIndex = 18;
             // 
             // cutBtn
@@ -283,21 +276,46 @@
             cutBtn.BackColor = Color.FromArgb(57, 72, 103);
             cutBtn.FlatStyle = FlatStyle.Popup;
             cutBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            cutBtn.Location = new Point(240, 411);
-            cutBtn.Margin = new Padding(3, 4, 3, 4);
+            cutBtn.Location = new Point(322, 340);
             cutBtn.Name = "cutBtn";
-            cutBtn.Size = new Size(86, 31);
+            cutBtn.Size = new Size(81, 23);
             cutBtn.TabIndex = 19;
             cutBtn.Text = "Cut";
             cutBtn.UseVisualStyleBackColor = false;
             cutBtn.Click += CutBtn_click;
             // 
+            // ClearCutOutput
+            // 
+            ClearCutOutput.BackColor = Color.FromArgb(57, 72, 103);
+            ClearCutOutput.FlatStyle = FlatStyle.Popup;
+            ClearCutOutput.ForeColor = Color.FromArgb(241, 246, 249);
+            ClearCutOutput.Location = new Point(409, 340);
+            ClearCutOutput.Name = "ClearCutOutput";
+            ClearCutOutput.Size = new Size(102, 23);
+            ClearCutOutput.TabIndex = 20;
+            ClearCutOutput.Text = "Clear output";
+            ClearCutOutput.UseVisualStyleBackColor = false;
+            ClearCutOutput.Click += ClearOutputButton_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.FromArgb(33, 42, 62);
+            label5.ForeColor = Color.FromArgb(241, 246, 249);
+            label5.Location = new Point(326, 165);
+            label5.Name = "label5";
+            label5.Size = new Size(36, 15);
+            label5.TabIndex = 21;
+            label5.Text = "Lacks";
+            // 
             // AnalogTimerForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
-            ClientSize = new Size(595, 499);
+            ClientSize = new Size(521, 374);
+            Controls.Add(label5);
+            Controls.Add(ClearCutOutput);
             Controls.Add(cutBtn);
             Controls.Add(cutOutput);
             Controls.Add(millisecondsOutput);
@@ -318,7 +336,6 @@
             Controls.Add(StartBtn);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             Name = "AnalogTimerForm";
             Text = "Not so Analog Timer";
             ((System.ComponentModel.ISupportInitialize)HoursInput).EndInit();
@@ -350,5 +367,7 @@
         private ColorDialog colorDialog1;
         private TextBox cutOutput;
         private Button cutBtn;
+        private Button ClearCutOutput;
+        private Label label5;
     }
 }
