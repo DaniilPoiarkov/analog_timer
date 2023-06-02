@@ -99,6 +99,7 @@
             // 
             TimerTypeComboBox.BackColor = Color.FromArgb(57, 72, 103);
             TimerTypeComboBox.DisplayMember = "Stopwatch";
+            TimerTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             TimerTypeComboBox.FlatStyle = FlatStyle.Popup;
             TimerTypeComboBox.ForeColor = Color.FromArgb(241, 246, 249);
             TimerTypeComboBox.FormattingEnabled = true;
@@ -107,7 +108,6 @@
             TimerTypeComboBox.Name = "TimerTypeComboBox";
             TimerTypeComboBox.Size = new Size(152, 23);
             TimerTypeComboBox.TabIndex = 4;
-            TimerTypeComboBox.Text = "Stopwatch";
             TimerTypeComboBox.SelectedValueChanged += TimerTypeChanged;
             // 
             // ResetBtn

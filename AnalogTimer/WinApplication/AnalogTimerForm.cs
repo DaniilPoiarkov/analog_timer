@@ -51,6 +51,8 @@ public partial class AnalogTimerForm : Form
             .Add<ChangeTimerTypePrompt>()
             .Add<CutTimerStatePrompt>()
             .Build();
+
+        TimerTypeComboBox.SelectedItem = Enum.GetName(TimerType.Stopwatch);
     }
 
     private void StartBtn_Click(object sender, EventArgs e)
