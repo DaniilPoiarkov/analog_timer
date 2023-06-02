@@ -44,7 +44,7 @@ public class TimerState
 
             var maxValue = Seconds + Minutes * Hours + Minutes * _maxValueInMinuteOrHour + Hours * _maxValueInMinuteOrHour * _maxValueInMinuteOrHour;
 
-            while (Milliseconds < _zero && seconds <= maxValue)
+            while (Milliseconds < _zero && seconds < maxValue)
             {
                 seconds++;
                 Milliseconds += _msInSecond;
@@ -71,7 +71,7 @@ public class TimerState
 
             var maxValue = Minutes + Hours * _maxValueInMinuteOrHour;
 
-            while (Seconds < _zero && minutes <= maxValue)
+            while (Seconds < _zero && minutes < maxValue)
             {
                 minutes++;
                 Seconds += _maxValueInMinuteOrHour;
@@ -97,7 +97,7 @@ public class TimerState
 
         var hours = _zero;
 
-        while (Minutes < _zero && hours <= Hours)
+        while (Minutes < _zero && hours < Hours)
         {
             hours++;
             Minutes += _maxValueInMinuteOrHour;

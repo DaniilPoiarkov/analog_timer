@@ -14,6 +14,8 @@ public class AnalogTimer : IAnalogTimer
 
     private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+    private delegate Task CounterExecutor();
+
 
     public event TimerTick? Tick;
 
@@ -39,7 +41,7 @@ public class AnalogTimer : IAnalogTimer
 
     public int TicksPerSecond { get; private set; }
 
-    private Func<Task>? Counter { get; set; }
+    private /*Func<Task>?*/ CounterExecutor? Counter { get; set; }
 
     private Task? Execution { get; set; }
 
@@ -137,7 +139,7 @@ public class AnalogTimer : IAnalogTimer
         MillisecondDisplayHelper.BackgroundDisplay();
 
         IsRunning = true;
-        Counter = StartTimerTemplate;
+        Counter = new CounterExecutor(StartTimerTemplate);
         Execution = Counter.Invoke();
     }
 
@@ -157,14 +159,7 @@ public class AnalogTimer : IAnalogTimer
 
                 if (_state.IsZero)
                 {
-                    try
-                    {
-                        await Stop();
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Error(ex);
-                    }
+                    await Stop();
                 }
             }
             catch (Exception ex)

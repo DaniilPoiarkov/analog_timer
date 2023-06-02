@@ -17,6 +17,8 @@ public partial class AnalogTimerForm : Form
 
     private readonly IPromptService<IAnalogTimer> _promptService;
 
+    delegate void SetMillisecondCallback(string text);
+
     private int hours;
 
     private int minutes;
@@ -39,13 +41,10 @@ public partial class AnalogTimerForm : Form
             SwitchControlsAccessability();
         };
 
-        MillisecondDisplayHelper.SetOutputHandler(digit =>
+        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
-            lock (this)
-            {
-                millisecondsOutput.Text = digit.ToString();
-            }
-        });
+            SetMillisecond(digit.ToString());
+        };
 
         _promptService = new AnalogTimerPromptServiceBuilder(_timer)
             .Add<StartPrompt>()
@@ -60,6 +59,19 @@ public partial class AnalogTimerForm : Form
             .Build();
 
         TimerTypeComboBox.SelectedItem = Enum.GetName(TimerType.Stopwatch);
+    }
+
+    private void SetMillisecond(string digit)
+    {
+        if (millisecondsOutput.InvokeRequired)
+        {
+            var setMillisecond = new SetMillisecondCallback(SetMillisecond);
+            Invoke(setMillisecond, digit);
+        }
+        else
+        {
+            millisecondsOutput.Text = digit;
+        }
     }
 
     private void StartBtn_Click(object sender, EventArgs e)
@@ -144,9 +156,15 @@ public partial class AnalogTimerForm : Form
                 SwitchControlsAccessability();
             }
 
-            ConsoleInput.Text = string.Empty;
             TimerTypeComboBox.SelectedItem = Enum.GetName(_timer.Type);
-            ChangeSpeedInput.Value = _timer.TicksPerSecond;
+
+            if (ConsoleInput.Text.StartsWith("speed") && _timer.TicksPerSecond > 10)
+            {
+                ChangeSpeedInput.Value = 10;
+                SpeedChangedEvent(this, EventArgs.Empty);
+            }
+
+            ConsoleInput.Text = string.Empty;
         }
         catch (Exception ex)
         {
@@ -158,9 +176,7 @@ public partial class AnalogTimerForm : Form
     {
         var input = ConsoleInput.Text.ToLower();
 
-        return input.StartsWith("start")
-            || input.StartsWith("pause")
-            || input.StartsWith("-p");
+        return input.StartsWith("start");
     }
 
     private void SpeedChangedEvent(object sender, EventArgs e)

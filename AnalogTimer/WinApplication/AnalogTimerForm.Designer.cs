@@ -49,6 +49,7 @@
             cutOutput = new TextBox();
             cutBtn = new Button();
             ClearCutOutput = new Button();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)HoursInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MinutesInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).BeginInit();
@@ -202,9 +203,9 @@
             OpenConsoleBtn.ForeColor = Color.FromArgb(241, 246, 249);
             OpenConsoleBtn.Location = new Point(11, 308);
             OpenConsoleBtn.Name = "OpenConsoleBtn";
-            OpenConsoleBtn.Size = new Size(172, 23);
+            OpenConsoleBtn.Size = new Size(274, 23);
             OpenConsoleBtn.TabIndex = 13;
-            OpenConsoleBtn.Text = "Open native console";
+            OpenConsoleBtn.Text = "Enable console";
             OpenConsoleBtn.UseVisualStyleBackColor = false;
             OpenConsoleBtn.Click += OpenConsoleBtn_Click;
             // 
@@ -275,9 +276,9 @@
             cutBtn.BackColor = Color.FromArgb(57, 72, 103);
             cutBtn.FlatStyle = FlatStyle.Popup;
             cutBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            cutBtn.Location = new Point(210, 308);
+            cutBtn.Location = new Point(322, 340);
             cutBtn.Name = "cutBtn";
-            cutBtn.Size = new Size(75, 23);
+            cutBtn.Size = new Size(81, 23);
             cutBtn.TabIndex = 19;
             cutBtn.Text = "Cut";
             cutBtn.UseVisualStyleBackColor = false;
@@ -288,13 +289,24 @@
             ClearCutOutput.BackColor = Color.FromArgb(57, 72, 103);
             ClearCutOutput.FlatStyle = FlatStyle.Popup;
             ClearCutOutput.ForeColor = Color.FromArgb(241, 246, 249);
-            ClearCutOutput.Location = new Point(322, 340);
+            ClearCutOutput.Location = new Point(409, 340);
             ClearCutOutput.Name = "ClearCutOutput";
-            ClearCutOutput.Size = new Size(189, 23);
+            ClearCutOutput.Size = new Size(102, 23);
             ClearCutOutput.TabIndex = 20;
             ClearCutOutput.Text = "Clear output";
             ClearCutOutput.UseVisualStyleBackColor = false;
             ClearCutOutput.Click += ClearOutputButton_Click;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.FromArgb(33, 42, 62);
+            label5.ForeColor = Color.FromArgb(241, 246, 249);
+            label5.Location = new Point(326, 165);
+            label5.Name = "label5";
+            label5.Size = new Size(36, 15);
+            label5.TabIndex = 21;
+            label5.Text = "Lacks";
             // 
             // AnalogTimerForm
             // 
@@ -302,6 +314,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
             ClientSize = new Size(521, 374);
+            Controls.Add(label5);
             Controls.Add(ClearCutOutput);
             Controls.Add(cutBtn);
             Controls.Add(cutOutput);
@@ -355,5 +368,6 @@
         private TextBox cutOutput;
         private Button cutBtn;
         private Button ClearCutOutput;
+        private Label label5;
     }
 }
