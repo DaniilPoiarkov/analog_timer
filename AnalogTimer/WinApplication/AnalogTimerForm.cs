@@ -138,6 +138,7 @@ public partial class AnalogTimerForm : Form
             }
 
             ConsoleInput.Text = string.Empty;
+            TimerTypeComboBox.SelectedItem = Enum.GetName(_timer.Type);
 
         }
         catch (Exception ex)
