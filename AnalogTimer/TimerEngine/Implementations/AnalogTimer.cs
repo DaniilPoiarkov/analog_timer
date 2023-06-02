@@ -1,6 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
+using ConsoleInterface.EntityContracts;
 using NLog;
 using System.Diagnostics;
 using TimerEngine.Models.Enums;
@@ -36,14 +37,13 @@ public class AnalogTimer : IAnalogTimer
     public TimerType Type { get; private set; }
 
 
-    private int TicksPerSecond { get; set; }
+    public int TicksPerSecond { get; private set; }
 
     private Func<Task>? Counter { get; set; }
 
     private Task? Execution { get; set; }
 
     private Action<int> StateCallback { get; set; }
-
 
     private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(95);
 

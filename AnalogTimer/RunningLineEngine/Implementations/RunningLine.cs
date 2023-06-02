@@ -20,6 +20,8 @@ public class RunningLine : IRunningLine
 
     private int Position { get; set; }
 
+    public int TicksPerSecond => _speedCoefficient;
+
     public RunningLine(ILineDisplay lineDisplay)
     {
         _speedCoefficient = 50;

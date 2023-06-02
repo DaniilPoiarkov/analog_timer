@@ -1,4 +1,4 @@
-﻿namespace ConsoleInterface.Contracts;
+﻿namespace ConsoleInterface.EntityContracts;
 
 public interface IAsyncRunnable
 {
