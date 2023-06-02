@@ -147,9 +147,11 @@ public partial class AnalogTimerForm : Form
 
     private bool NeedsSwitchButtonsAccessability()
     {
-        return ConsoleInput.Text.StartsWith("start")
-                        || ConsoleInput.Text.StartsWith("pause")
-                        || ConsoleInput.Text.StartsWith("-p");
+        var input = ConsoleInput.Text.ToLower();
+
+        return input.StartsWith("start")
+            || input.StartsWith("pause")
+            || input.StartsWith("-p");
     }
 
     private void SpeedChangedEvent(object sender, EventArgs e)
