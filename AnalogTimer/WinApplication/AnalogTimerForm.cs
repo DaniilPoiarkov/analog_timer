@@ -34,10 +34,17 @@ public partial class AnalogTimerForm : Form
         _timer.Tick += displayService.DisplayTick;
         _timer.Updated += displayService.DisplayUpdated;
         _timer.TimerCut += displayService.DisplayCut;
+        _timer.Stopeed += _ =>
+        {
+            SwitchControlsAccessability();
+        };
 
         MillisecondDisplayHelper.SetOutputHandler(digit =>
         {
-            millisecondsOutput.Text = digit.ToString();
+            lock (this)
+            {
+                millisecondsOutput.Text = digit.ToString();
+            }
         });
 
         _promptService = new AnalogTimerPromptServiceBuilder(_timer)
@@ -80,7 +87,7 @@ public partial class AnalogTimerForm : Form
 
     private async void PauseBtn_Click(object sender, EventArgs e)
     {
-        await UpdateTimerState(async timer => await timer.Stop(), SwitchControlsAccessability);
+        await UpdateTimerState(async timer => await timer.Stop());
     }
 
     private void SwitchControlsAccessability()

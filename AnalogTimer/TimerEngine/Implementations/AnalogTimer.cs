@@ -1,9 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
-using ConsoleInterface.EntityContracts;
 using NLog;
-using System.Diagnostics;
 using TimerEngine.Models.Enums;
 using TimerEngine.Models.TimerEventArgs;
 using static TimerEngine.Contracts.ITimerEvents;
@@ -24,6 +22,8 @@ public class AnalogTimer : IAnalogTimer
     public event TimerUpdated? TimerStarted;
 
     public event TimerUpdated? TimerCut;
+
+    public event TimerUpdated? Stopeed;
 
     private TimerEventArgs TimerEventArgs => new()
     {
@@ -157,7 +157,14 @@ public class AnalogTimer : IAnalogTimer
 
                 if (_state.IsZero)
                 {
-                    await Stop();
+                    try
+                    {
+                        await Stop();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex);
+                    }
                 }
             }
             catch (Exception ex)
@@ -176,11 +183,14 @@ public class AnalogTimer : IAnalogTimer
 
         MillisecondDisplayHelper.StopDisplay();
 
-        if(_state.IsZero)
+        if (_state.IsZero)
+        {
             MillisecondDisplayHelper.DisplayZero();
+        }
 
         IsRunning = false;
         await Execution;
         Counter = null;
+        Stopeed?.Invoke(new() { IsStopped = true });
     }
 }
