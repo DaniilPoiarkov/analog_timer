@@ -25,7 +25,6 @@ public class ChangeSpeedPrompt<TEntity> : PromptBase<TEntity>
             throw new Exception($"\'{values[1]}\' is not correct value for speed. Use only integers, also fractions are not allowed.", ex);
         }
 
-
         return Task.CompletedTask;
     }
 }
