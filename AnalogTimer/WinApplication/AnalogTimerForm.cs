@@ -129,10 +129,8 @@ public partial class AnalogTimerForm : Form
         try
         {
             await _promptService.Consume(ConsoleInput.Text);
-            
-            if (ConsoleInput.Text.StartsWith("start")
-                || ConsoleInput.Text.StartsWith("pause")
-                || ConsoleInput.Text.StartsWith("-p"))
+
+            if (NeedsSwitchButtonsAccessability())
             {
                 SwitchControlsAccessability();
             }
@@ -145,6 +143,13 @@ public partial class AnalogTimerForm : Form
         {
             DisplayError(ex.Message);
         }
+    }
+
+    private bool NeedsSwitchButtonsAccessability()
+    {
+        return ConsoleInput.Text.StartsWith("start")
+                        || ConsoleInput.Text.StartsWith("pause")
+                        || ConsoleInput.Text.StartsWith("-p");
     }
 
     private void SpeedChangedEvent(object sender, EventArgs e)
@@ -213,5 +218,10 @@ public partial class AnalogTimerForm : Form
     private void CutBtn_click(object sender, EventArgs e)
     {
         _timer.Cut();
+    }
+
+    private void ClearOutputButton_Click(object sender, EventArgs e)
+    {
+        cutOutput.Text = string.Empty;
     }
 }
