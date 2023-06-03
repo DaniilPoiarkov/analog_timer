@@ -58,7 +58,7 @@ public partial class AnalogTimerForm : Form
             .Add<CutTimerStatePrompt>()
             .Build();
 
-        TimerTypeComboBox.SelectedItem = Enum.GetName(TimerType.Stopwatch);
+        //TimerTypeComboBox.SelectedItem = Enum.GetName(TimerType.Stopwatch);
     }
 
     private void SetMillisecond(string digit)
@@ -85,13 +85,13 @@ public partial class AnalogTimerForm : Form
             _timer.AddMinutes(state.Minutes);
             _timer.AddSeconds(state.Seconds);
 
-            HoursInput.Value = 0;
-            MinutesInput.Value = 0;
-            SecondsInput.Value = 0;
+            //HoursInput.Value = 0;
+            //MinutesInput.Value = 0;
+            //SecondsInput.Value = 0;
 
-            NumericInput_Click(HoursInput, new());
-            NumericInput_Click(MinutesInput, new());
-            NumericInput_Click(SecondsInput, new());
+            //NumericInput_Click(HoursInput, new());
+            //NumericInput_Click(MinutesInput, new());
+            //NumericInput_Click(SecondsInput, new());
         }
 
         UpdateTimerState(timer => timer.Start(), SwitchControlsAccessability);
@@ -105,10 +105,10 @@ public partial class AnalogTimerForm : Form
     private void SwitchControlsAccessability()
     {
         StartBtn.Enabled = !StartBtn.Enabled;
-        PauseBtn.Enabled = !PauseBtn.Enabled;
-        ResetBtn.Enabled = !ResetBtn.Enabled;
-        TimerTypeComboBox.Enabled = !TimerTypeComboBox.Enabled;
-        ChangeSpeedInput.Enabled = !ChangeSpeedInput.Enabled;
+        //PauseBtn.Enabled = !PauseBtn.Enabled;
+        //ResetBtn.Enabled = !ResetBtn.Enabled;
+        //TimerTypeComboBox.Enabled = !TimerTypeComboBox.Enabled;
+        //ChangeSpeedInput.Enabled = !ChangeSpeedInput.Enabled;
     }
 
     private void ResetBtn_Click(object sender, EventArgs e)
@@ -135,8 +135,8 @@ public partial class AnalogTimerForm : Form
     {
         UpdateTimerState(timer =>
         {
-            var type = Enum.Parse<TimerType>(TimerTypeComboBox.SelectedItem.ToString()!);
-            timer.SetTimerType(type);
+            //var type = Enum.Parse<TimerType>(TimerTypeComboBox.SelectedItem.ToString()!);
+            //timer.SetTimerType(type);
         });
     }
 
@@ -156,11 +156,11 @@ public partial class AnalogTimerForm : Form
                 SwitchControlsAccessability();
             }
 
-            TimerTypeComboBox.SelectedItem = Enum.GetName(_timer.Type);
+            //TimerTypeComboBox.SelectedItem = Enum.GetName(_timer.Type);
 
             if (ConsoleInput.Text.StartsWith("speed") && _timer.TicksPerSecond > 10)
             {
-                ChangeSpeedInput.Value = 10;
+                //ChangeSpeedInput.Value = 10;
                 SpeedChangedEvent(this, EventArgs.Empty);
             }
 
@@ -181,9 +181,9 @@ public partial class AnalogTimerForm : Form
 
     private void SpeedChangedEvent(object sender, EventArgs e)
     {
-        var speedCoef = (int)ChangeSpeedInput.Value;
+        //var speedCoef = (int)ChangeSpeedInput.Value;
 
-        UpdateTimerState(timer => timer.ChangeSpeed(speedCoef));
+        //UpdateTimerState(timer => timer.ChangeSpeed(speedCoef));
     }
 
     private async Task UpdateTimerState(Func<MyTimer, Task> action, Action? onSuccess = null)
@@ -250,5 +250,10 @@ public partial class AnalogTimerForm : Form
     private void ClearOutputButton_Click(object sender, EventArgs e)
     {
         cutOutput.Text = string.Empty;
+    }
+
+    private void label10_Click(object sender, EventArgs e)
+    {
+
     }
 }
