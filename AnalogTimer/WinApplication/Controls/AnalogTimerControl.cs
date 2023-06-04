@@ -76,15 +76,7 @@ public partial class AnalogTimerControl : UserControl
 
             _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
             SubscribeToButtons();
-
-            HoursInput.Enabled = false;
-            MinutesInput.Enabled = false;
-            SecondsInput.Enabled = false;
-
-            TimerStartFiveMinBtn.Enabled = false;
-            TimerStartTenSecBtn.Enabled = false;
-
-            TickPerSecondInput.Enabled = false;
+            ResetFormValues(false);
         };
 
         _switchStateBtnState.PausePressed += async (_, _) =>
@@ -115,15 +107,20 @@ public partial class AnalogTimerControl : UserControl
             SecondsInput.Value = 0;
             TickPerSecondInput.Value = 1;
 
-            HoursInput.Enabled = true;
-            MinutesInput.Enabled = true;
-            SecondsInput.Enabled = true;
-
-            TimerStartFiveMinBtn.Enabled = true;
-            TimerStartTenSecBtn.Enabled = true;
-
-            TickPerSecondInput.Enabled = true;
+            ResetFormValues(true);
         };
+    }
+
+    private void ResetFormValues(bool accessability)
+    {
+        HoursInput.Enabled = accessability;
+        MinutesInput.Enabled = accessability;
+        SecondsInput.Enabled = accessability;
+
+        TimerStartFiveMinBtn.Enabled = accessability;
+        TimerStartTenSecBtn.Enabled = accessability;
+
+        TickPerSecondInput.Enabled = accessability;
     }
 
     private void SubscribeToTimer()
@@ -133,6 +130,7 @@ public partial class AnalogTimerControl : UserControl
         _timer.Stopeed += _ =>
         {
             _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
+            ResetFormValues(true);
         };
 
         MillisecondDisplayHelper.OutputHandler += (_, digit) =>
@@ -217,23 +215,30 @@ public partial class AnalogTimerControl : UserControl
     private void UpdateSwitchButtonsAccessability()
     {
         var userInput = TimerConsoleInput.Text.ToLower();
-        string btnText = "Start";
+
+        string btnText = string.Empty;
 
         if (userInput.StartsWith("start"))
         {
-            btnText = "Pause";
-            TimerCaancelBtn.Enabled = false;
-            TickPerSecondInput.Enabled = false;
+            _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
         }
         else if (userInput.StartsWith("pause") || userInput.StartsWith("-p"))
         {
-            btnText = "Resume";
-            TimerCaancelBtn.Enabled = true;
-            TickPerSecondInput.Enabled = true;
+            _switchStateBtnState = new PauseButtonState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
         }
         else if (userInput.StartsWith("reset") || userInput.StartsWith("-r"))
         {
-            btnText = "Start";
+            _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
+            ResetFormValues(true);
+
+            HoursInput.Value = 0;
+            MinutesInput.Value = 0;
+            SecondsInput.Value = 0;
+            TickPerSecondInput.Value = 1;
+
         }
 
         if (!string.IsNullOrEmpty(btnText))
@@ -301,5 +306,20 @@ public partial class AnalogTimerControl : UserControl
 
             _switchStateBtnState.LeftBtnClick();
         });
+    }
+
+    private void SwitchConsoleAccessability(object sender, EventArgs e)
+    {
+        if (TimerConsoleInput.Enabled)
+        {
+            TimerConsoleInput.Enabled = false;
+            TimerConsoleInput.Text = string.Empty;
+            TimerOpenConsoleBtn.Text = "Enable console";
+        }
+        else
+        {
+            TimerConsoleInput.Enabled = true;
+            TimerOpenConsoleBtn.Text = "Disable console";
+        }
     }
 }

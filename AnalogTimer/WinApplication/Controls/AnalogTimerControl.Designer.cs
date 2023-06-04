@@ -168,6 +168,7 @@
             TimerConsoleInput.PlaceholderText = "Console mode";
             TimerConsoleInput.Size = new Size(325, 20);
             TimerConsoleInput.TabIndex = 49;
+            TimerConsoleInput.KeyDown += ConsoleInputEnterKeydown;
             // 
             // TimerOpenConsoleBtn
             // 
@@ -181,6 +182,7 @@
             TimerOpenConsoleBtn.TabIndex = 48;
             TimerOpenConsoleBtn.Text = "Enable console";
             TimerOpenConsoleBtn.UseVisualStyleBackColor = false;
+            TimerOpenConsoleBtn.Click += SwitchConsoleAccessability;
             // 
             // TimerCaancelBtn
             // 
