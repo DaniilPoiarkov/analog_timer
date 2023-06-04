@@ -151,6 +151,7 @@
             SwitchTimerBtn.TabIndex = 39;
             SwitchTimerBtn.Text = "Start";
             SwitchTimerBtn.UseVisualStyleBackColor = false;
+            SwitchTimerBtn.Click += SwitchTimerStateBtnClick;
             // 
             // TimerConsoleInput
             // 
