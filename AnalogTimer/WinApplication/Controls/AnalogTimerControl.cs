@@ -72,55 +72,55 @@ public partial class AnalogTimerControl : UserControl
                 _timer.AddSeconds(state.Seconds);
             }
 
-            _timer.Start();
+            UpdateTimerState(timer =>
+            {
+                timer.Start();
 
-            _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
-            ResetFormValues(false);
+                _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
+                SubscribeToButtons();
+                ResetFormValues(false);
+            });
         };
 
         _switchStateBtnState.PausePressed += async (_, _) =>
         {
-            await _timer.Stop();
+            await UpdateTimerState(async timer =>
+            {
+                await timer.Stop();
 
-            _switchStateBtnState = new PauseButtonState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
+                _switchStateBtnState = new PauseButtonState(SwitchTimerBtn, TimerCaancelBtn);
+                SubscribeToButtons();
+            });
         };
 
         _switchStateBtnState.ResumePressed += (_, _) =>
         {
-            _timer.Start();
+            UpdateTimerState(timer =>
+            {
+                timer.Start();
 
-            _switchStateBtnState = new ResumeButtonState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
+                _switchStateBtnState = new ResumeButtonState(SwitchTimerBtn, TimerCaancelBtn);
+                SubscribeToButtons();
+            });
         };
 
         _switchStateBtnState.CancelPressed += (_, _) =>
         {
-            _timer.ResetState();
+            UpdateTimerState(timer =>
+            {
+                timer.ResetState();
 
-            _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
+                _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
+                SubscribeToButtons();
 
-            HoursInput.Value = 0;
-            MinutesInput.Value = 0;
-            SecondsInput.Value = 0;
-            TickPerSecondInput.Value = 1;
+                HoursInput.Value = 0;
+                MinutesInput.Value = 0;
+                SecondsInput.Value = 0;
+                TickPerSecondInput.Value = 1;
 
-            ResetFormValues(true);
+                ResetFormValues(true);
+            });
         };
-    }
-
-    private void ResetFormValues(bool accessability)
-    {
-        HoursInput.Enabled = accessability;
-        MinutesInput.Enabled = accessability;
-        SecondsInput.Enabled = accessability;
-
-        TimerStartFiveMinBtn.Enabled = accessability;
-        TimerStartTenSecBtn.Enabled = accessability;
-
-        TickPerSecondInput.Enabled = accessability;
     }
 
     private void SubscribeToTimer()
@@ -130,7 +130,13 @@ public partial class AnalogTimerControl : UserControl
         _timer.Stopeed += _ =>
         {
             _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
             ResetFormValues(true);
+
+            if (_timer.GetSnapshot().IsZero)
+            {
+                TimerMsOutput.Text = "0";
+            }
         };
 
         MillisecondDisplayHelper.OutputHandler += (_, digit) =>
@@ -247,30 +253,6 @@ public partial class AnalogTimerControl : UserControl
         }
     }
 
-    protected void UpdateTimerState(Action<MyTimer> action)
-    {
-        try
-        {
-            action.Invoke(_timer);
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex.Message);
-        }
-    }
-
-    protected async Task UpdateTimerState(Func<MyTimer, Task> action)
-    {
-        try
-        {
-            await action.Invoke(_timer);
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex.Message);
-        }
-    }
-
     private void SwitchTimerStateBtnClick(object sender, EventArgs e)
     {
         if (sender is not Button switchBtn)
@@ -283,7 +265,7 @@ public partial class AnalogTimerControl : UserControl
 
     private void CancelBtnClick(object sender, EventArgs e)
     {
-        _switchStateBtnState.RightBtnClick();
+        UpdateTimerState(_ => _switchStateBtnState.RightBtnClick());
     }
 
     private void StartFiveMinutesBtnClick(object sender, EventArgs e)
@@ -320,6 +302,42 @@ public partial class AnalogTimerControl : UserControl
         {
             TimerConsoleInput.Enabled = true;
             TimerOpenConsoleBtn.Text = "Disable console";
+        }
+    }
+
+    private void ResetFormValues(bool accessability)
+    {
+        HoursInput.Enabled = accessability;
+        MinutesInput.Enabled = accessability;
+        SecondsInput.Enabled = accessability;
+
+        TimerStartFiveMinBtn.Enabled = accessability;
+        TimerStartTenSecBtn.Enabled = accessability;
+
+        TickPerSecondInput.Enabled = accessability;
+    }
+
+    protected void UpdateTimerState(Action<MyTimer> action)
+    {
+        try
+        {
+            action.Invoke(_timer);
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    protected async Task UpdateTimerState(Func<MyTimer, Task> action)
+    {
+        try
+        {
+            await action.Invoke(_timer);
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
         }
     }
 }
