@@ -124,6 +124,7 @@
             MinutesInput.Name = "MinutesInput";
             MinutesInput.Size = new Size(51, 23);
             MinutesInput.TabIndex = 45;
+            MinutesInput.ValueChanged += NumericInput_Click;
             // 
             // TickPerSecondInput
             // 
@@ -138,6 +139,7 @@
             TickPerSecondInput.Size = new Size(51, 23);
             TickPerSecondInput.TabIndex = 50;
             TickPerSecondInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            TickPerSecondInput.ValueChanged += SpeedChangedEvent;
             // 
             // SwitchTimerBtn
             // 
@@ -204,6 +206,7 @@
             SecondsInput.Name = "SecondsInput";
             SecondsInput.Size = new Size(51, 23);
             SecondsInput.TabIndex = 47;
+            SecondsInput.ValueChanged += NumericInput_Click;
             // 
             // label9
             // 
@@ -238,6 +241,7 @@
             HoursInput.Name = "HoursInput";
             HoursInput.Size = new Size(51, 23);
             HoursInput.TabIndex = 43;
+            HoursInput.ValueChanged += NumericInput_Click;
             // 
             // label8
             // 

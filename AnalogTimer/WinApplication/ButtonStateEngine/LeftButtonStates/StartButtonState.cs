@@ -2,18 +2,17 @@
 
 internal class StartButtonState : ButtonsStateBase
 {
-    public override event EventHandler<EventArgs>? StartPressed;
+    public override event EventHandler<EventArgs>? PausePressed;
 
     public StartButtonState(Button leftBtn, Button rightBrn)
         : base(leftBtn, rightBrn)
     {
+        LeftBtn.Text = "Pause";
+        RightBtn.Enabled = false;
     }
 
     public override void LeftBtnClick()
     {
-        LeftBtn.Text = "Pause";
-        RightBtn.Enabled = false;
-
-        StartPressed?.Invoke(this, EventArgs.Empty);
+        PausePressed?.Invoke(this, EventArgs.Empty);
     }
 }
