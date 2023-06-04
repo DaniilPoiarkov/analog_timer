@@ -82,6 +82,8 @@ public partial class AnalogTimerControl : UserControl
         _switchStateBtnState.CancelPressed += (_, _) =>
         {
             _timer.ResetState();
+            _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
         };
     }
 

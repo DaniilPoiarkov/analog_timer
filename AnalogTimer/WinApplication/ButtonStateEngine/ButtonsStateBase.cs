@@ -28,6 +28,6 @@ internal abstract class ButtonsStateBase
 
     public virtual void RightBtnClick()
     {
-
+        
     }
 }

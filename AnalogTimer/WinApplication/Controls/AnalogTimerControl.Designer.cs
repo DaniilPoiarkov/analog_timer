@@ -189,8 +189,9 @@
             TimerCaancelBtn.Name = "TimerCaancelBtn";
             TimerCaancelBtn.Size = new Size(160, 31);
             TimerCaancelBtn.TabIndex = 41;
-            TimerCaancelBtn.Text = "Reset";
+            TimerCaancelBtn.Text = "Cancel";
             TimerCaancelBtn.UseVisualStyleBackColor = false;
+            TimerCaancelBtn.Click += CancelBtnClick;
             // 
             // SecondsInput
             // 

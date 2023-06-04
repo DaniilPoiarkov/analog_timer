@@ -4,6 +4,8 @@ internal class PauseButtonState : ButtonsStateBase
 {
     public override event EventHandler<EventArgs>? PausePressed;
 
+    public override event EventHandler<EventArgs>? CancelPressed;
+
     public PauseButtonState(Button leftBtn, Button rightBrn)
         : base(leftBtn, rightBrn)
     {
@@ -15,5 +17,10 @@ internal class PauseButtonState : ButtonsStateBase
         RightBtn.Enabled = true;
 
         PausePressed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public override void RightBtnClick()
+    {
+        CancelPressed?.Invoke(this, EventArgs.Empty);
     }
 }
