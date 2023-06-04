@@ -14,6 +14,8 @@ internal abstract class ButtonsStateBase
 
     public virtual event EventHandler<EventArgs>? CancelPressed;
 
+    public virtual event EventHandler<EventArgs>? CutPressed;
+
 
     protected ButtonsStateBase(Button leftBtn, Button rightBrn)
     {

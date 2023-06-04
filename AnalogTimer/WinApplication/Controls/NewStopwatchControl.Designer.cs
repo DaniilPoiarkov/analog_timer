@@ -110,6 +110,7 @@
             StopwatchOpenConsoleBtn.TabIndex = 33;
             StopwatchOpenConsoleBtn.Text = "Enable console";
             StopwatchOpenConsoleBtn.UseVisualStyleBackColor = false;
+            StopwatchOpenConsoleBtn.Click += SwitchConsoleAccessability;
             // 
             // StopwatchResetBtn
             // 

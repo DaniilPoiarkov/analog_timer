@@ -1,4 +1,4 @@
-﻿namespace WinApplication.ButtonStateEngine.LeftButtonStates;
+﻿namespace WinApplication.ButtonStateEngine.TimerButtonStates;
 
 internal class PauseButtonState : ButtonsStateBase
 {

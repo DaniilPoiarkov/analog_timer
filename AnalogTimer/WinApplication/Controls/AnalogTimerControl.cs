@@ -9,7 +9,7 @@ using static WinApplication.Statics.Extensions;
 using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using AnalogTimer.Models;
 using WinApplication.ButtonStateEngine;
-using WinApplication.ButtonStateEngine.LeftButtonStates;
+using WinApplication.ButtonStateEngine.TimerButtonStates;
 using TimerEngine.Models.Enums;
 
 namespace WinApplication;
@@ -90,6 +90,7 @@ public partial class AnalogTimerControl : UserControl
 
                 _switchStateBtnState = new PauseButtonState(SwitchTimerBtn, TimerCaancelBtn);
                 SubscribeToButtons();
+                ResetFormValues(false);
             });
         };
 
@@ -272,8 +273,13 @@ public partial class AnalogTimerControl : UserControl
     {
         UpdateTimerState(timer =>
         {
-            timer.ResetState();
-            timer.AddMinutes(5);
+            _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
+            ResetFormValues(true);
+
+            HoursInput.Value = hours = 0;
+            MinutesInput.Value = minutes = 5;
+            SecondsInput.Value = seconds = 0;
 
             _switchStateBtnState.LeftBtnClick();
         });
@@ -283,8 +289,13 @@ public partial class AnalogTimerControl : UserControl
     {
         UpdateTimerState(timer =>
         {
-            timer.ResetState();
-            timer.AddSeconds(10);
+            _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
+            SubscribeToButtons();
+            ResetFormValues(true);
+
+            HoursInput.Value = hours = 0;
+            MinutesInput.Value = minutes = 0;
+            SecondsInput.Value = seconds = 10;
 
             _switchStateBtnState.LeftBtnClick();
         });

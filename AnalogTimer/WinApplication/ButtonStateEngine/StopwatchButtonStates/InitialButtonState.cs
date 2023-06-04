@@ -1,14 +1,15 @@
-﻿namespace WinApplication.ButtonStateEngine.LeftButtonStates;
+﻿namespace WinApplication.ButtonStateEngine.StopwatchButtonStates;
 
-internal class InitialButtonsState : ButtonsStateBase
+internal class InitialButtonState : ButtonsStateBase
 {
     public override event EventHandler<EventArgs>? StartPressed;
 
-    public InitialButtonsState(Button leftBtn, Button rightBrn)
+    public InitialButtonState(Button leftBtn, Button rightBrn)
         : base(leftBtn, rightBrn)
     {
         LeftBtn.Text = "Start";
         RightBtn.Enabled = false;
+        RightBtn.Text = string.Empty;
     }
 
     public override void LeftBtnClick()
