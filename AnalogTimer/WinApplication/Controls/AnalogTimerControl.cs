@@ -76,6 +76,11 @@ public partial class AnalogTimerControl : UserControl
 
             _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
             SubscribeToButtons();
+
+            HoursInput.Enabled = false;
+            MinutesInput.Enabled = false;
+            SecondsInput.Enabled = false;
+            TickPerSecondInput.Enabled = false;
         };
 
         _switchStateBtnState.PausePressed += async (_, _) =>
@@ -104,6 +109,12 @@ public partial class AnalogTimerControl : UserControl
             HoursInput.Value = 0;
             MinutesInput.Value = 0;
             SecondsInput.Value = 0;
+            TickPerSecondInput.Value = 1;
+
+            HoursInput.Enabled = true;
+            MinutesInput.Enabled = true;
+            SecondsInput.Enabled = true;
+            TickPerSecondInput.Enabled = true;
         };
     }
 
@@ -113,8 +124,7 @@ public partial class AnalogTimerControl : UserControl
         _timer.Updated += _timerDisplayService.DisplayUpdated;
         _timer.Stopeed += _ =>
         {
-            SwitchTimerBtn.Text = "Start";
-            TimerCaancelBtn.Enabled = false;
+            _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
         };
 
         MillisecondDisplayHelper.OutputHandler += (_, digit) =>
