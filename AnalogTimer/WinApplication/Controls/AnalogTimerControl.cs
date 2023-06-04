@@ -80,6 +80,10 @@ public partial class AnalogTimerControl : UserControl
             HoursInput.Enabled = false;
             MinutesInput.Enabled = false;
             SecondsInput.Enabled = false;
+
+            TimerStartFiveMinBtn.Enabled = false;
+            TimerStartTenSecBtn.Enabled = false;
+
             TickPerSecondInput.Enabled = false;
         };
 
@@ -114,6 +118,10 @@ public partial class AnalogTimerControl : UserControl
             HoursInput.Enabled = true;
             MinutesInput.Enabled = true;
             SecondsInput.Enabled = true;
+
+            TimerStartFiveMinBtn.Enabled = true;
+            TimerStartTenSecBtn.Enabled = true;
+
             TickPerSecondInput.Enabled = true;
         };
     }
@@ -271,5 +279,27 @@ public partial class AnalogTimerControl : UserControl
     private void CancelBtnClick(object sender, EventArgs e)
     {
         _switchStateBtnState.RightBtnClick();
+    }
+
+    private void StartFiveMinutesBtnClick(object sender, EventArgs e)
+    {
+        UpdateTimerState(timer =>
+        {
+            timer.ResetState();
+            timer.AddMinutes(5);
+
+            _switchStateBtnState.LeftBtnClick();
+        });
+    }
+
+    private void StartTenSecondsBtnClick(object sender, EventArgs e)
+    {
+        UpdateTimerState(timer =>
+        {
+            timer.ResetState();
+            timer.AddSeconds(10);
+
+            _switchStateBtnState.LeftBtnClick();
+        });
     }
 }

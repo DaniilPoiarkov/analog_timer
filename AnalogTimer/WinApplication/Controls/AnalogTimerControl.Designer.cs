@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TimerStartTenMinBtn = new Button();
+            TimerStartTenSecBtn = new Button();
             TimerStartFiveMinBtn = new Button();
             TimerMsOutput = new Label();
             label6 = new Label();
@@ -50,18 +50,19 @@
             ((System.ComponentModel.ISupportInitialize)HoursInput).BeginInit();
             SuspendLayout();
             // 
-            // TimerStartTenMinBtn
+            // TimerStartTenSecBtn
             // 
-            TimerStartTenMinBtn.BackColor = Color.FromArgb(57, 72, 103);
-            TimerStartTenMinBtn.FlatStyle = FlatStyle.Popup;
-            TimerStartTenMinBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            TimerStartTenMinBtn.Location = new Point(211, 175);
-            TimerStartTenMinBtn.Margin = new Padding(3, 4, 3, 4);
-            TimerStartTenMinBtn.Name = "TimerStartTenMinBtn";
-            TimerStartTenMinBtn.Size = new Size(116, 31);
-            TimerStartTenMinBtn.TabIndex = 53;
-            TimerStartTenMinBtn.Text = "Start 10 min";
-            TimerStartTenMinBtn.UseVisualStyleBackColor = false;
+            TimerStartTenSecBtn.BackColor = Color.FromArgb(57, 72, 103);
+            TimerStartTenSecBtn.FlatStyle = FlatStyle.Popup;
+            TimerStartTenSecBtn.ForeColor = Color.FromArgb(241, 246, 249);
+            TimerStartTenSecBtn.Location = new Point(211, 175);
+            TimerStartTenSecBtn.Margin = new Padding(3, 4, 3, 4);
+            TimerStartTenSecBtn.Name = "TimerStartTenSecBtn";
+            TimerStartTenSecBtn.Size = new Size(116, 31);
+            TimerStartTenSecBtn.TabIndex = 53;
+            TimerStartTenSecBtn.Text = "Start 10 sec";
+            TimerStartTenSecBtn.UseVisualStyleBackColor = false;
+            TimerStartTenSecBtn.Click += StartTenSecondsBtnClick;
             // 
             // TimerStartFiveMinBtn
             // 
@@ -75,6 +76,7 @@
             TimerStartFiveMinBtn.TabIndex = 52;
             TimerStartFiveMinBtn.Text = "Start 5 min";
             TimerStartFiveMinBtn.UseVisualStyleBackColor = false;
+            TimerStartFiveMinBtn.Click += StartFiveMinutesBtnClick;
             // 
             // TimerMsOutput
             // 
@@ -259,7 +261,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
-            Controls.Add(TimerStartTenMinBtn);
+            Controls.Add(TimerStartTenSecBtn);
             Controls.Add(TimerStartFiveMinBtn);
             Controls.Add(TimerMsOutput);
             Controls.Add(label6);
@@ -287,7 +289,7 @@
 
         #endregion
 
-        private Button TimerStartTenMinBtn;
+        private Button TimerStartTenSecBtn;
         private Button TimerStartFiveMinBtn;
         private Label TimerMsOutput;
         private Label label6;
