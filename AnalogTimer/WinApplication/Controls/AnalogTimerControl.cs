@@ -54,6 +54,11 @@ public partial class AnalogTimerControl : UserControl
 
         _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
         SubscribeToButtons();
+
+        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        {
+            SetMillisecond(digit.ToString());
+        };
     }
 
     #region Subscribtions

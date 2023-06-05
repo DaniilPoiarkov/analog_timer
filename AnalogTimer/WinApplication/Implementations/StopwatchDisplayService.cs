@@ -2,15 +2,15 @@
 using AnalogTimer.Models;
 using TimerEngine.Models.TimerEventArgs;
 
-namespace TimerEngine.Implementations.DisplayServices;
+namespace WinApplication.Implementations;
 
-public class WinFormDisplayService : IDisplayService
+public class StopwatchDisplayService : IDisplayService
 {
     private readonly Label _output;
 
     private readonly TextBox _cutOutput;
 
-    public WinFormDisplayService(Label outputLabel, TextBox cutOutput)
+    public StopwatchDisplayService(Label outputLabel, TextBox cutOutput)
     {
         _output = outputLabel;
         _cutOutput = cutOutput;

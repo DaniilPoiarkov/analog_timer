@@ -5,10 +5,10 @@ using AnalogTimer.Implementations;
 using ConsoleInterface.Contracts;
 using ConsoleInterface.Prompts.Implementations;
 using TimerEngine.Prompts.Implementations;
-using TimerEngine.Implementations.DisplayServices;
 using WinApplication.ButtonStateEngine;
 using WinApplication.ButtonStateEngine.StopwatchButtonStates;
 using AnalogTimer.Helpers;
+using WinApplication.Implementations;
 
 namespace WinApplication;
 
@@ -16,7 +16,7 @@ public partial class NewStopwatchControl : UserControl
 {
     private readonly MyTimer _timer;
 
-    private readonly WinFormDisplayService _stopwatchDisplayService;
+    private readonly StopwatchDisplayService _stopwatchDisplayService;
 
     private readonly IPromptService<IAnalogTimer> _stopwatchPromptService;
 
@@ -27,7 +27,7 @@ public partial class NewStopwatchControl : UserControl
         InitializeComponent();
 
         _timer = new MyTimer();
-        _stopwatchDisplayService = new WinFormDisplayService(StopwatchOutput, cutOutput);
+        _stopwatchDisplayService = new StopwatchDisplayService(StopwatchOutput, cutOutput);
         _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
 
         SubscribeToTimer();
@@ -130,7 +130,11 @@ public partial class NewStopwatchControl : UserControl
 
         try
         {
-            await _stopwatchPromptService.Consume(StopwatchConsoleInput.Text);
+            var input = StopwatchConsoleInput.Text.ToLower().StartsWith("start")
+                ? "start"
+                : StopwatchConsoleInput.Text;
+
+            await _stopwatchPromptService.Consume(input);
 
             UpdateSwitchButtonsAccessability();
 
