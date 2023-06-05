@@ -6,6 +6,9 @@ using ConsoleInterface.Contracts;
 using ConsoleInterface.Prompts.Implementations;
 using TimerEngine.Prompts.Implementations;
 using TimerEngine.Implementations.DisplayServices;
+using WinApplication.ButtonStateEngine;
+using WinApplication.ButtonStateEngine.StopwatchButtonStates;
+using AnalogTimer.Helpers;
 
 namespace WinApplication;
 
@@ -13,23 +16,22 @@ public partial class NewStopwatchControl : UserControl
 {
     private readonly MyTimer _timer;
 
+    private readonly WinFormDisplayService _stopwatchDisplayService;
+
     private readonly IPromptService<IAnalogTimer> _stopwatchPromptService;
+
+    private ButtonsStateBase _buttonState;
 
     public NewStopwatchControl()
     {
         InitializeComponent();
 
         _timer = new MyTimer();
+        _stopwatchDisplayService = new WinFormDisplayService(StopwatchOutput, cutOutput);
+        _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
 
-        var displayService = new WinFormDisplayService(StopwatchOutput, cutOutput);
-
-        _timer.Tick += displayService.DisplayTick;
-        _timer.Updated += displayService.DisplayUpdated;
-        _timer.TimerCut += displayService.DisplayCut;
-        _timer.Stopeed += _ =>
-        {
-
-        };
+        SubscribeToTimer();
+        SubscribeToButtons();
 
         _stopwatchPromptService = new AnalogTimerPromptServiceBuilder(_timer)
             .Add<StartPrompt>()
@@ -37,6 +39,142 @@ public partial class NewStopwatchControl : UserControl
             .Add<ResetPrompt>()
             .Add<CutTimerStatePrompt>()
             .Build();
+    }
+
+    #region Subscribtions
+
+    private void SubscribeToButtons()
+    {
+        _buttonState.StartPressed += (_, _) =>
+        {
+            UpdateTimerState(timer =>
+            {
+                timer.Start();
+
+                _buttonState = new StartStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
+                SubscribeToButtons();
+            });
+        };
+
+        _buttonState.PausePressed += async (_, _) =>
+        {
+            await UpdateTimerState(async timer =>
+            {
+                await timer.Stop();
+
+                _buttonState = new PauseStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
+                SubscribeToButtons();
+            });
+        };
+
+        _buttonState.ResumePressed += (_, _) =>
+        {
+            UpdateTimerState(timer =>
+            {
+                timer.Start();
+
+                _buttonState = new StartStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
+                SubscribeToButtons();
+            });
+        };
+
+        _buttonState.CancelPressed += (_, _) =>
+        {
+            UpdateTimerState(timer =>
+            {
+                timer.ResetState();
+
+                _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
+                cutOutput.Text = string.Empty;
+                SubscribeToButtons();
+            });
+        };
+
+        _buttonState.CutPressed += (_, _) =>
+        {
+            _timer.Cut();
+        };
+    }
+
+    private void SubscribeToTimer()
+    {
+        _timer.Tick += _stopwatchDisplayService.DisplayTick;
+        _timer.Updated += _stopwatchDisplayService.DisplayUpdated;
+        _timer.TimerCut += _stopwatchDisplayService.DisplayCut;
+
+        _timer.Stopeed += _ =>
+        {
+            _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
+            SubscribeToButtons();
+
+            if (_timer.GetSnapshot().IsZero)
+            {
+                StopwatchMsOutput.Text = "0";
+            }
+        };
+
+        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        {
+            SetMillisecond(digit.ToString());
+        };
+    }
+
+    #endregion
+
+    private async void ConsoleInputEnterKeydown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode != Keys.Enter)
+        {
+            return;
+        }
+
+        try
+        {
+            await _stopwatchPromptService.Consume(StopwatchConsoleInput.Text);
+
+            UpdateSwitchButtonsAccessability();
+
+            StopwatchConsoleInput.Text = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    private void UpdateSwitchButtonsAccessability()
+    {
+        var userInput = StopwatchConsoleInput.Text.ToLower();
+
+        if (userInput.StartsWith("start"))
+        {
+            _buttonState = new StartStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
+            SubscribeToButtons();
+        }
+        else if (userInput.StartsWith("pause") || userInput.StartsWith("-p"))
+        {
+            _buttonState = new PauseStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
+            SubscribeToButtons();
+        }
+        else if (userInput.StartsWith("reset") || userInput.StartsWith("-r"))
+        {
+            _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
+            cutOutput.Text = string.Empty;
+            SubscribeToButtons();
+        }
+    }
+
+    private void SetMillisecond(string digit)
+    {
+        if (StopwatchMsOutput.InvokeRequired)
+        {
+            var setMillisecond = new SetMillisecondCallback(SetMillisecond);
+            Invoke(setMillisecond, digit);
+        }
+        else
+        {
+            StopwatchMsOutput.Text = digit;
+        }
     }
 
     private void SwitchConsoleAccessability(object sender, EventArgs e)
@@ -76,5 +214,15 @@ public partial class NewStopwatchControl : UserControl
         {
             DisplayError(ex.Message);
         }
+    }
+
+    private void SwitchStopwatchClick(object sender, EventArgs e)
+    {
+        _buttonState.LeftBtnClick();
+    }
+
+    private void RightBtnCLick(object sender, EventArgs e)
+    {
+        _buttonState.RightBtnClick();
     }
 }

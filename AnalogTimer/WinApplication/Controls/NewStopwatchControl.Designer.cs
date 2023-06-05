@@ -84,6 +84,7 @@
             StopwatchConsoleInput.PlaceholderText = "Console mode";
             StopwatchConsoleInput.Size = new Size(325, 20);
             StopwatchConsoleInput.TabIndex = 34;
+            StopwatchConsoleInput.KeyDown += ConsoleInputEnterKeydown;
             // 
             // StopwatchOutput
             // 
@@ -115,6 +116,7 @@
             // StopwatchResetBtn
             // 
             StopwatchResetBtn.BackColor = Color.FromArgb(57, 72, 103);
+            StopwatchResetBtn.Enabled = false;
             StopwatchResetBtn.FlatStyle = FlatStyle.Popup;
             StopwatchResetBtn.ForeColor = Color.FromArgb(241, 246, 249);
             StopwatchResetBtn.Location = new Point(181, 290);
@@ -124,6 +126,7 @@
             StopwatchResetBtn.TabIndex = 32;
             StopwatchResetBtn.Text = "Reset";
             StopwatchResetBtn.UseVisualStyleBackColor = false;
+            StopwatchResetBtn.Click += RightBtnCLick;
             // 
             // StopwatchStartBtn
             // 
@@ -137,6 +140,7 @@
             StopwatchStartBtn.TabIndex = 31;
             StopwatchStartBtn.Text = "Start";
             StopwatchStartBtn.UseVisualStyleBackColor = false;
+            StopwatchStartBtn.Click += SwitchStopwatchClick;
             // 
             // NewStopwatchControl
             // 

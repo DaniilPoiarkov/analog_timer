@@ -10,6 +10,7 @@ internal class PauseStopwatchState : ButtonsStateBase
         : base(leftBtn, rightBrn)
     {
         LeftBtn.Text = "Resume";
+        RightBtn.Enabled = true;
         RightBtn.Text = "Reset";
     }
 

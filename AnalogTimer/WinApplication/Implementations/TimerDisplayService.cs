@@ -1,10 +1,9 @@
-﻿using AnalogTimer.Contracts;
-using AnalogTimer.Models;
+﻿using AnalogTimer.Models;
 using TimerEngine.Models.TimerEventArgs;
 
 namespace WinApplication.Implementations;
 
-internal class TimerDisplayService// : IDisplayService
+internal class TimerDisplayService
 {
     private readonly Label _output;
 

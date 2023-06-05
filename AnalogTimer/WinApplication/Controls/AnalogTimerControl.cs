@@ -223,8 +223,6 @@ public partial class AnalogTimerControl : UserControl
     {
         var userInput = TimerConsoleInput.Text.ToLower();
 
-        string btnText = string.Empty;
-
         if (userInput.StartsWith("start"))
         {
             _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
@@ -245,12 +243,6 @@ public partial class AnalogTimerControl : UserControl
             MinutesInput.Value = 0;
             SecondsInput.Value = 0;
             TickPerSecondInput.Value = 1;
-
-        }
-
-        if (!string.IsNullOrEmpty(btnText))
-        {
-            SwitchTimerBtn.Text = btnText;
         }
     }
 
