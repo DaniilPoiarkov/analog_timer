@@ -159,7 +159,12 @@ public class AnalogTimer : IAnalogTimer
 
                 if (_state.IsZero)
                 {
-                    await Stop();
+                    IsRunning = false;
+
+                    MillisecondDisplayHelper.StopDisplay();
+                    MillisecondDisplayHelper.DisplayZero();
+
+                    Stopeed?.Invoke(new() { IsStopped = true });
                 }
             }
             catch (Exception ex)
