@@ -2,5 +2,5 @@
 
 public interface ILineDisplay
 {
-    void Display(string text, int position);
+    void Display(IEnumerable<List<string>> text, int position);
 }

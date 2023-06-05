@@ -1,4 +1,5 @@
 ﻿using RunningLineEngine.Contracts;
+using RunningLineEngine.LetterPatterns.Implementations;
 
 namespace RunningLineEngine.Implementations;
 
@@ -14,6 +15,9 @@ public class RunningLine : IRunningLine
 
     private string? Sentence { get; set; }
 
+    private IEnumerable<List<string>> _sentencePatterns;
+
+
     private readonly ILineDisplay _lineDisplay;
 
     private bool IsCleaned = false;
@@ -27,6 +31,7 @@ public class RunningLine : IRunningLine
         _speedCoefficient = 50;
         _lineDisplay = lineDisplay;
         Position = Console.BufferWidth - 1;
+        _sentencePatterns = new List<List<string>>();
     }
 
     public void ChangeSpeed(int coefficient)
@@ -44,7 +49,7 @@ public class RunningLine : IRunningLine
             {
                 await Task.Delay(_speedCoefficient);
 
-                var partial = sentence[..index];
+                var partial = _sentencePatterns.Take(index);
                 _lineDisplay.Display(partial, Position);
 
                 index++;
@@ -54,7 +59,7 @@ public class RunningLine : IRunningLine
             while (Position != 0 && IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(sentence, Position);
+                _lineDisplay.Display(_sentencePatterns, Position);
 
                 Position--;
             }
@@ -65,7 +70,7 @@ public class RunningLine : IRunningLine
             {
                 await Task.Delay(_speedCoefficient);
 
-                var partial = sentence[index..];
+                var partial = _sentencePatterns.Skip(index);
                 _lineDisplay.Display(partial, 0);
 
                 Position--;
@@ -75,7 +80,7 @@ public class RunningLine : IRunningLine
             if (IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(string.Empty, 0);
+                _lineDisplay.Display(new List<List<string>>(), 0);
 
                 Console.CursorLeft = 0;
                 Position = Console.BufferWidth - 1;
@@ -101,6 +106,14 @@ public class RunningLine : IRunningLine
     public void Set(string sentence)
     {
         Sentence = sentence;
+
+        _sentencePatterns = new List<List<string>>()
+        {
+            new LetterA().Pattern,
+            new LetterB().Pattern,
+            new LetterC().Pattern,
+            new LetterD().Pattern,
+        };
     }
 
     public void Start()
