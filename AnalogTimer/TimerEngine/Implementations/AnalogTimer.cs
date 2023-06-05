@@ -41,7 +41,7 @@ public class AnalogTimer : IAnalogTimer
 
     public int TicksPerSecond { get; private set; }
 
-    private /*Func<Task>?*/ CounterExecutor? Counter { get; set; }
+    private CounterExecutor? Counter { get; set; }
 
     private Task? Execution { get; set; }
 
