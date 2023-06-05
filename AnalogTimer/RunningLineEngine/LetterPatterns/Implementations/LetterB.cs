@@ -1,6 +1,6 @@
 ﻿using RunningLineEngine.Contracts;
 
-namespace RunningLineEngine.LetterPatterns;
+namespace RunningLineEngine.LetterPatterns.Implementations;
 
 internal class LetterB : ILetterPattern
 {

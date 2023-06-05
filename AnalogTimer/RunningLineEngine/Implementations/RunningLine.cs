@@ -1,5 +1,5 @@
 ﻿using RunningLineEngine.Contracts;
-using RunningLineEngine.LetterPatterns.Implementations;
+using RunningLineEngine.LetterPatterns;
 
 namespace RunningLineEngine.Implementations;
 
@@ -107,13 +107,10 @@ public class RunningLine : IRunningLine
     {
         Sentence = sentence;
 
-        _sentencePatterns = new List<List<string>>()
-        {
-            new LetterA().Pattern,
-            new LetterB().Pattern,
-            new LetterC().Pattern,
-            new LetterD().Pattern,
-        };
+        _sentencePatterns = sentence.ToUpper()
+            .Select(LetterPatternProvider.Get)
+            .Select(p => p.Pattern)
+            .ToList();
     }
 
     public void Start()

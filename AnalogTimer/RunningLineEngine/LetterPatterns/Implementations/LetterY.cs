@@ -2,14 +2,14 @@
 
 namespace RunningLineEngine.LetterPatterns.Implementations;
 
-internal class LetterC : ILetterPattern
+internal class LetterY : ILetterPattern
 {
     public List<string> Pattern => new()
     {
-        " █████",
-        "█     ",
-        "█     ",
-        "█     ",
-        " █████"
+        "█     █",
+        " █   █ ",
+        "  █ █  ",
+        "   █   ",
+        "   █   "
     };
 }
