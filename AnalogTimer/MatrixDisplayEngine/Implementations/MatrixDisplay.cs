@@ -23,6 +23,11 @@ public sealed class MatrixDisplay : IMatrixDisplay
     {
         lock (_lock)
         {
+            if (!multipleMatrixes.Any())
+            {
+                return;
+            }
+
             var values = multipleMatrixes.Aggregate((first, second) =>
                 first.Zip(second)
                     .Select((pair) => $"{pair.First}{new string(_empty, _spaceBetweenMatrixes)}{pair.Second}")
