@@ -58,7 +58,7 @@ public class RunningLine : IRunningLine
 
         var sentenceLength = _sentencePatterns.First().Length;
 
-        while (IsRunning && Console.BufferWidth - 1 - sentenceLength < Position)
+        while (Console.BufferWidth - 1 - sentenceLength < Position && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
 
