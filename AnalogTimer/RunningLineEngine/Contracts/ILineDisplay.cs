@@ -2,5 +2,7 @@
 
 public interface ILineDisplay
 {
-    void Display(string text, int position);
+    void Display(IEnumerable<string> text, int position);
+
+    void Clean();
 }

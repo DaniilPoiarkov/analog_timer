@@ -2,17 +2,15 @@
 using AnalogTimer.Models;
 using TimerEngine.Models.TimerEventArgs;
 
-namespace TimerEngine.Implementations.DisplayServices;
+namespace WinApplication.Implementations;
 
-public class WinFormDisplayService : IDisplayService
+public class StopwatchDisplayService : IDisplayService
 {
     private readonly Label _output;
 
     private readonly TextBox _cutOutput;
 
-    private int _cutClicks;
-
-    public WinFormDisplayService(Label outputLabel, TextBox cutOutput)
+    public StopwatchDisplayService(Label outputLabel, TextBox cutOutput)
     {
         _output = outputLabel;
         _cutOutput = cutOutput;
@@ -25,13 +23,6 @@ public class WinFormDisplayService : IDisplayService
 
     public void DisplayCut(TimerEventArgs args)
     {
-        if (_cutClicks == 3)
-        {
-            _cutClicks = 0;
-            _cutOutput.Text = string.Empty;
-        }
-
-        _cutClicks++;
         _cutOutput.Text += $"|{DateTime.UtcNow.ToShortTimeString()} => {args.State}{Environment.NewLine}";
     }
 

@@ -1,4 +1,6 @@
 ﻿using RunningLineEngine.Contracts;
+using ConsoleInterface.Helpers;
+using RunningLineEngine.LetterPatterns;
 
 namespace RunningLineEngine.Implementations;
 
@@ -8,11 +10,14 @@ public class RunningLine : IRunningLine
 
     public bool IsRunning { get; private set; }
 
-    private Func<string, Task>? Runner { get; set; }
+    private Func<Task>? Runner { get; set; }
 
     private Task? Execution { get; set; }
 
     private string? Sentence { get; set; }
+
+    private List<string> _sentencePatterns;
+
 
     private readonly ILineDisplay _lineDisplay;
 
@@ -20,11 +25,14 @@ public class RunningLine : IRunningLine
 
     private int Position { get; set; }
 
+    public int TicksPerSecond => _speedCoefficient;
+
     public RunningLine(ILineDisplay lineDisplay)
     {
-        _speedCoefficient = 50;
+        _speedCoefficient = 10;
         _lineDisplay = lineDisplay;
         Position = Console.BufferWidth - 1;
+        _sentencePatterns = new List<string>();
     }
 
     public void ChangeSpeed(int coefficient)
@@ -32,53 +40,130 @@ public class RunningLine : IRunningLine
         _speedCoefficient = coefficient;
     }
 
-    private async Task RunTemplate(string sentence)
+    private async Task RunTemplate()
     {
-        while (IsRunning)
+        var sentenceLength = _sentencePatterns.First().Length;
+
+        if (sentenceLength < Console.BufferWidth)
         {
-            var index = 1;
-
-            while (IsRunning && Console.BufferWidth - 1 - sentence.Length < Position)
+            while (IsRunning)
             {
-                await Task.Delay(_speedCoefficient);
+                await DisplayShortSentence();
+            }
+        }
+        else
+        {
+            while (IsRunning)
+            {
+                await DisplayLargeSentence();
+            }
+        }
+    }
 
-                var partial = sentence[..index];
-                _lineDisplay.Display(partial, Position);
+    /// <summary>
+    /// This is a recursive call binded to RunTemplate method
+    /// </summary>
+    /// <returns></returns>
+    private async Task DisplayLargeSentence()
+    {
+        var index = 1;
+        var sentenceLength = _sentencePatterns.First().Length;
 
-                index++;
-                Position--;
+        while (Position > 0 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+
+            var partial = _sentencePatterns.Select(p => p[..index]);
+
+            _lineDisplay.Display(partial, Position);
+
+            index++;
+            Position--;
+        }
+
+        index = 1;
+        var last = sentenceLength - (sentenceLength - Console.BufferWidth);
+
+        while (Position > sentenceLength * -1 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+            
+            var partial = _sentencePatterns
+                .Select(p => p[index..].Length <= Console.BufferWidth
+                ? p[index..]
+                : p[index..last]);
+
+            _lineDisplay.Display(partial, 0);
+
+            index++;
+
+            if (last < sentenceLength)
+            {
+                last++;
             }
 
-            while (Position != 0 && IsRunning)
-            {
-                await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(sentence, Position);
+            Position--;
+        }
 
-                Position--;
-            }
+        if (IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+            Position = Console.BufferWidth - 1;
 
-            index = 1;
+            await RunTemplate();
+        }
+    }
 
-            while (Position > sentence.Length * -1 && IsRunning)
-            {
-                await Task.Delay(_speedCoefficient);
+    /// <summary>
+    /// This is a recursive call binded to RunTemplate method
+    /// </summary>
+    /// <returns></returns>
+    private async Task DisplayShortSentence()
+    {
+        var index = 1;
 
-                var partial = sentence[index..];
-                _lineDisplay.Display(partial, 0);
+        var sentenceLength = _sentencePatterns.First().Length;
 
-                Position--;
-                index++;
-            }
+        while (Console.BufferWidth - 1 - sentenceLength < Position && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
 
-            if (IsRunning)
-            {
-                await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(string.Empty, 0);
+            var partial = _sentencePatterns.Select(p => p[..index]);
 
-                Console.CursorLeft = 0;
-                Position = Console.BufferWidth - 1;
-                await RunTemplate(sentence);
-            }
+            _lineDisplay.Display(partial, Position);
+
+            index++;
+            Position--;
+        }
+
+        while (Position != 0 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+            _lineDisplay.Display(_sentencePatterns, Position);
+
+            Position--;
+        }
+
+        index = 1;
+
+        while (Position > sentenceLength * -1 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+
+            var partial = _sentencePatterns.Select(p => p[index..]);
+            _lineDisplay.Display(partial, 0);
+
+            Position--;
+            index++;
+        }
+
+        if (IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+
+            Console.CursorLeft = 0;
+            Position = Console.BufferWidth - 1;
+            await RunTemplate();
         }
     }
 
@@ -99,6 +184,18 @@ public class RunningLine : IRunningLine
     public void Set(string sentence)
     {
         Sentence = sentence;
+
+        var matrix = sentence.ToUpper()
+            .Select(LetterPatternProvider.Get)
+            .Select(p => p.Pattern)
+            .AggregateToDisplayModel();
+
+        if (!matrix.Any())
+        {
+            throw new Exception("Empty sentence is not allowed");
+        }
+
+        _sentencePatterns = matrix;
     }
 
     public void Start()
@@ -121,7 +218,7 @@ public class RunningLine : IRunningLine
             IsCleaned = false;
         }
 
-        Execution = Runner.Invoke(Sentence);
+        Execution = Runner.Invoke();
     }
 
     public void Clean()
@@ -131,9 +228,7 @@ public class RunningLine : IRunningLine
             throw new InvalidOperationException("Cannot clean line when it's running.");
         }
 
-        Console.CursorLeft = 0;
-        Console.CursorTop = 1;
-        Console.Write(new string(' ', Console.BufferWidth));
+        _lineDisplay.Clean();
 
         Runner = null;
         Position = Console.BufferWidth - 1;

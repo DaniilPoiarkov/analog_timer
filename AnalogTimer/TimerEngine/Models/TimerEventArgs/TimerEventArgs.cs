@@ -8,4 +8,6 @@ public class TimerEventArgs
     public TimerState? State { get; set; }
 
     public TimerType? TimerType { get; set; }
+
+    public bool IsStopped { get; set; }
 }
