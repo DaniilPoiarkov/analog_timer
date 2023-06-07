@@ -122,7 +122,7 @@ public class RunningLine : IRunningLine
 
         if (matrix.First().Length > Console.BufferWidth)
         {
-            throw new Exception("To long sentences are not allowed now");
+            throw new Exception("Too long sentences are not allowed now");
         }
 
         _sentencePatterns = matrix;
