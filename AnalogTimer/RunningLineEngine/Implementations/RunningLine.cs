@@ -1,6 +1,6 @@
 ﻿using RunningLineEngine.Contracts;
+using ConsoleInterface.Helpers;
 using RunningLineEngine.LetterPatterns;
-using RunningLineEngine.LetterPatterns.Implementations;
 
 namespace RunningLineEngine.Implementations;
 
@@ -10,13 +10,13 @@ public class RunningLine : IRunningLine
 
     public bool IsRunning { get; private set; }
 
-    private Func<string, Task>? Runner { get; set; }
+    private Func<Task>? Runner { get; set; }
 
     private Task? Execution { get; set; }
 
     private string? Sentence { get; set; }
 
-    private IEnumerable<List<string>> _sentencePatterns;
+    private List<string> _sentencePatterns;
 
 
     private readonly ILineDisplay _lineDisplay;
@@ -32,7 +32,7 @@ public class RunningLine : IRunningLine
         _speedCoefficient = 50;
         _lineDisplay = lineDisplay;
         Position = Console.BufferWidth - 1;
-        _sentencePatterns = new List<List<string>>();
+        _sentencePatterns = new List<string>();
     }
 
     public void ChangeSpeed(int coefficient)
@@ -40,17 +40,20 @@ public class RunningLine : IRunningLine
         _speedCoefficient = coefficient;
     }
 
-    private async Task RunTemplate(string sentence)
+    private async Task RunTemplate()
     {
         while (IsRunning)
         {
             var index = 1;
 
-            while (IsRunning && Console.BufferWidth - 1 - sentence.Length < Position)
+            var sentenceLength = _sentencePatterns.First().Length;
+
+            while (IsRunning && Console.BufferWidth - 1 - sentenceLength < Position)
             {
                 await Task.Delay(_speedCoefficient);
 
-                var partial = _sentencePatterns.Take(index);
+                var partial = _sentencePatterns.Select(p => p[..index]);
+
                 _lineDisplay.Display(partial, Position);
 
                 index++;
@@ -67,15 +70,11 @@ public class RunningLine : IRunningLine
 
             index = 1;
 
-            var sentenceLength = _sentencePatterns
-                .Select(x => x.Count)
-                .Sum();
-
             while (Position > sentenceLength * -1 && IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
 
-                var partial = _sentencePatterns.Skip(index);
+                var partial = _sentencePatterns.Select(p => p[index..]);
                 _lineDisplay.Display(partial, 0);
 
                 Position--;
@@ -86,15 +85,9 @@ public class RunningLine : IRunningLine
             {
                 await Task.Delay(_speedCoefficient);
 
-                var empty = Enumerable.Range(0, sentence.Length)
-                    .Select(_ => new EmptyLetter())
-                    .Select(p => p.Pattern);
-
-                _lineDisplay.Display(empty, 0);
-
                 Console.CursorLeft = 0;
                 Position = Console.BufferWidth - 1;
-                await RunTemplate(sentence);
+                await RunTemplate();
             }
         }
     }
@@ -120,7 +113,7 @@ public class RunningLine : IRunningLine
         _sentencePatterns = sentence.ToUpper()
             .Select(LetterPatternProvider.Get)
             .Select(p => p.Pattern)
-            .ToList();
+            .AggregateToDisplayModel();
     }
 
     public void Start()
@@ -143,7 +136,7 @@ public class RunningLine : IRunningLine
             IsCleaned = false;
         }
 
-        Execution = Runner.Invoke(Sentence);
+        Execution = Runner.Invoke();
     }
 
     public void Clean()
@@ -153,9 +146,7 @@ public class RunningLine : IRunningLine
             throw new InvalidOperationException("Cannot clean line when it's running.");
         }
 
-        Console.CursorLeft = 0;
-        Console.CursorTop = 1;
-        Console.Write(new string(' ', Console.BufferWidth));
+        _lineDisplay.Clean();
 
         Runner = null;
         Position = Console.BufferWidth - 1;
