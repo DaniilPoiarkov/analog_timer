@@ -1,6 +1,7 @@
 ﻿using AnalogTimer.DigitDrawers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
+using ConsoleInterface.Helpers;
 using MatrixDisplayEngine.Contracts;
 using MatrixDisplayEngine.Implementations;
 
@@ -23,7 +24,8 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
         var values = TransformToEnumerable(digit, value)
             .Select(DigitDrawerProvider.GetDrawer)
-            .Select(d => d.Pattern);
+            .Select(d => d.Pattern)
+            .AggregateToDisplayModel();
 
         _matrixDisplay.Display(values, positionLeft);
 
