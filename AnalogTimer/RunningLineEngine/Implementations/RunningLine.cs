@@ -110,10 +110,22 @@ public class RunningLine : IRunningLine
     {
         Sentence = sentence;
 
-        _sentencePatterns = sentence.ToUpper()
+        var matrix = sentence.ToUpper()
             .Select(LetterPatternProvider.Get)
             .Select(p => p.Pattern)
             .AggregateToDisplayModel();
+
+        if (!matrix.Any())
+        {
+            throw new Exception("Empty sentence is not allowed");
+        }
+
+        if (matrix.First().Length > Console.BufferWidth)
+        {
+            throw new Exception("To long sentences are not allowed now");
+        }
+
+        _sentencePatterns = matrix;
     }
 
     public void Start()
