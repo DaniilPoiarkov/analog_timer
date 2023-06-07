@@ -29,7 +29,7 @@ public class RunningLine : IRunningLine
 
     public RunningLine(ILineDisplay lineDisplay)
     {
-        _speedCoefficient = 50;
+        _speedCoefficient = 10;
         _lineDisplay = lineDisplay;
         Position = Console.BufferWidth - 1;
         _sentencePatterns = new List<string>();
