@@ -42,9 +42,21 @@ public class RunningLine : IRunningLine
 
     private async Task RunTemplate()
     {
-        while (IsRunning)
+        var sentenceLength = _sentencePatterns.First().Length;
+
+        if (sentenceLength < Console.BufferWidth)
         {
-            await DisplaySentence();
+            while (IsRunning)
+            {
+                await DisplayShortSentence();
+            }
+        }
+        else
+        {
+            while (IsRunning)
+            {
+                await DisplayLargeSentence();
+            }
         }
     }
 
@@ -52,7 +64,61 @@ public class RunningLine : IRunningLine
     /// This is a recursive call binded to RunTemplate method
     /// </summary>
     /// <returns></returns>
-    private async Task DisplaySentence()
+    private async Task DisplayLargeSentence()
+    {
+        var index = 1;
+        var sentenceLength = _sentencePatterns.First().Length;
+
+        while (Position > 0 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+
+            var partial = _sentencePatterns.Select(p => p[..index]);
+
+            _lineDisplay.Display(partial, Position);
+
+            index++;
+            Position--;
+        }
+
+        index = 1;
+        var last = sentenceLength - (sentenceLength - Console.BufferWidth);
+
+        while (Position > sentenceLength * -1 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+            
+            var partial = _sentencePatterns
+                .Select(p => p[index..].Length <= Console.BufferWidth
+                ? p[index..]
+                : p[index..last]);
+
+            _lineDisplay.Display(partial, 0);
+
+            index++;
+
+            if (last < sentenceLength)
+            {
+                last++;
+            }
+
+            Position--;
+        }
+
+        if (IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+            Position = Console.BufferWidth - 1;
+
+            await RunTemplate();
+        }
+    }
+
+    /// <summary>
+    /// This is a recursive call binded to RunTemplate method
+    /// </summary>
+    /// <returns></returns>
+    private async Task DisplayShortSentence()
     {
         var index = 1;
 
@@ -127,11 +193,6 @@ public class RunningLine : IRunningLine
         if (!matrix.Any())
         {
             throw new Exception("Empty sentence is not allowed");
-        }
-
-        if (matrix.First().Length > Console.BufferWidth)
-        {
-            throw new Exception("Too long sentences are not allowed now");
         }
 
         _sentencePatterns = matrix;
