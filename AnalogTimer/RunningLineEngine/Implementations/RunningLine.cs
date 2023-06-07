@@ -44,51 +44,60 @@ public class RunningLine : IRunningLine
     {
         while (IsRunning)
         {
-            var index = 1;
+            await DisplaySentence();
+        }
+    }
 
-            var sentenceLength = _sentencePatterns.First().Length;
+    /// <summary>
+    /// This is a recursive call binded to RunTemplate method
+    /// </summary>
+    /// <returns></returns>
+    private async Task DisplaySentence()
+    {
+        var index = 1;
 
-            while (IsRunning && Console.BufferWidth - 1 - sentenceLength < Position)
-            {
-                await Task.Delay(_speedCoefficient);
+        var sentenceLength = _sentencePatterns.First().Length;
 
-                var partial = _sentencePatterns.Select(p => p[..index]);
+        while (IsRunning && Console.BufferWidth - 1 - sentenceLength < Position)
+        {
+            await Task.Delay(_speedCoefficient);
 
-                _lineDisplay.Display(partial, Position);
+            var partial = _sentencePatterns.Select(p => p[..index]);
 
-                index++;
-                Position--;
-            }
+            _lineDisplay.Display(partial, Position);
 
-            while (Position != 0 && IsRunning)
-            {
-                await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(_sentencePatterns, Position);
+            index++;
+            Position--;
+        }
 
-                Position--;
-            }
+        while (Position != 0 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+            _lineDisplay.Display(_sentencePatterns, Position);
 
-            index = 1;
+            Position--;
+        }
 
-            while (Position > sentenceLength * -1 && IsRunning)
-            {
-                await Task.Delay(_speedCoefficient);
+        index = 1;
 
-                var partial = _sentencePatterns.Select(p => p[index..]);
-                _lineDisplay.Display(partial, 0);
+        while (Position > sentenceLength * -1 && IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
 
-                Position--;
-                index++;
-            }
+            var partial = _sentencePatterns.Select(p => p[index..]);
+            _lineDisplay.Display(partial, 0);
 
-            if (IsRunning)
-            {
-                await Task.Delay(_speedCoefficient);
+            Position--;
+            index++;
+        }
 
-                Console.CursorLeft = 0;
-                Position = Console.BufferWidth - 1;
-                await RunTemplate();
-            }
+        if (IsRunning)
+        {
+            await Task.Delay(_speedCoefficient);
+
+            Console.CursorLeft = 0;
+            Position = Console.BufferWidth - 1;
+            await RunTemplate();
         }
     }
 
