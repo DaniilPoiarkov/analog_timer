@@ -21,11 +21,16 @@ internal class DefaultDisplayHandler : ILineDisplay
         }
     }
 
-    public void Display(IEnumerable<List<string>> text, int position)
+    public void Clean()
     {
         _matrixDisplay.Display(_cleanWindowPattern, 1);
+    }
 
-        _matrixDisplay.Display(text, position);
+    public void Display(IEnumerable<string> text, int position)
+    {
+        Clean();
+
+        _matrixDisplay.Display(text.ToList(), position);
 
         UIHelper.SetCursor();
     }
