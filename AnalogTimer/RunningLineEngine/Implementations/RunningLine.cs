@@ -1,5 +1,6 @@
 ﻿using RunningLineEngine.Contracts;
 using RunningLineEngine.LetterPatterns;
+using RunningLineEngine.LetterPatterns.Implementations;
 
 namespace RunningLineEngine.Implementations;
 
@@ -66,7 +67,11 @@ public class RunningLine : IRunningLine
 
             index = 1;
 
-            while (Position > sentence.Length * -1 && IsRunning)
+            var sentenceLength = _sentencePatterns
+                .Select(x => x.Count)
+                .Sum();
+
+            while (Position > sentenceLength * -1 && IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
 
@@ -80,7 +85,12 @@ public class RunningLine : IRunningLine
             if (IsRunning)
             {
                 await Task.Delay(_speedCoefficient);
-                _lineDisplay.Display(new List<List<string>>(), 0);
+
+                var empty = Enumerable.Range(0, sentence.Length)
+                    .Select(_ => new EmptyLetter())
+                    .Select(p => p.Pattern);
+
+                _lineDisplay.Display(empty, 0);
 
                 Console.CursorLeft = 0;
                 Position = Console.BufferWidth - 1;
