@@ -8,12 +8,15 @@ namespace RunningLineEngine.Implementations;
 public class RunningLine : IRunningLine
 {
     private int _speedCoefficient;
+    public int TicksPerSecond => _speedCoefficient;
+
 
     public bool IsRunning { get; private set; }
 
     private Func<Task>? Runner { get; set; }
 
     private Task? Execution { get; set; }
+
 
     private string? Sentence { get; set; }
 
@@ -24,12 +27,14 @@ public class RunningLine : IRunningLine
 
     private bool IsCleaned = false;
 
+
     private int Position { get; set; }
+    private static int BasePosition => Console.BufferWidth - 1;
+
 
     private int Index { get; set; } = 1;
     private int LastIndex { get; set; } = 1;
 
-    public int TicksPerSecond => _speedCoefficient;
 
     private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
@@ -37,7 +42,7 @@ public class RunningLine : IRunningLine
     {
         _speedCoefficient = 10;
         _lineDisplay = lineDisplay;
-        Position = Console.BufferWidth - 1;
+        Position = BasePosition;
         _sentencePatterns = new List<string>();
     }
 
@@ -77,7 +82,7 @@ public class RunningLine : IRunningLine
     {
         var sentenceLength = _sentencePatterns.First().Length;
 
-        if (Position == Console.BufferWidth - 1)
+        if (Position == BasePosition)
         {
             Index = 1;
         }
@@ -124,7 +129,7 @@ public class RunningLine : IRunningLine
         if (IsRunning)
         {
             await Task.Delay(_speedCoefficient);
-            Position = Console.BufferWidth - 1;
+            Position = BasePosition;
         }
     }
 
@@ -132,7 +137,7 @@ public class RunningLine : IRunningLine
     {
         var sentenceLength = _sentencePatterns.First().Length;
 
-        while (Console.BufferWidth - 1 - sentenceLength < Position && IsRunning)
+        while (BasePosition - sentenceLength < Position && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
 
@@ -171,7 +176,7 @@ public class RunningLine : IRunningLine
         if (IsRunning)
         {
             await Task.Delay(_speedCoefficient);
-            Position = Console.BufferWidth - 1;
+            Position = BasePosition;
             Index = 1;
         }
     }
@@ -192,6 +197,11 @@ public class RunningLine : IRunningLine
 
     public void Set(string sentence)
     {
+        if (IsRunning)
+        {
+            throw new Exception("Cannot update sentence in when line is running.");
+        }
+
         Sentence = sentence;
 
         var matrix = sentence.ToUpper()
@@ -205,6 +215,9 @@ public class RunningLine : IRunningLine
         }
 
         _sentencePatterns = matrix;
+        Clean();
+        Position = BasePosition;
+        Index = 1;
     }
 
     public void Start()
@@ -240,7 +253,7 @@ public class RunningLine : IRunningLine
         _lineDisplay.Clean();
 
         Runner = null;
-        Position = Console.BufferWidth - 1;
+        Position = BasePosition;
         IsCleaned = true;
     }
 }
