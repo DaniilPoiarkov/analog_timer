@@ -27,6 +27,7 @@ public class RunningLine : IRunningLine
     private int Position { get; set; }
 
     private int Index { get; set; } = 1;
+    private int LastIndex { get; set; } = 1;
 
     public int TicksPerSecond => _speedCoefficient;
 
@@ -74,40 +75,47 @@ public class RunningLine : IRunningLine
 
     private async Task DisplayLargeSentence()
     {
-        var index = 1;
         var sentenceLength = _sentencePatterns.First().Length;
+
+        if (Position == Console.BufferWidth - 1)
+        {
+            Index = 1;
+        }
 
         while (Position > 0 && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
 
-            var partial = _sentencePatterns.Select(p => p[..index]);
+            var partial = _sentencePatterns.Select(p => p[..Index]);
 
             _lineDisplay.Display(partial, Position);
 
-            index++;
+            Index++;
             Position--;
         }
 
-        index = 1;
-        var last = sentenceLength - (sentenceLength - Console.BufferWidth);
+        if (Position == 0)
+        {
+            Index = 1;
+            LastIndex = sentenceLength - (sentenceLength - Console.BufferWidth);
+        }
 
         while (Position > sentenceLength * -1 && IsRunning)
         {
             await Task.Delay(_speedCoefficient);
             
             var partial = _sentencePatterns
-                .Select(p => p[index..].Length <= Console.BufferWidth
-                ? p[index..]
-                : p[index..last]);
+                .Select(p => p[Index..].Length <= Console.BufferWidth
+                ? p[Index..]
+                : p[Index..LastIndex]);
 
             _lineDisplay.Display(partial, 0);
 
-            index++;
+            Index++;
 
-            if (last < sentenceLength)
+            if (LastIndex < sentenceLength)
             {
-                last++;
+                LastIndex++;
             }
 
             Position--;
