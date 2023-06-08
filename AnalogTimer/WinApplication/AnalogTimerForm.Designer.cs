@@ -47,10 +47,11 @@
             TabWindow.Controls.Add(TimerTab);
             TabWindow.Controls.Add(StopwatchTab);
             TabWindow.Controls.Add(HelpTab);
-            TabWindow.Location = new Point(12, 12);
+            TabWindow.Location = new Point(10, 9);
+            TabWindow.Margin = new Padding(3, 2, 3, 2);
             TabWindow.Name = "TabWindow";
             TabWindow.SelectedIndex = 0;
-            TabWindow.Size = new Size(353, 431);
+            TabWindow.Size = new Size(309, 323);
             TabWindow.TabIndex = 22;
             // 
             // TimerTab
@@ -59,19 +60,21 @@
             TimerTab.BackgroundImageLayout = ImageLayout.Center;
             TimerTab.BorderStyle = BorderStyle.Fixed3D;
             TimerTab.Controls.Add(analogTimerControl1);
-            TimerTab.Location = new Point(4, 29);
+            TimerTab.Location = new Point(4, 24);
+            TimerTab.Margin = new Padding(3, 2, 3, 2);
             TimerTab.Name = "TimerTab";
-            TimerTab.Padding = new Padding(3);
-            TimerTab.Size = new Size(345, 398);
+            TimerTab.Padding = new Padding(3, 2, 3, 2);
+            TimerTab.Size = new Size(301, 295);
             TimerTab.TabIndex = 0;
             TimerTab.Text = "Timer";
             // 
             // analogTimerControl1
             // 
             analogTimerControl1.BackColor = Color.FromArgb(33, 42, 62);
-            analogTimerControl1.Location = new Point(-6, -2);
+            analogTimerControl1.Location = new Point(-5, -2);
+            analogTimerControl1.Margin = new Padding(3, 2, 3, 2);
             analogTimerControl1.Name = "analogTimerControl1";
-            analogTimerControl1.Size = new Size(353, 417);
+            analogTimerControl1.Size = new Size(309, 313);
             analogTimerControl1.TabIndex = 0;
             // 
             // StopwatchTab
@@ -79,19 +82,21 @@
             StopwatchTab.BackColor = Color.FromArgb(33, 42, 62);
             StopwatchTab.BorderStyle = BorderStyle.Fixed3D;
             StopwatchTab.Controls.Add(newStopwatchControl1);
-            StopwatchTab.Location = new Point(4, 29);
+            StopwatchTab.Location = new Point(4, 24);
+            StopwatchTab.Margin = new Padding(3, 2, 3, 2);
             StopwatchTab.Name = "StopwatchTab";
-            StopwatchTab.Padding = new Padding(3);
-            StopwatchTab.Size = new Size(345, 398);
+            StopwatchTab.Padding = new Padding(3, 2, 3, 2);
+            StopwatchTab.Size = new Size(301, 295);
             StopwatchTab.TabIndex = 1;
             StopwatchTab.Text = "Stopwatch";
             // 
             // newStopwatchControl1
             // 
             newStopwatchControl1.BackColor = Color.FromArgb(33, 42, 62);
-            newStopwatchControl1.Location = new Point(-6, -2);
+            newStopwatchControl1.Location = new Point(-5, -2);
+            newStopwatchControl1.Margin = new Padding(3, 2, 3, 2);
             newStopwatchControl1.Name = "newStopwatchControl1";
-            newStopwatchControl1.Size = new Size(353, 399);
+            newStopwatchControl1.Size = new Size(309, 299);
             newStopwatchControl1.TabIndex = 0;
             // 
             // HelpTab
@@ -99,9 +104,10 @@
             HelpTab.BackColor = Color.FromArgb(33, 42, 62);
             HelpTab.BorderStyle = BorderStyle.Fixed3D;
             HelpTab.Controls.Add(textBox1);
-            HelpTab.Location = new Point(4, 29);
+            HelpTab.Location = new Point(4, 24);
+            HelpTab.Margin = new Padding(3, 2, 3, 2);
             HelpTab.Name = "HelpTab";
-            HelpTab.Size = new Size(345, 398);
+            HelpTab.Size = new Size(301, 295);
             HelpTab.TabIndex = 2;
             HelpTab.Text = "Help";
             // 
@@ -110,25 +116,25 @@
             textBox1.BackColor = Color.FromArgb(33, 42, 62);
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.ForeColor = Color.FromArgb(241, 246, 249);
-            textBox1.Location = new Point(3, 3);
+            textBox1.Location = new Point(3, 2);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.ReadOnly = true;
             textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(330, 388);
+            textBox1.Size = new Size(289, 291);
             textBox1.TabIndex = 0;
             textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // AnalogTimerForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
-            ClientSize = new Size(377, 452);
+            ClientSize = new Size(330, 339);
             Controls.Add(TabWindow);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             Name = "AnalogTimerForm";
             Text = "Not so Analog Timer";
             TabWindow.ResumeLayout(false);
