@@ -1,5 +1,5 @@
 ﻿using MyTimer = AnalogTimer.Implementations.AnalogTimer;
-using static WinApplication.Statics.Extensions;
+using static WinApplication.Statics.Helper;
 using AnalogTimer.Contracts;
 using AnalogTimer.Implementations;
 using ConsoleInterface.Contracts;

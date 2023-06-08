@@ -1,6 +1,6 @@
 ﻿namespace WinApplication.Statics;
 
-internal static class Extensions
+internal static class Helper
 {
     public delegate void SetMillisecondCallback(string text);
 

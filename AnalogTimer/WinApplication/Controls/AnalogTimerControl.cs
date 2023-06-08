@@ -5,7 +5,7 @@ using AnalogTimer.Implementations;
 using ConsoleInterface.Prompts.Implementations;
 using TimerEngine.Prompts.Implementations;
 using AnalogTimer.Helpers;
-using static WinApplication.Statics.Extensions;
+using static WinApplication.Statics.Helper;
 using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using AnalogTimer.Models;
 using WinApplication.ButtonStateEngine;
