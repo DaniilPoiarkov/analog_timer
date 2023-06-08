@@ -216,8 +216,6 @@ public class RunningLine : IRunningLine
 
         _sentencePatterns = matrix;
         Clean();
-        Position = BasePosition;
-        Index = 1;
     }
 
     public void Start()
@@ -254,6 +252,7 @@ public class RunningLine : IRunningLine
 
         Runner = null;
         Position = BasePosition;
+        Index = 1;
         IsCleaned = true;
     }
 }
