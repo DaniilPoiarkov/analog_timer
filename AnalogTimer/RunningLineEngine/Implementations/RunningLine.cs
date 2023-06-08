@@ -11,6 +11,7 @@ public class RunningLine : IRunningLine
     public int TicksPerSecond => _speedCoefficient;
 
 
+    private bool IsCleaned = false;
     public bool IsRunning { get; private set; }
 
     private Func<Task>? Runner { get; set; }
@@ -23,11 +24,6 @@ public class RunningLine : IRunningLine
     private List<string> _sentencePatterns;
 
 
-    private readonly ILineDisplay _lineDisplay;
-
-    private bool IsCleaned = false;
-
-
     private int Position { get; set; }
     private static int BasePosition => Console.BufferWidth - 1;
 
@@ -35,6 +31,8 @@ public class RunningLine : IRunningLine
     private int Index { get; set; } = 1;
     private int LastIndex { get; set; } = 1;
 
+
+    private readonly ILineDisplay _lineDisplay;
 
     private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
