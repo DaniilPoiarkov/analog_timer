@@ -1,13 +1,12 @@
 ﻿using AnalogTimer.Helpers;
 using MatrixDisplayEngine.Contracts;
-using MatrixDisplayEngine.Implementations;
 using RunningLineEngine.Contracts;
 
 namespace AnalogTimer.RunningLineDisplayHandlers;
 
 internal class DefaultDisplayHandler : ILineDisplay
 {
-    private readonly IMatrixDisplay _matrixDisplay = MatrixDisplay.Instance;
+    private readonly IMatrixDisplay _matrixDisplay = IMatrixDisplay.Instance;
 
     private readonly List<string> _cleanWindowPattern;
 

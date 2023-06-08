@@ -12,7 +12,7 @@ public sealed class MatrixDisplay : IMatrixDisplay
 
     private static readonly Lazy<MatrixDisplay> _instance = new(() => new MatrixDisplay());
 
-    public static IMatrixDisplay Instance => _instance.Value;
+    internal static IMatrixDisplay Instance => _instance.Value;
 
     public void Display(List<string> matrix, int horizontalPosition)
     {

@@ -4,7 +4,7 @@ using AnalogTimer.DisplayHandlers.ConsoleHandlers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
-using MatrixDisplayEngine.Implementations;
+using MatrixDisplayEngine.Contracts;
 using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Implementations;
@@ -49,7 +49,7 @@ public class ConsoleDisplayService : IDisplayService
 
         MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
-            MatrixDisplay.Instance
+            IMatrixDisplay.Instance
                 .Display(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
 
             UIHelper.SetCursor();

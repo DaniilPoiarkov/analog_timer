@@ -3,13 +3,12 @@ using AnalogTimer.Helpers;
 using AnalogTimer.Models.Enums;
 using ConsoleInterface.Helpers;
 using MatrixDisplayEngine.Contracts;
-using MatrixDisplayEngine.Implementations;
 
 namespace AnalogTimer.DisplayHandlers.ConsoleHandlers;
 
 public class MatrixDisplayHandler : DisplayHandlerBase
 {
-    private readonly IMatrixDisplay _matrixDisplay = MatrixDisplay.Instance;
+    private readonly IMatrixDisplay _matrixDisplay = IMatrixDisplay.Instance;
 
     private MatrixDisplayHandler() { }
 
