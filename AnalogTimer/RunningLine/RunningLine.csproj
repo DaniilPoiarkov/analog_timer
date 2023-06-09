@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleApplicationBuilder\ConsoleApplicationBuilder.csproj" />
     <ProjectReference Include="..\ConsoleOutputEngine\ConsoleOutputEngine.csproj" />
+    <ProjectReference Include="..\RunningLineEngine\RunningLineEngine.csproj" />
   </ItemGroup>
 
 </Project>

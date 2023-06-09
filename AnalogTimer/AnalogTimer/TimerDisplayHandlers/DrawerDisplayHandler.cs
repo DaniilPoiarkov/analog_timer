@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.DigitDrawers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 
@@ -41,19 +40,20 @@ public class DrawerDisplayHandler : DisplayHandlerBase
 
         foreach (var num in values)
         {
-            var drawer = DigitDrawerProvider.GetDrawer(num);
+            // TODO: Check if needed
+            //var drawer = DigitDrawerProvider.GetDrawer(num);
 
             if (needFullRewrite || _mode == DisplayMode.Full)
             {
-                drawer.Draw(positionLeft, _timerTemplate);
+                //drawer.Draw(positionLeft, _timerTemplate);
             }
             else if (_mode == DisplayMode.Down)
             {
-                drawer.DrawDown(positionLeft, _timerTemplate);
+                //drawer.DrawDown(positionLeft, _timerTemplate);
             }
             else
             {
-                drawer.DrawUp(positionLeft, _timerTemplate);
+                //drawer.DrawUp(positionLeft, _timerTemplate);
             }
 
             positionLeft += _space;

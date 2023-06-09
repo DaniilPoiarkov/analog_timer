@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleApplicationBuilder\ConsoleApplicationBuilder.csproj" />
     <ProjectReference Include="..\MatrixDisplayEngine\MatrixDisplayEngine.csproj" />
-    <ProjectReference Include="..\RunningLineEngine\RunningLineEngine.csproj" />
     <ProjectReference Include="..\TimerEngine\TimerEngine.csproj" />
   </ItemGroup>
 
