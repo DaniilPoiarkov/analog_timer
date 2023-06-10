@@ -10,9 +10,7 @@ internal class ConsoleOutput : IConsoleOutput
 
     public int PositionLeft { get; set; }
 
-    private string CachedString { get; set; } = string.Empty;
-
-    private List<string> CachedPattern { get; set; } = new();
+    private readonly Dictionary<string, List<string>> _mapper = new();
 
     public int GetLength(object value)
     {
@@ -23,14 +21,10 @@ internal class ConsoleOutput : IConsoleOutput
             return 0;
         }
 
-        var patterns = normalized.Select(CharacterPatternProvider.Get)
-            .Select(p => p.Pattern)
-            .ToAggregateModel();
+        var pattern = _mapper.GetValueOrDefault(normalized)
+            ?? GetAndSavePattern(normalized);
 
-        CachedPattern = patterns;
-        CachedString = normalized;
-
-        return CachedPattern.First().Length;
+        return pattern.First().Length;
     }
 
     public void Out(string value, IConsoleOutputFormatter formatter)
@@ -42,16 +36,10 @@ internal class ConsoleOutput : IConsoleOutput
 
         var normalized = value.ToUpper();
 
-        if (!normalized.Equals(CachedString))
-        {
-            CachedString = normalized;
-            CachedPattern = normalized
-                .Select(CharacterPatternProvider.Get)
-                .Select(p => p.Pattern)
-                .ToAggregateModel();
-        }
+        var pattern = _mapper.GetValueOrDefault(normalized)
+            ?? GetAndSavePattern(normalized);
 
-        var formatted = formatter.Format(CachedPattern).ToList();
+        var formatted = formatter.Format(pattern).ToList();
         _display.Display(formatted, PositionLeft);
     }
 
@@ -60,4 +48,17 @@ internal class ConsoleOutput : IConsoleOutput
 
     public void Out(int value) =>
         Out(value.ToString());
+
+
+    private List<string> GetAndSavePattern(string normalized)
+    {
+        List<string> pattern = normalized
+            .Select(CharacterPatternProvider.Get)
+            .Select(p => p.Pattern)
+            .ToAggregateModel();
+
+        _mapper.Add(normalized, pattern);
+
+        return pattern;
+    }
 }
