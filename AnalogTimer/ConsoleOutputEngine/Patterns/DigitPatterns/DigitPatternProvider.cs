@@ -3,6 +3,7 @@ using ConsoleOutputEngine.Patterns.DigitPatterns.Implementations;
 
 namespace ConsoleOutputEngine.Patterns.DigitPatterns;
 
+[Obsolete("This one suites only digits, use CharacterPatternProvider instead")]
 internal class DigitPatternProvider
 {
     internal static IDigitPattern Get(int digit)

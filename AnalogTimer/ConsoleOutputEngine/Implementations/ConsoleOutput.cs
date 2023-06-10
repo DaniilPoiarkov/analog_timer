@@ -16,19 +16,19 @@ internal class ConsoleOutput : IConsoleOutput
 
     public int GetLength(object value)
     {
-        var asString = value.ToString()?.ToUpper();
+        var normalized = value.ToString()?.ToUpper();
 
-        if (string.IsNullOrEmpty(asString))
+        if (string.IsNullOrEmpty(normalized))
         {
             return 0;
         }
 
-        var patterns = asString.Select(CharacterPatternProvider.Get)
+        var patterns = normalized.Select(CharacterPatternProvider.Get)
             .Select(p => p.Pattern)
             .ToAggregateModel();
 
         CachedPattern = patterns;
-        CachedString = asString;
+        CachedString = normalized;
 
         return CachedPattern.First().Length;
     }
@@ -40,12 +40,12 @@ internal class ConsoleOutput : IConsoleOutput
             throw new ArgumentNullException(nameof(formatter));
         }
 
-        var normilized = value.ToUpper();
+        var normalized = value.ToUpper();
 
-        if (!normilized.Equals(CachedString))
+        if (!normalized.Equals(CachedString))
         {
-            CachedString = normilized;
-            CachedPattern = normilized
+            CachedString = normalized;
+            CachedPattern = normalized
                 .Select(CharacterPatternProvider.Get)
                 .Select(p => p.Pattern)
                 .ToAggregateModel();

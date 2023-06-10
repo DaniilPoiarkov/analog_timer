@@ -9,6 +9,15 @@ internal class CharacterPatternProvider
 {
     public static ICharacterPattern Get(char letter)
     {
+        // TODO: review an idea of adding char Character property to each pattern and use LINQ to find first sutable pattern
+
+        // return typeof(ICharacterPattern).Assembly
+        //    .GetTypes()
+        //    .Where(t => t.IsAssignableTo(typeof(ICharacterPattern)) && !t.IsInterface && !t.IsAbstract)
+        //    .Select(Activator.CreateInstance)
+        //    .Cast<ICharacterPattern>()
+        //    .FirstOrDefault(p => p.Character = letter);
+
         return letter switch
         {
             'A' => new LetterA(),
@@ -37,6 +46,7 @@ internal class CharacterPatternProvider
             'X' => new LetterX(),
             'Y' => new LetterY(),
             'Z' => new LetterZ(),
+
             '0' => new ZeroPattern(),
             '1' => new OnePattern(),
             '2' => new TwoPattern(),
@@ -47,8 +57,12 @@ internal class CharacterPatternProvider
             '7' => new SevenPattern(),
             '8' => new EightPattern(),
             '9' => new NinePattern(),
+
             ':' => new DoubleDotsPattern(),
             ',' => new CommaPattern(),
+            '.' => new DotPattern(),
+            '!' => new ExclamationPattern(),
+            '?' => new QuestionPattern(),
             _ => new EmptyLetter(),
         };
     }

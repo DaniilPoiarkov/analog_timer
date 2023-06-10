@@ -1,14 +1,12 @@
 ﻿using ConsoleApplicationBuilder;
 using ConsoleOutputEngine.Contracts;
-using NLog;
-using RunningLine.Contracts;
-using RunningLine.Implementations.OutputFormatter;
+using RunningLine.Implementations;
 using RunningLine.Prompts.Implementations;
-using RunningLine.RunningLineDisplayHandlers;
 using RunningLineEngine.Contracts;
 using RunningLineEngine.Implementations;
 using RunningLineEngine.Models;
 using RunningLineEngine.Prompts.Implementations;
+using MyRunningLine = RunningLineEngine.Implementations.RunningLine;
 
 namespace RunningLine.ConsoleApplications;
 
@@ -20,7 +18,7 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
     {
         var display = new DefaultDisplayHandler();
 
-        Entity = new RunningLineEngine.Implementations.RunningLine(new RunningLineConfiguration());
+        Entity = new MyRunningLine(new RunningLineConfiguration());
 
         RunPrompt.NewSentence += (_, sentence) =>
         {

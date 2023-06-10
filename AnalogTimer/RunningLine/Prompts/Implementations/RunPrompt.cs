@@ -25,9 +25,6 @@ public class RunPrompt : RunningLinePromptBase
         var sentence = string.Join(' ', splitted
             .Skip(1));
 
-        // TODO: Review saving of sentence
-        //entity.Set(sentence);
-
         NewSentence?.Invoke(this, sentence);
 
         entity.Start();

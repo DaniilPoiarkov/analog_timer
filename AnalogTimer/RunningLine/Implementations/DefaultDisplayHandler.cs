@@ -4,7 +4,7 @@ using RunningLine.Contracts;
 using RunningLine.Implementations.OutputFormatter;
 using RunningLineEngine.Models;
 
-namespace RunningLine.RunningLineDisplayHandlers;
+namespace RunningLine.Implementations;
 
 internal class DefaultDisplayHandler
 {
@@ -14,7 +14,7 @@ internal class DefaultDisplayHandler
 
     public void Clean()
     {
-        _output.PositionLeft = 1;
+        _output.PositionLeft = 0;
         _output.Out(new string(' ', Console.BufferWidth));
     }
 
