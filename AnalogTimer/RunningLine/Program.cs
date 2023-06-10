@@ -1,8 +1,4 @@
-﻿
-using ConsoleOutputEngine.Contracts;
+﻿using RunningLine.ConsoleApplications;
 
-var output = IConsoleOutput.Create();
-
-output.Out("Hello Daniil");
-
-Console.ReadKey();
+var app = new RunningLineApplication();
+await app.Run();

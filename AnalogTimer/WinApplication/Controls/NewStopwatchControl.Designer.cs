@@ -31,9 +31,7 @@
             cutOutput = new TextBox();
             StopwatchMsOutput = new Label();
             label5 = new Label();
-            StopwatchConsoleInput = new TextBox();
             StopwatchOutput = new Label();
-            StopwatchOpenConsoleBtn = new Button();
             StopwatchResetBtn = new Button();
             StopwatchStartBtn = new Button();
             SuspendLayout();
@@ -73,19 +71,6 @@
             label5.TabIndex = 37;
             label5.Text = "Leaps";
             // 
-            // StopwatchConsoleInput
-            // 
-            StopwatchConsoleInput.BackColor = Color.FromArgb(57, 72, 103);
-            StopwatchConsoleInput.BorderStyle = BorderStyle.None;
-            StopwatchConsoleInput.Enabled = false;
-            StopwatchConsoleInput.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchConsoleInput.Location = new Point(12, 367);
-            StopwatchConsoleInput.Name = "StopwatchConsoleInput";
-            StopwatchConsoleInput.PlaceholderText = "Console mode";
-            StopwatchConsoleInput.Size = new Size(325, 20);
-            StopwatchConsoleInput.TabIndex = 34;
-            StopwatchConsoleInput.KeyDown += ConsoleInputEnterKeydown;
-            // 
             // StopwatchOutput
             // 
             StopwatchOutput.AutoSize = true;
@@ -98,20 +83,6 @@
             StopwatchOutput.TabIndex = 30;
             StopwatchOutput.Text = "00:00:00:0";
             StopwatchOutput.UseCompatibleTextRendering = true;
-            // 
-            // StopwatchOpenConsoleBtn
-            // 
-            StopwatchOpenConsoleBtn.BackColor = Color.FromArgb(57, 72, 103);
-            StopwatchOpenConsoleBtn.FlatStyle = FlatStyle.Popup;
-            StopwatchOpenConsoleBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchOpenConsoleBtn.Location = new Point(12, 329);
-            StopwatchOpenConsoleBtn.Margin = new Padding(3, 4, 3, 4);
-            StopwatchOpenConsoleBtn.Name = "StopwatchOpenConsoleBtn";
-            StopwatchOpenConsoleBtn.Size = new Size(325, 31);
-            StopwatchOpenConsoleBtn.TabIndex = 33;
-            StopwatchOpenConsoleBtn.Text = "Enable console";
-            StopwatchOpenConsoleBtn.UseVisualStyleBackColor = false;
-            StopwatchOpenConsoleBtn.Click += SwitchConsoleAccessability;
             // 
             // StopwatchResetBtn
             // 
@@ -150,13 +121,11 @@
             Controls.Add(cutOutput);
             Controls.Add(StopwatchMsOutput);
             Controls.Add(label5);
-            Controls.Add(StopwatchConsoleInput);
             Controls.Add(StopwatchOutput);
-            Controls.Add(StopwatchOpenConsoleBtn);
             Controls.Add(StopwatchResetBtn);
             Controls.Add(StopwatchStartBtn);
             Name = "NewStopwatchControl";
-            Size = new Size(345, 400);
+            Size = new Size(345, 334);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -166,9 +135,7 @@
         private TextBox cutOutput;
         private Label StopwatchMsOutput;
         private Label label5;
-        private TextBox StopwatchConsoleInput;
         private Label StopwatchOutput;
-        private Button StopwatchOpenConsoleBtn;
         private Button StopwatchResetBtn;
         private Button StopwatchStartBtn;
     }

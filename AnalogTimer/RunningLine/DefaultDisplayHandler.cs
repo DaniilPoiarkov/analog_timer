@@ -1,42 +1,31 @@
 ﻿using ConsoleApplicationBuilder.Helpers;
 using ConsoleOutputEngine.Contracts;
+using RunningLine.Contracts;
+using RunningLine.Implementations.OutputFormatter;
+using RunningLineEngine.Models;
 
-namespace AnalogTimer.RunningLineDisplayHandlers;
+namespace RunningLine.RunningLineDisplayHandlers;
 
 internal class DefaultDisplayHandler
 {
     private readonly IConsoleOutput _output = IConsoleOutput.Create();
 
-    private readonly List<string> _cleanWindowPattern;
-
-    public DefaultDisplayHandler()
-    {
-        _cleanWindowPattern = new List<string>();
-
-        for (int i = 1; i < 6; i++)
-        {
-            _cleanWindowPattern.Add(new string(' ', Console.BufferWidth));
-        }
-    }
+    private readonly IRunningLineArgsOutputFormatter _formatter = new RunningLineArgsOutputFormatter();
 
     public void Clean()
     {
         _output.PositionLeft = 1;
         _output.Out(new string(' ', Console.BufferWidth));
-
-        //TODO: Review
-        //.Display(_cleanWindowPattern, 1);
     }
 
-    public void Display(string text, int position)
+    public void Display(string text, RunningLineEventArgs args)
     {
         Clean();
 
-        _output.PositionLeft = position;
-        _output.Out(text);
+        _formatter.Update(args);
+        _output.PositionLeft = args.Position < 0 ? 0 : args.Position;
 
-        // Review
-        //_matrixDisplay.Display(text.ToList(), position);
+        _output.Out(text, _formatter);
 
         UIHelper.SetCursor();
     }

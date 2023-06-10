@@ -4,6 +4,8 @@ namespace RunningLineEngine.Prompts.Implementations;
 
 public class RunPrompt : RunningLinePromptBase
 {
+    public static event EventHandler<string>? NewSentence;
+
     public override string Name => "run";
 
     public override string Instruction => "Write \'run x\' or \'-r x\' where\'x\' is a sentence you want to display.";
@@ -20,11 +22,13 @@ public class RunPrompt : RunningLinePromptBase
             return Task.CompletedTask;
         }
 
-        //var sentence = string.Join(' ', splitted
-        //    .Skip(1));
+        var sentence = string.Join(' ', splitted
+            .Skip(1));
 
-        // TODO: Review
+        // TODO: Review saving of sentence
         //entity.Set(sentence);
+
+        NewSentence?.Invoke(this, sentence);
 
         entity.Start();
 

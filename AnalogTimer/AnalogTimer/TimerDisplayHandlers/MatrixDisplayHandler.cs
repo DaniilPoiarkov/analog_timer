@@ -1,11 +1,13 @@
 ﻿using AnalogTimer.Models.Enums;
+using AnalogTimer.TimerDisplayHandlers;
 using ConsoleApplicationBuilder.Helpers;
+using ConsoleOutputEngine.Contracts;
 
 namespace AnalogTimer.DisplayHandlers.ConsoleHandlers;
 
 public class MatrixDisplayHandler : DisplayHandlerBase
 {
-    //private readonly IMatrixDisplay _matrixDisplay = IMatrixDisplay.Instance;
+    private readonly IConsoleOutput _output = IConsoleOutput.Create();
 
     private MatrixDisplayHandler() { }
 
@@ -16,15 +18,11 @@ public class MatrixDisplayHandler : DisplayHandlerBase
 
     public override void Update(int digit, TimerValue value)
     {
-        //var positionLeft = GetPosition(value);
+        _output.PositionLeft = GetPosition(value);
 
-        // TODO: Rework
-        //var values = TransformToEnumerable(digit, value)
-        //    .Select(DigitDrawerProvider.GetDrawer)
-        //    .Select(d => d.Pattern)
-        //    .AggregateToDisplayModel();
+        var text = string.Join(string.Empty, TransformToEnumerable(digit, value));
 
-        // _matrixDisplay.Display(values, positionLeft);
+        _output.Out(text);
 
         UIHelper.SetCursor();
     }

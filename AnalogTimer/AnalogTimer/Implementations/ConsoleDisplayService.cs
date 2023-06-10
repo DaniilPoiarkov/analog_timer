@@ -4,6 +4,7 @@ using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
 using ConsoleApplicationBuilder.Helpers;
+using ConsoleOutputEngine.Contracts;
 using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Implementations;
@@ -15,6 +16,8 @@ public class ConsoleDisplayService : IDisplayService
     private TimerState? _snapshot;
 
     private readonly IDisplayHandler _handler;
+
+    private readonly IConsoleOutput _output = IConsoleOutput.Create();
 
 
     private const int _dotsBetweenHourAndMinute = 23;
@@ -48,9 +51,8 @@ public class ConsoleDisplayService : IDisplayService
 
         MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
-            // TODO: Change To console output
-            //IMatrixDisplay.Instance
-            //    .Display(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
+            _output.PositionLeft = _position;
+            _output.Out(digit);
 
             UIHelper.SetCursor();
         };

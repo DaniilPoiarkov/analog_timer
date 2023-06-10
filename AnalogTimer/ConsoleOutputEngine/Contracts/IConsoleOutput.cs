@@ -8,7 +8,11 @@ public interface IConsoleOutput
 
     void Out(string value);
 
+    void Out(string value, IConsoleOutputFormatter formatter);
+
     void Out(int value);
+
+    int GetLength(object value);
 
     static IConsoleOutput Create() => new ConsoleOutput();
 }

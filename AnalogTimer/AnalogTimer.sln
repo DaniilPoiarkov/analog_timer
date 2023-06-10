@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerEngine", "TimerEngine\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningLineEngine", "RunningLineEngine\RunningLineEngine.csproj", "{EA26B90A-1626-4CCC-BF2E-FBE526105691}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatrixDisplayEngine", "MatrixDisplayEngine\MatrixDisplayEngine.csproj", "{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOutputEngine", "ConsoleOutputEngine\ConsoleOutputEngine.csproj", "{DC297491-2F7B-41B3-9474-518CC498CAE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningLine", "RunningLine\RunningLine.csproj", "{409EDDA2-864F-4046-9133-B0F1E57A9770}"
@@ -41,10 +39,6 @@ Global
 		{EA26B90A-1626-4CCC-BF2E-FBE526105691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA26B90A-1626-4CCC-BF2E-FBE526105691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA26B90A-1626-4CCC-BF2E-FBE526105691}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,7 +1,6 @@
 ﻿using ConsoleOutputEngine.Contracts;
-using ConsoleOutputEngine.DigitPatterns;
 using ConsoleOutputEngine.Helpers;
-using ConsoleOutputEngine.LetterPatterns;
+using ConsoleOutputEngine.Patterns;
 
 namespace ConsoleOutputEngine.Implementations;
 
@@ -11,24 +10,54 @@ internal class ConsoleOutput : IConsoleOutput
 
     public int PositionLeft { get; set; }
 
-    public void Out(string value)
+    private string CachedString { get; set; } = string.Empty;
+
+    private List<string> CachedPattern { get; set; } = new();
+
+    public int GetLength(object value)
     {
-        var pattern = value.ToUpper()
-            .Select(LetterPatternProvider.Get)
+        var asString = value.ToString()?.ToUpper();
+
+        if (string.IsNullOrEmpty(asString))
+        {
+            return 0;
+        }
+
+        var patterns = asString.Select(CharacterPatternProvider.Get)
             .Select(p => p.Pattern)
             .ToAggregateModel();
 
-        _display.Display(pattern, PositionLeft);
+        CachedPattern = patterns;
+        CachedString = asString;
+
+        return CachedPattern.First().Length;
     }
 
-    public void Out(int value)
+    public void Out(string value, IConsoleOutputFormatter formatter)
     {
-        var pattern = value.ToString()
-            .Select(v => int.Parse(v.ToString()))
-            .Select(DigitPatternProvider.Get)
-            .Select(p => p.Pattern)
-            .ToAggregateModel();
+        if (formatter is null)
+        {
+            throw new ArgumentNullException(nameof(formatter));
+        }
 
-        _display.Display(pattern, PositionLeft);
+        var normilized = value.ToUpper();
+
+        if (!normilized.Equals(CachedString))
+        {
+            CachedString = normilized;
+            CachedPattern = normilized
+                .Select(CharacterPatternProvider.Get)
+                .Select(p => p.Pattern)
+                .ToAggregateModel();
+        }
+
+        var formatted = formatter.Format(CachedPattern).ToList();
+        _display.Display(formatted, PositionLeft);
     }
+
+    public void Out(string value) =>
+        Out(value, new DefaultConsoleOutputFormatter());
+
+    public void Out(int value) =>
+        Out(value.ToString());
 }

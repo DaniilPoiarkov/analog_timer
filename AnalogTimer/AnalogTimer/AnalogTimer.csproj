@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConsoleApplicationBuilder\ConsoleApplicationBuilder.csproj" />
-    <ProjectReference Include="..\MatrixDisplayEngine\MatrixDisplayEngine.csproj" />
+    <ProjectReference Include="..\ConsoleOutputEngine\ConsoleOutputEngine.csproj" />
     <ProjectReference Include="..\TimerEngine\TimerEngine.csproj" />
   </ItemGroup>
 
