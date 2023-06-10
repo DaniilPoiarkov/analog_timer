@@ -22,8 +22,8 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
 
         RunPrompt.NewSentence += (_, sentence) =>
         {
+            Entity.Set(IConsoleOutput.Create().GetLength(sentence));
             Sentance = sentence;
-            Entity.Set(IConsoleOutput.Create().GetLength(Sentance));
         };
 
         Entity.CleanEvent += (_, _) => display.Clean();
