@@ -26,6 +26,8 @@ internal sealed class MatrixDisplay : IMatrixDisplay
                 if (column.Equals(value))
                     continue;
 
+                var x = column.Length;
+
                 Console.CursorTop = i;
                 Console.CursorLeft = horizontalPosition;
 

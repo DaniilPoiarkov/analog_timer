@@ -15,7 +15,7 @@ internal class DefaultDisplayHandler
     public void Clean()
     {
         _output.PositionLeft = 0;
-        _output.Out(new string(' ', Console.BufferWidth));
+        _output.Out(new string(' ', Console.BufferWidth / 5));
     }
 
     public void Display(string text, RunningLineEventArgs args)
