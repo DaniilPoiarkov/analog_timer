@@ -36,7 +36,6 @@ public class ConsoleDisplayService : IDisplayService
         MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             PrintValue(digit.ToString(), _position);
-
             UIHelper.SetCursor();
         };
 
