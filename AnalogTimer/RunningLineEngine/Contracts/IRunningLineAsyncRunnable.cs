@@ -7,5 +7,4 @@ public interface IRunningLineAsyncRunnable
     void Start();
 
     Task Stop();
-
 }
