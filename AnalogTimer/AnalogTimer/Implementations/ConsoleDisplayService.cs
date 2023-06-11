@@ -14,7 +14,7 @@ public class ConsoleDisplayService : IDisplayService
     private readonly object _lock = new();
 
 
-    private const int _position = 81;
+    private const int _position = 74;
 
     private const int _maxPositionLeft = 104;
 

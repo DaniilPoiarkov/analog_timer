@@ -6,10 +6,10 @@ internal class OnePattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        "      █",
-        "      █",
-        "      █",
-        "      █",
-        "      █",
+        "     █",
+        "     █",
+        "     █",
+        "     █",
+        "     █",
     };
 }
