@@ -13,5 +13,11 @@ internal class FourPattern : IDigitPattern
         "       █",
         "       █",
         "       █",
+        //" █    █ ",
+        //" █    █ ",
+        //" ██████ ",
+        //"      █ ",
+        //"      █ ",
+
     };
 }

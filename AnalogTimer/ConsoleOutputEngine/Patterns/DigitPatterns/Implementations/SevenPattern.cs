@@ -13,5 +13,10 @@ internal class SevenPattern : IDigitPattern
         "       █",
         "       █",
         "       █",
+        //" ██████ ",
+        //"      █ ",
+        //"     █  ",
+        //"    █   ",
+        //"   █    ",
     };
 }
