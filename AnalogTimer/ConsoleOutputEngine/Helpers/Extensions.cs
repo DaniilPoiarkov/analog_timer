@@ -4,7 +4,7 @@ internal static class Extensions
 {
     private const char _empty = ' ';
 
-    private const int _spaceBetweenMatrixes = 5;
+    private const int _spaceBetweenMatrixes = 2;
 
     public static List<string> ToAggregateModel(this IEnumerable<List<string>> matrix)
     {
