@@ -53,7 +53,7 @@
             StopwatchMsOutput.BackColor = Color.FromArgb(33, 42, 62);
             StopwatchMsOutput.Font = new Font("Segoe UI", 35F, FontStyle.Regular, GraphicsUnit.Point);
             StopwatchMsOutput.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchMsOutput.Location = new Point(265, 0);
+            StopwatchMsOutput.Location = new Point(264, 0);
             StopwatchMsOutput.Name = "StopwatchMsOutput";
             StopwatchMsOutput.Size = new Size(52, 88);
             StopwatchMsOutput.TabIndex = 35;

@@ -53,7 +53,7 @@
             TimerStartTenSecBtn.BackColor = Color.FromArgb(57, 72, 103);
             TimerStartTenSecBtn.FlatStyle = FlatStyle.Popup;
             TimerStartTenSecBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            TimerStartTenSecBtn.Location = new Point(211, 175);
+            TimerStartTenSecBtn.Location = new Point(221, 175);
             TimerStartTenSecBtn.Margin = new Padding(3, 4, 3, 4);
             TimerStartTenSecBtn.Name = "TimerStartTenSecBtn";
             TimerStartTenSecBtn.Size = new Size(116, 31);

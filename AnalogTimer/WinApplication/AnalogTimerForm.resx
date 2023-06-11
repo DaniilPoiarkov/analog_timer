@@ -117,27 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>Console prompt helper.
-
-Timer:
-1. Write 'start' to start a timer. Also you can pass following flags:
-'-h' to specify hours.
-'-m' to specify minutes.
-'-s' to specify seconds.
-You can add minutes, seconds and hours also as separate prompt.
-For this you can write:
-'hours x' or '-h x', 'minutes x' or '-m x', 'seconds x' or '-s x', where x is amount of accordant flag.
-2. Write 'pause' or '-p' to pause timer counting.
-3. Write 'reset' or '-r' to reset timer state.
-4. Write 'speed x' where 'x' is a speed coefficient. Take into account that min is 1 and max is 10
-
-Stopwatch:
-1. Write 'start' to start a stopwatch
-2. Write 'pause' or '-p' to pause a stopwatch
-3. Write 'reset' or '-r' to reset stopwatch state
-4. Write 'cut' or '-c' to cut stopwatch state</value>
-  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>61</value>
   </metadata>
