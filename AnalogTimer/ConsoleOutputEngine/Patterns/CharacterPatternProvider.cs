@@ -63,6 +63,9 @@ internal class CharacterPatternProvider
             '.' => new DotPattern(),
             '!' => new ExclamationPattern(),
             '?' => new QuestionPattern(),
+            '-' => new HyphenPattern(),
+            '+' => new PlusPattern(),
+            '=' => new EqualPattern(),
             _ => new EmptyLetter(),
         };
     }
