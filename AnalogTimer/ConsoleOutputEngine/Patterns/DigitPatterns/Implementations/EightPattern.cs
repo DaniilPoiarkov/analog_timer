@@ -6,13 +6,6 @@ internal class EightPattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        //"████████",
-        //"█      █",
-        //"█      █",
-        //"████████",
-        //"█      █",
-        //"█      █",
-        //"████████",
         "██████",
         "█    █",
         "██████",

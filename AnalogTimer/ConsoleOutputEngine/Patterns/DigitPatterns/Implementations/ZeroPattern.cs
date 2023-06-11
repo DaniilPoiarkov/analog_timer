@@ -6,13 +6,6 @@ internal class ZeroPattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        //"████████",
-        //"█      █",
-        //"█      █",
-        //"█      █",
-        //"█      █",
-        //"█      █",
-        //"████████",
         "██████",
         "█    █",
         "█    █",

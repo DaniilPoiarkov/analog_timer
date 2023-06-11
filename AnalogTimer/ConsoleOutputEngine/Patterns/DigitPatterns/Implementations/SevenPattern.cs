@@ -6,13 +6,6 @@ internal class SevenPattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        //"████████",
-        //"       █",
-        //"       █",
-        //"       █",
-        //"       █",
-        //"       █",
-        //"       █",
         "██████",
         "     █",
         "     █",

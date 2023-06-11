@@ -6,13 +6,6 @@ internal class SixPattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        //"████████",
-        //"█       ",
-        //"█       ",
-        //"████████",
-        //"█      █",
-        //"█      █",
-        //"████████",
         "██████",
         "█     ",
         "██████",

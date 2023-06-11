@@ -6,13 +6,6 @@ internal class TwoPattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        //"████████",
-        //"       █",
-        //"       █",
-        //"████████",
-        //"█       ",
-        //"█       ",
-        //"████████",
         "██████",
         "     █",
         "██████",

@@ -6,13 +6,6 @@ internal class FivePattern : IDigitPattern
 {
     public List<string> Pattern => new()
     {
-        //"████████",
-        //"█       ",
-        //"█       ",
-        //"████████",
-        //"       █",
-        //"       █",
-        //"████████",
         "██████",
         "█     ",
         "██████",
