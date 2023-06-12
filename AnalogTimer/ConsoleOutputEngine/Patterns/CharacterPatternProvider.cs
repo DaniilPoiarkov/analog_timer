@@ -1,6 +1,6 @@
 ﻿using ConsoleOutputEngine.Contracts;
-using ConsoleOutputEngine.Patterns.DigitPatterns.Implementations;
-using ConsoleOutputEngine.Patterns.LetterPatterns.Implementations;
+using ConsoleOutputEngine.Patterns.DigitPatterns;
+using ConsoleOutputEngine.Patterns.LetterPatterns;
 using ConsoleOutputEngine.Patterns.SpecialCharacterPatterns;
 
 namespace ConsoleOutputEngine.Patterns;
