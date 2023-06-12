@@ -48,19 +48,21 @@ internal class DefaultDisplayHandler
 
     private List<string> GetOrCreate(string text)
     {
-        var pattern = _mapper.GetValueOrDefault(text);
+        var normilized = text.ToUpper();
+        var pattern = _mapper.GetValueOrDefault(normilized);
 
         if (pattern is not null)
         {
             return pattern;
         }
 
-        pattern = text.ToUpper()
+        
+        pattern = normilized
             .Select(CharacterPatternProvider.Get)
             .Select(p => p.Pattern)
             .ToAggregateModel();
 
-        _mapper.Add(text, pattern);
+        _mapper.Add(normilized, pattern);
 
         return pattern;
     }
