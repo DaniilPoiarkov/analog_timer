@@ -21,8 +21,7 @@ internal class ConsoleOutput : IConsoleOutput
             return 0;
         }
 
-        var pattern = _mapper.GetValueOrDefault(normalized)
-            ?? GetAndSavePattern(normalized);
+        var pattern = GetOrCreatePattern(normalized);
 
         return pattern.First().Length;
     }
@@ -36,8 +35,7 @@ internal class ConsoleOutput : IConsoleOutput
 
         var normalized = value.ToUpper();
 
-        var pattern = _mapper.GetValueOrDefault(normalized)
-            ?? GetAndSavePattern(normalized);
+        var pattern = GetOrCreatePattern(normalized);
 
         var formatted = formatter.Format(pattern).ToList();
         _display.Display(formatted, PositionLeft);
@@ -50,9 +48,16 @@ internal class ConsoleOutput : IConsoleOutput
         Out(value.ToString());
 
 
-    private List<string> GetAndSavePattern(string normalized)
+    private List<string> GetOrCreatePattern(string normalized)
     {
-        List<string> pattern = normalized
+        var pattern = _mapper.GetValueOrDefault(normalized);
+
+        if (pattern is not null)
+        {
+            return pattern;
+        }
+
+        pattern = normalized
             .Select(CharacterPatternProvider.Get)
             .Select(p => p.Pattern)
             .ToAggregateModel();
