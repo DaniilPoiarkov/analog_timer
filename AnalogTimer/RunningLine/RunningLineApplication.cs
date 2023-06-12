@@ -1,5 +1,4 @@
 ﻿using ConsoleApplicationBuilder;
-using ConsoleOutputEngine.Contracts;
 using RunningLine.Implementations;
 using RunningLine.Prompts.Implementations;
 using RunningLineEngine.Contracts;
@@ -22,7 +21,9 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
 
         RunPrompt.NewSentence += (_, sentence) =>
         {
-            Entity.Set(IConsoleOutput.Create().GetLength(sentence));
+            var sentanceLength = display.GetLength(sentence);
+
+            Entity.Set(sentanceLength);
             Sentance = sentence;
         };
 

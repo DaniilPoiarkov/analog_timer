@@ -1,6 +1,6 @@
 ﻿namespace ConsoleOutputEngine.Helpers;
 
-internal static class Extensions
+public static class Extensions
 {
     private const char _empty = ' ';
 

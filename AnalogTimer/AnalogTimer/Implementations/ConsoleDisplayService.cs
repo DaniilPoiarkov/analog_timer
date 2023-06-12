@@ -1,6 +1,7 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
+using AnalogTimer.Patterns;
 using ConsoleApplicationBuilder.Helpers;
 using ConsoleOutputEngine.Contracts;
 using TimerEngine.Models.TimerEventArgs;
@@ -10,6 +11,8 @@ namespace AnalogTimer.Implementations;
 public class ConsoleDisplayService : IDisplayService
 {
     private readonly IConsoleOutput _output = IConsoleOutput.Create();
+
+    private readonly Dictionary<string, IEnumerable<List<string>>> _mapper = new();
 
     private readonly object _lock = new();
 
@@ -48,8 +51,27 @@ public class ConsoleDisplayService : IDisplayService
         lock (_lock)
         {
             _output.PositionLeft = position;
-            _output.Out(value);
+
+            var pattern = GetOrCreate(value);
+
+            _output.Out(pattern);
         }
+    }
+
+    private IEnumerable<List<string>> GetOrCreate(string value)
+    {
+        var pattern = _mapper.GetValueOrDefault(value);
+
+        if (pattern is not null)
+        {
+            return pattern;
+        }
+
+        pattern = value.Select(CharacterPatternProvider.Get)
+            .Select(p => p.Pattern);
+
+        _mapper.Add(value, pattern);
+        return pattern;
     }
 
     public void DisplayTick(TimerState state)

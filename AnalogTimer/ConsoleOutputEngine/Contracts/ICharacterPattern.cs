@@ -1,6 +1,6 @@
 ﻿namespace ConsoleOutputEngine.Contracts;
 
-internal interface ICharacterPattern
+public interface ICharacterPattern
 {
     List<string> Pattern { get; }
 }

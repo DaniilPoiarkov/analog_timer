@@ -6,13 +6,9 @@ public interface IConsoleOutput
 {
     int PositionLeft { get; set; }
 
-    void Out(string value, IConsoleOutputFormatter formatter);
+    void Out(IEnumerable<List<string>> values);
 
-    void Out(string value);
-
-    void Out(int value);
-
-    int GetLength(object value);
+    void Out(List<string> values);
 
     static IConsoleOutput Create() => new ConsoleOutput();
 }
