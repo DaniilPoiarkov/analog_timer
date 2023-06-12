@@ -1,9 +1,10 @@
-﻿using ConsoleOutputEngine.Contracts;
-using RunningLineEngine.Models;
+﻿using RunningLineEngine.Models;
 
 namespace RunningLine.Contracts;
 
-internal interface IRunningLineArgsOutputFormatter : IConsoleOutputFormatter
+internal interface IRunningLineArgsOutputFormatter
 {
+    IEnumerable<string> Format(IEnumerable<string> pattern);
+
     void Update(RunningLineEventArgs args);
 }
