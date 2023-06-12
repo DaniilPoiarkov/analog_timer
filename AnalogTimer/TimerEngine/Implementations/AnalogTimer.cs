@@ -4,7 +4,7 @@ using AnalogTimer.Models;
 using NLog;
 using TimerEngine.Models.Enums;
 using TimerEngine.Models.TimerEventArgs;
-using static TimerEngine.Contracts.ITimerEvents;
+using static TimerEngine.Contracts.IAnalogTimerEvents;
 
 namespace AnalogTimer.Implementations;
 

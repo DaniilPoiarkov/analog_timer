@@ -1,10 +1,5 @@
 ﻿using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using static WinApplication.Statics.Helper;
-using AnalogTimer.Contracts;
-using AnalogTimer.Implementations;
-using ConsoleInterface.Contracts;
-using ConsoleInterface.Prompts.Implementations;
-using TimerEngine.Prompts.Implementations;
 using WinApplication.ButtonStateEngine;
 using WinApplication.ButtonStateEngine.StopwatchButtonStates;
 using AnalogTimer.Helpers;
@@ -18,8 +13,6 @@ public partial class NewStopwatchControl : UserControl
 
     private readonly StopwatchDisplayService _stopwatchDisplayService;
 
-    private readonly IPromptService<IAnalogTimer> _stopwatchPromptService;
-
     private ButtonsStateBase _buttonState;
 
     public NewStopwatchControl()
@@ -32,13 +25,6 @@ public partial class NewStopwatchControl : UserControl
 
         SubscribeToTimer();
         SubscribeToButtons();
-
-        _stopwatchPromptService = new AnalogTimerPromptServiceBuilder(_timer)
-            .Add<StartPrompt>()
-            .Add<PausePrompt<IAnalogTimer>>()
-            .Add<ResetPrompt>()
-            .Add<CutTimerStatePrompt>()
-            .Build();
     }
 
     #region Subscribtions
@@ -121,53 +107,6 @@ public partial class NewStopwatchControl : UserControl
 
     #endregion
 
-    private async void ConsoleInputEnterKeydown(object sender, KeyEventArgs e)
-    {
-        if (e.KeyCode != Keys.Enter)
-        {
-            return;
-        }
-
-        try
-        {
-            var input = StopwatchConsoleInput.Text.ToLower().StartsWith("start")
-                ? "start"
-                : StopwatchConsoleInput.Text;
-
-            await _stopwatchPromptService.Consume(input);
-
-            UpdateSwitchButtonsAccessability();
-
-            StopwatchConsoleInput.Text = string.Empty;
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex.Message);
-        }
-    }
-
-    private void UpdateSwitchButtonsAccessability()
-    {
-        var userInput = StopwatchConsoleInput.Text.ToLower();
-
-        if (userInput.StartsWith("start"))
-        {
-            _buttonState = new StartStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
-            SubscribeToButtons();
-        }
-        else if (userInput.StartsWith("pause") || userInput.StartsWith("-p"))
-        {
-            _buttonState = new PauseStopwatchState(StopwatchStartBtn, StopwatchResetBtn);
-            SubscribeToButtons();
-        }
-        else if (userInput.StartsWith("reset") || userInput.StartsWith("-r"))
-        {
-            _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
-            cutOutput.Text = string.Empty;
-            SubscribeToButtons();
-        }
-    }
-
     private void SetMillisecond(string digit)
     {
         if (StopwatchMsOutput.InvokeRequired)
@@ -178,21 +117,6 @@ public partial class NewStopwatchControl : UserControl
         else
         {
             StopwatchMsOutput.Text = digit;
-        }
-    }
-
-    private void SwitchConsoleAccessability(object sender, EventArgs e)
-    {
-        if (StopwatchConsoleInput.Enabled)
-        {
-            StopwatchConsoleInput.Enabled = false;
-            StopwatchConsoleInput.Text = string.Empty;
-            StopwatchOpenConsoleBtn.Text = "Enable console";
-        }
-        else
-        {
-            StopwatchConsoleInput.Enabled = true;
-            StopwatchOpenConsoleBtn.Text = "Disable console";
         }
     }
 

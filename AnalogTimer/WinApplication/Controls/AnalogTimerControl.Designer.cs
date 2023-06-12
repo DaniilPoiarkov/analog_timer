@@ -36,8 +36,6 @@
             MinutesInput = new NumericUpDown();
             TickPerSecondInput = new NumericUpDown();
             SwitchTimerBtn = new Button();
-            TimerConsoleInput = new TextBox();
-            TimerOpenConsoleBtn = new Button();
             TimerCaancelBtn = new Button();
             SecondsInput = new NumericUpDown();
             label9 = new Label();
@@ -55,7 +53,7 @@
             TimerStartTenSecBtn.BackColor = Color.FromArgb(57, 72, 103);
             TimerStartTenSecBtn.FlatStyle = FlatStyle.Popup;
             TimerStartTenSecBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            TimerStartTenSecBtn.Location = new Point(211, 175);
+            TimerStartTenSecBtn.Location = new Point(221, 175);
             TimerStartTenSecBtn.Margin = new Padding(3, 4, 3, 4);
             TimerStartTenSecBtn.Name = "TimerStartTenSecBtn";
             TimerStartTenSecBtn.Size = new Size(116, 31);
@@ -157,33 +155,6 @@
             SwitchTimerBtn.UseVisualStyleBackColor = false;
             SwitchTimerBtn.Click += SwitchTimerStateBtnClick;
             // 
-            // TimerConsoleInput
-            // 
-            TimerConsoleInput.BackColor = Color.FromArgb(57, 72, 103);
-            TimerConsoleInput.BorderStyle = BorderStyle.None;
-            TimerConsoleInput.Enabled = false;
-            TimerConsoleInput.ForeColor = Color.FromArgb(241, 246, 249);
-            TimerConsoleInput.Location = new Point(12, 367);
-            TimerConsoleInput.Name = "TimerConsoleInput";
-            TimerConsoleInput.PlaceholderText = "Console mode";
-            TimerConsoleInput.Size = new Size(325, 20);
-            TimerConsoleInput.TabIndex = 49;
-            TimerConsoleInput.KeyDown += ConsoleInputEnterKeydown;
-            // 
-            // TimerOpenConsoleBtn
-            // 
-            TimerOpenConsoleBtn.BackColor = Color.FromArgb(57, 72, 103);
-            TimerOpenConsoleBtn.FlatStyle = FlatStyle.Popup;
-            TimerOpenConsoleBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            TimerOpenConsoleBtn.Location = new Point(12, 329);
-            TimerOpenConsoleBtn.Margin = new Padding(3, 4, 3, 4);
-            TimerOpenConsoleBtn.Name = "TimerOpenConsoleBtn";
-            TimerOpenConsoleBtn.Size = new Size(325, 31);
-            TimerOpenConsoleBtn.TabIndex = 48;
-            TimerOpenConsoleBtn.Text = "Enable console";
-            TimerOpenConsoleBtn.UseVisualStyleBackColor = false;
-            TimerOpenConsoleBtn.Click += SwitchConsoleAccessability;
-            // 
             // TimerCaancelBtn
             // 
             TimerCaancelBtn.BackColor = Color.FromArgb(57, 72, 103);
@@ -271,8 +242,6 @@
             Controls.Add(MinutesInput);
             Controls.Add(TickPerSecondInput);
             Controls.Add(SwitchTimerBtn);
-            Controls.Add(TimerConsoleInput);
-            Controls.Add(TimerOpenConsoleBtn);
             Controls.Add(TimerCaancelBtn);
             Controls.Add(SecondsInput);
             Controls.Add(label9);
@@ -280,7 +249,7 @@
             Controls.Add(HoursInput);
             Controls.Add(label8);
             Name = "AnalogTimerControl";
-            Size = new Size(345, 400);
+            Size = new Size(345, 333);
             ((System.ComponentModel.ISupportInitialize)MinutesInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)TickPerSecondInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)SecondsInput).EndInit();
@@ -299,8 +268,6 @@
         private NumericUpDown MinutesInput;
         private NumericUpDown TickPerSecondInput;
         private Button SwitchTimerBtn;
-        private TextBox TimerConsoleInput;
-        private Button TimerOpenConsoleBtn;
         private Button TimerCaancelBtn;
         private NumericUpDown SecondsInput;
         private Label label9;
