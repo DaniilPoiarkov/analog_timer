@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalogTimer", "AnalogTimer\AnalogTimer.csproj", "{AA8D0C7A-C062-49E7-98CB-3117872DF518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalogTimerApp", "AnalogTimer\AnalogTimerApp.csproj", "{AA8D0C7A-C062-49E7-98CB-3117872DF518}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinApplication", "WinApplication\WinApplication.csproj", "{B35F8D90-4209-4F66-8D3D-638D0D96C889}"
 EndProject
@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerEngine", "TimerEngine\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningLineEngine", "RunningLineEngine\RunningLineEngine.csproj", "{EA26B90A-1626-4CCC-BF2E-FBE526105691}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOutputEngine", "ConsoleOutputEngine\ConsoleOutputEngine.csproj", "{DC297491-2F7B-41B3-9474-518CC498CAE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleOutputEngine", "ConsoleOutputEngine\ConsoleOutputEngine.csproj", "{DC297491-2F7B-41B3-9474-518CC498CAE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningLine", "RunningLine\RunningLine.csproj", "{409EDDA2-864F-4046-9133-B0F1E57A9770}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningLineApp", "RunningLine\RunningLineApp.csproj", "{409EDDA2-864F-4046-9133-B0F1E57A9770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplicationBuilder", "ConsoleApplicationBuilder\ConsoleApplicationBuilder.csproj", "{B2FD539B-31A9-43FD-BA08-470122417748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApplicationBuilder", "ConsoleApplicationBuilder\ConsoleApplicationBuilder.csproj", "{B2FD539B-31A9-43FD-BA08-470122417748}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
