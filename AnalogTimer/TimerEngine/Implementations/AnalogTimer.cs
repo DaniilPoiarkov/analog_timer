@@ -1,9 +1,8 @@
 ﻿using AnalogTimer.Contracts;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
 using NLog;
-using System.Diagnostics;
+using TimerEngine.Models.Enums;
 using TimerEngine.Models.TimerEventArgs;
 using static TimerEngine.Contracts.ITimerEvents;
 
@@ -15,6 +14,8 @@ public class AnalogTimer : IAnalogTimer
 
     private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+    private delegate Task CounterExecutor();
+
 
     public event TimerTick? Tick;
 
@@ -23,6 +24,8 @@ public class AnalogTimer : IAnalogTimer
     public event TimerUpdated? TimerStarted;
 
     public event TimerUpdated? TimerCut;
+
+    public event TimerUpdated? Stopeed;
 
     private TimerEventArgs TimerEventArgs => new()
     {
@@ -36,14 +39,13 @@ public class AnalogTimer : IAnalogTimer
     public TimerType Type { get; private set; }
 
 
-    private int TicksPerSecond { get; set; }
+    public int TicksPerSecond { get; private set; }
 
-    private Func<Task>? Counter { get; set; }
+    private CounterExecutor? Counter { get; set; }
 
     private Task? Execution { get; set; }
 
     private Action<int> StateCallback { get; set; }
-
 
     private static readonly TimeSpan _baseDelay = TimeSpan.FromMilliseconds(95);
 
@@ -76,7 +78,7 @@ public class AnalogTimer : IAnalogTimer
         UpdateState(timer => timer.Type = type);
     }
 
-    public void ChangeTicksPerSecond(int ticksPerSecond)
+    public void ChangeSpeed(int ticksPerSecond)
     {
         UpdateState(timer => timer.TicksPerSecond = ticksPerSecond);
     }
@@ -137,7 +139,7 @@ public class AnalogTimer : IAnalogTimer
         MillisecondDisplayHelper.BackgroundDisplay();
 
         IsRunning = true;
-        Counter = StartTimerTemplate;
+        Counter = new CounterExecutor(StartTimerTemplate);
         Execution = Counter.Invoke();
     }
 
@@ -157,7 +159,12 @@ public class AnalogTimer : IAnalogTimer
 
                 if (_state.IsZero)
                 {
-                    await Stop();
+                    IsRunning = false;
+
+                    MillisecondDisplayHelper.StopDisplay();
+                    MillisecondDisplayHelper.DisplayZero();
+
+                    Stopeed?.Invoke(new() { IsStopped = true });
                 }
             }
             catch (Exception ex)
@@ -176,11 +183,14 @@ public class AnalogTimer : IAnalogTimer
 
         MillisecondDisplayHelper.StopDisplay();
 
-        if(_state.IsZero)
+        if (_state.IsZero)
+        {
             MillisecondDisplayHelper.DisplayZero();
+        }
 
         IsRunning = false;
         await Execution;
         Counter = null;
+        Stopeed?.Invoke(new() { IsStopped = true });
     }
 }

@@ -13,6 +13,8 @@ public interface ITimerEvents
 
     event TimerUpdated? TimerCut;
 
+    event TimerUpdated? Stopeed;
+
 
     public delegate void TimerTick(TimerState state);
 

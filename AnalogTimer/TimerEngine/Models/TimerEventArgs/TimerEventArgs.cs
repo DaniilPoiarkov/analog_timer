@@ -1,5 +1,5 @@
 ﻿using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
+using TimerEngine.Models.Enums;
 
 namespace TimerEngine.Models.TimerEventArgs;
 
@@ -8,4 +8,6 @@ public class TimerEventArgs
     public TimerState? State { get; set; }
 
     public TimerType? TimerType { get; set; }
+
+    public bool IsStopped { get; set; }
 }

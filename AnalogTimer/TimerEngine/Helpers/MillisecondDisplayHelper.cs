@@ -13,9 +13,7 @@ public static class MillisecondDisplayHelper
 
     private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-    private static Action<int>? _outputHandler;
-
-    public static void SetOutputHandler(Action<int> handler) => _outputHandler = handler;
+    public static event EventHandler<int>? OutputHandler;
 
     public static Task BackgroundDisplay()
     {
@@ -68,7 +66,7 @@ public static class MillisecondDisplayHelper
 
     public static void DisplayZero()
     {
-        _outputHandler?.Invoke(0);
+        OutputHandler?.Invoke(null, 0);
     }
 
     private static async Task Display(CancellationToken cancellationToken)
@@ -82,7 +80,8 @@ public static class MillisecondDisplayHelper
                 var digit = i switch
                 {
                     < 3 => 0,
-                    < 7 => 3,
+                    < 5 => 3,
+                    < 7 => 5,
                     _ => 7
                 };
 
@@ -91,8 +90,8 @@ public static class MillisecondDisplayHelper
 
                 await Task.Delay(10, cancellationToken);
                 
-                _outputHandler?.Invoke(i);
-                
+                OutputHandler?.Invoke(null, i);
+
                 snapshot = digit;
             }
         }

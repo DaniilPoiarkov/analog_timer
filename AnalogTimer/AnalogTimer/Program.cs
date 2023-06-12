@@ -1,5 +1,5 @@
-﻿using AnalogTimer;
+﻿using AnalogTimer.ConsoleApplications;
 
-var app = new ConsoleApplication();
+var runningLineApp = new RunningLineApplication();
+await runningLineApp.Run();
 
-await app.Run();

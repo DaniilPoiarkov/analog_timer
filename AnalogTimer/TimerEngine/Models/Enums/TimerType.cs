@@ -1,4 +1,4 @@
-﻿namespace AnalogTimer.Models.Enums;
+﻿namespace TimerEngine.Models.Enums;
 
 public enum TimerType
 {

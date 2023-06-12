@@ -4,6 +4,7 @@ using AnalogTimer.DisplayHandlers.ConsoleHandlers;
 using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Models.Enums;
+using MatrixDisplayEngine.Contracts;
 using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Implementations;
@@ -46,12 +47,13 @@ public class ConsoleDisplayService : IDisplayService
         _timerTemplate = timerTemplate;
         _handler = MatrixDisplayHandler.Instance;
 
-        MillisecondDisplayHelper.SetOutputHandler(digit =>
+        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
-            MatrixDisplayHandler.Instance
-                .DisplayPattern(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
+            IMatrixDisplay.Instance
+                .Display(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
+
             UIHelper.SetCursor();
-        });
+        };
 
         PrintDots(_dotsBetweenHourAndMinute);
         PrintDots(_dotsBetweenMinuteAndSecond);
