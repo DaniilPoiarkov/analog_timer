@@ -1,8 +1,8 @@
 ﻿using ConsoleOutputEngine.Contracts;
 
-namespace ConsoleOutputEngine.Patterns.LetterPatterns;
+namespace ConsoleOutputEngine.Patterns.SpecialCharacterPatterns;
 
-internal class EmptyLetter : ILetterPattern
+internal class WhiteSpacePattern : ILetterPattern
 {
     public List<string> Pattern => new()
     {

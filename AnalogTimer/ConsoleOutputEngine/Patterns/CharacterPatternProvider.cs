@@ -66,7 +66,7 @@ internal class CharacterPatternProvider
             '-' => new HyphenPattern(),
             '+' => new PlusPattern(),
             '=' => new EqualPattern(),
-            _ => new EmptyLetter(),
+            _ => new WhiteSpacePattern(),
         };
     }
 }
