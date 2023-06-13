@@ -56,7 +56,6 @@ internal class DefaultDisplayHandler
             return pattern;
         }
 
-        
         pattern = normilized
             .Select(CharacterPatternProvider.Get)
             .Select(p => p.Pattern)
