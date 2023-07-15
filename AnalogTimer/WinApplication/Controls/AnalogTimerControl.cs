@@ -124,6 +124,7 @@ public partial class AnalogTimerControl : UserControl
 
             if (_timer.GetSnapshot().IsZero)
             {
+                _timer.MillisecondDisplayHelper.DisplayZero();
                 TimerMsOutput.Text = "0";
             }
         };
