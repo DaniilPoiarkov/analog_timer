@@ -1,10 +1,4 @@
-﻿using AnalogTimer.Contracts;
-using ConsoleInterface.Contracts;
-using WinApplication.Implementations;
-using AnalogTimer.Implementations;
-using ConsoleInterface.Prompts.Implementations;
-using TimerEngine.Prompts.Implementations;
-using AnalogTimer.Helpers;
+﻿using WinApplication.Implementations;
 using static WinApplication.Statics.Helper;
 using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using AnalogTimer.Models;
@@ -17,8 +11,6 @@ namespace WinApplication;
 public partial class AnalogTimerControl : UserControl
 {
     private readonly MyTimer _timer;
-
-    private readonly IPromptService<IAnalogTimer> _timerPromptService;
 
     private ButtonsStateBase _switchStateBtnState;
 
@@ -42,20 +34,10 @@ public partial class AnalogTimerControl : UserControl
 
         SubscribeToTimer();
 
-        _timerPromptService = new AnalogTimerPromptServiceBuilder(_timer)
-            .Add<StartPrompt>()
-            .Add<PausePrompt<IAnalogTimer>>()
-            .Add<ResetPrompt>()
-            .Add<AddSecondsPrompt>()
-            .Add<AddMinutesPrompt>()
-            .Add<AddHoursPrompt>()
-            .Add<ChangeSpeedPrompt<IAnalogTimer>>()
-            .Build();
-
         _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
         SubscribeToButtons();
 
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             SetMillisecond(digit.ToString());
         };
@@ -122,6 +104,7 @@ public partial class AnalogTimerControl : UserControl
                 HoursInput.Value = 0;
                 MinutesInput.Value = 0;
                 SecondsInput.Value = 0;
+                TimerMsOutput.Text = "0";
                 TickPerSecondInput.Value = 1;
 
                 ResetFormValues(true);
@@ -141,11 +124,12 @@ public partial class AnalogTimerControl : UserControl
 
             if (_timer.GetSnapshot().IsZero)
             {
+                _timer.MillisecondDisplayHelper.DisplayZero();
                 TimerMsOutput.Text = "0";
             }
         };
 
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             SetMillisecond(digit.ToString());
         };
@@ -197,60 +181,6 @@ public partial class AnalogTimerControl : UserControl
         }
     }
 
-    private async void ConsoleInputEnterKeydown(object sender, KeyEventArgs e)
-    {
-        if (e.KeyCode != Keys.Enter)
-        {
-            return;
-        }
-
-        try
-        {
-            await _timerPromptService.Consume(TimerConsoleInput.Text);
-
-            UpdateSwitchButtonsAccessability();
-
-            if (TimerConsoleInput.Text.StartsWith("speed") && _timer.TicksPerSecond > 10)
-            {
-                TickPerSecondInput.Value = 10;
-                SpeedChangedEvent(this, EventArgs.Empty);
-            }
-
-            TimerConsoleInput.Text = string.Empty;
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex.Message);
-        }
-    }
-
-    private void UpdateSwitchButtonsAccessability()
-    {
-        var userInput = TimerConsoleInput.Text.ToLower();
-
-        if (userInput.StartsWith("start"))
-        {
-            _switchStateBtnState = new StartButtonState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
-        }
-        else if (userInput.StartsWith("pause") || userInput.StartsWith("-p"))
-        {
-            _switchStateBtnState = new PauseButtonState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
-        }
-        else if (userInput.StartsWith("reset") || userInput.StartsWith("-r"))
-        {
-            _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
-            SubscribeToButtons();
-            ResetFormValues(true);
-
-            HoursInput.Value = 0;
-            MinutesInput.Value = 0;
-            SecondsInput.Value = 0;
-            TickPerSecondInput.Value = 1;
-        }
-    }
-
     private void SwitchTimerStateBtnClick(object sender, EventArgs e)
     {
         if (sender is not Button switchBtn)
@@ -296,21 +226,6 @@ public partial class AnalogTimerControl : UserControl
 
             _switchStateBtnState.LeftBtnClick();
         });
-    }
-
-    private void SwitchConsoleAccessability(object sender, EventArgs e)
-    {
-        if (TimerConsoleInput.Enabled)
-        {
-            TimerConsoleInput.Enabled = false;
-            TimerConsoleInput.Text = string.Empty;
-            TimerOpenConsoleBtn.Text = "Enable console";
-        }
-        else
-        {
-            TimerConsoleInput.Enabled = true;
-            TimerOpenConsoleBtn.Text = "Disable console";
-        }
     }
 
     private void ResetFormValues(bool accessability)

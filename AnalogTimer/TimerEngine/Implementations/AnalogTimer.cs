@@ -4,7 +4,7 @@ using AnalogTimer.Models;
 using NLog;
 using TimerEngine.Models.Enums;
 using TimerEngine.Models.TimerEventArgs;
-using static TimerEngine.Contracts.ITimerEvents;
+using static TimerEngine.Contracts.IAnalogTimerEvents;
 
 namespace AnalogTimer.Implementations;
 
@@ -26,6 +26,8 @@ public class AnalogTimer : IAnalogTimer
     public event TimerUpdated? TimerCut;
 
     public event TimerUpdated? Stopeed;
+
+    public MillisecondDisplayHelper MillisecondDisplayHelper { get; }
 
     private TimerEventArgs TimerEventArgs => new()
     {
@@ -58,6 +60,7 @@ public class AnalogTimer : IAnalogTimer
         Type = TimerType.Stopwatch;
 
         StateCallback = _state.AddMilliseconds;
+        MillisecondDisplayHelper = new MillisecondDisplayHelper();
     }
 
     public AnalogTimer()
@@ -101,6 +104,7 @@ public class AnalogTimer : IAnalogTimer
     public void ResetState()
     {
         UpdateState(timer => timer._state.Reset());
+        MillisecondDisplayHelper.DisplayZero();
     }
 
     private void UpdateState(Action<AnalogTimer> stateUpdateAction)

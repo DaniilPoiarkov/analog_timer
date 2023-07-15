@@ -1,19 +1,13 @@
-﻿using AnalogTimer.Models;
-using ConsoleInterface.EntityContracts;
+﻿using AnalogTimer.Helpers;
+using AnalogTimer.Models;
 using TimerEngine.Contracts;
 using TimerEngine.Models.Enums;
 
 namespace AnalogTimer.Contracts;
 
-public interface IAnalogTimer : ITimerEvents, ISpeedChangable, IAsyncRunnable
+public interface IAnalogTimer : IAnalogTimerEvents, IAnalogTimerSpeed, IAnalogTimerAsyncRunnable, IAnalogTimerStateChangable
 {
-    void AddSeconds(int seconds);
-
-    void AddMinutes(int minutes);
-
-    void AddHours(int hours);
-
-    void ResetState();
+    MillisecondDisplayHelper MillisecondDisplayHelper { get; }
 
     void SetTimerType(TimerType type);
 

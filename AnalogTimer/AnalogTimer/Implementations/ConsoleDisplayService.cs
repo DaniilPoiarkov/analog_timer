@@ -1,30 +1,22 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.DigitDrawers;
-using AnalogTimer.DisplayHandlers.ConsoleHandlers;
-using AnalogTimer.Helpers;
 using AnalogTimer.Models;
-using AnalogTimer.Models.Enums;
-using MatrixDisplayEngine.Contracts;
+using AnalogTimer.Patterns;
+using ConsoleApplicationBuilder.Helpers;
+using ConsoleOutputEngine.Contracts;
 using TimerEngine.Models.TimerEventArgs;
 
 namespace AnalogTimer.Implementations;
 
 public class ConsoleDisplayService : IDisplayService
 {
-    private readonly ITimerTemplate _timerTemplate;
+    private readonly IConsoleOutput _output = IConsoleOutput.Create();
 
-    private TimerState? _snapshot;
+    private readonly Dictionary<string, IEnumerable<List<string>>> _mapper = new();
 
-    private readonly IDisplayHandler _handler;
+    private readonly object _lock = new();
 
 
-    private const int _dotsBetweenHourAndMinute = 23;
-
-    private const int _dotsBetweenMinuteAndSecond = 49;
-
-    private const int _dotsBetweenSecondsAndMilliseconds = 75;
-
-    private const int _position = 91;
+    private const int _position = 74;
 
     private const int _maxPositionLeft = 104;
 
@@ -41,56 +33,49 @@ public class ConsoleDisplayService : IDisplayService
 
     private static int PositionLeft = _startPositionLeft;
 
-
-    public ConsoleDisplayService(ITimerTemplate timerTemplate)
+    public ConsoleDisplayService(IAnalogTimer analogTimer)
     {
-        _timerTemplate = timerTemplate;
-        _handler = MatrixDisplayHandler.Instance;
-
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        analogTimer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
-            IMatrixDisplay.Instance
-                .Display(DigitDrawerProvider.GetDrawer(digit).Pattern, _position);
-
+            PrintValue(digit.ToString(), _position);
             UIHelper.SetCursor();
         };
 
-        PrintDots(_dotsBetweenHourAndMinute);
-        PrintDots(_dotsBetweenMinuteAndSecond);
-        PrintDots(_dotsBetweenSecondsAndMilliseconds);
-
-        MillisecondDisplayHelper.DisplayZero();
+        analogTimer.MillisecondDisplayHelper.DisplayZero();
         DisplayTick(new());
+    }
+
+    private void PrintValue(string value, int position)
+    {
+        lock (_lock)
+        {
+            _output.PositionLeft = position;
+
+            var pattern = GetOrCreate(value);
+
+            _output.Out(pattern);
+        }
+    }
+
+    private IEnumerable<List<string>> GetOrCreate(string value)
+    {
+        var pattern = _mapper.GetValueOrDefault(value);
+
+        if (pattern is not null)
+        {
+            return pattern;
+        }
+
+        pattern = value.Select(CharacterPatternProvider.Get)
+            .Select(p => p.Pattern);
+
+        _mapper.Add(value, pattern);
+        return pattern;
     }
 
     public void DisplayTick(TimerState state)
     {
-        if (state.Hours != _snapshot?.Hours)
-            _handler.Update(state.Hours, TimerValue.Hour);
-
-        if (state.Minutes != _snapshot?.Minutes)
-            _handler.Update(state.Minutes, TimerValue.Minute);
-
-        if (state.Seconds != _snapshot?.Seconds)
-            _handler.Update(state.Seconds, TimerValue.Second);
-
-        if (state.Milliseconds != _snapshot?.Milliseconds)
-            _handler.Update(state.Milliseconds, TimerValue.Millisecond);
-
-        _snapshot = new(state.Hours, state.Minutes, state.Seconds, state.Milliseconds);
-    }
-
-    private void PrintDots(int position)
-    {
-        Console.CursorTop = 2;
-        Console.CursorLeft = position;
-
-        Console.WriteLine(_timerTemplate.Pattern);
-
-        Console.CursorTop = 5;
-        Console.CursorLeft = position;
-
-        Console.WriteLine(_timerTemplate.Pattern);
+        PrintValue(state.ToString(), 0);
     }
 
     public void DisplayUpdated(TimerEventArgs args)

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalogTimer", "AnalogTimer\AnalogTimer.csproj", "{AA8D0C7A-C062-49E7-98CB-3117872DF518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalogTimerApp", "AnalogTimer\AnalogTimerApp.csproj", "{AA8D0C7A-C062-49E7-98CB-3117872DF518}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinApplication", "WinApplication\WinApplication.csproj", "{B35F8D90-4209-4F66-8D3D-638D0D96C889}"
 EndProject
@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimerEngine", "TimerEngine\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningLineEngine", "RunningLineEngine\RunningLineEngine.csproj", "{EA26B90A-1626-4CCC-BF2E-FBE526105691}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleInterface", "ConsoleInterface\ConsoleInterface.csproj", "{4BC999D2-DD2E-475F-AD73-7B6FBFD73681}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleOutputEngine", "ConsoleOutputEngine\ConsoleOutputEngine.csproj", "{DC297491-2F7B-41B3-9474-518CC498CAE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixDisplayEngine", "MatrixDisplayEngine\MatrixDisplayEngine.csproj", "{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningLineApp", "RunningLine\RunningLineApp.csproj", "{409EDDA2-864F-4046-9133-B0F1E57A9770}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApplicationBuilder", "ConsoleApplicationBuilder\ConsoleApplicationBuilder.csproj", "{B2FD539B-31A9-43FD-BA08-470122417748}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +39,18 @@ Global
 		{EA26B90A-1626-4CCC-BF2E-FBE526105691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA26B90A-1626-4CCC-BF2E-FBE526105691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA26B90A-1626-4CCC-BF2E-FBE526105691}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BC999D2-DD2E-475F-AD73-7B6FBFD73681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BC999D2-DD2E-475F-AD73-7B6FBFD73681}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BC999D2-DD2E-475F-AD73-7B6FBFD73681}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BC999D2-DD2E-475F-AD73-7B6FBFD73681}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D88BE47-FFD4-4BA9-9596-D17776DF37E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC297491-2F7B-41B3-9474-518CC498CAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{409EDDA2-864F-4046-9133-B0F1E57A9770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409EDDA2-864F-4046-9133-B0F1E57A9770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409EDDA2-864F-4046-9133-B0F1E57A9770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409EDDA2-864F-4046-9133-B0F1E57A9770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FD539B-31A9-43FD-BA08-470122417748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FD539B-31A9-43FD-BA08-470122417748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FD539B-31A9-43FD-BA08-470122417748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FD539B-31A9-43FD-BA08-470122417748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

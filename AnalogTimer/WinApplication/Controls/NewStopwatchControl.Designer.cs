@@ -31,22 +31,19 @@
             cutOutput = new TextBox();
             StopwatchMsOutput = new Label();
             label5 = new Label();
-            StopwatchConsoleInput = new TextBox();
             StopwatchOutput = new Label();
-            StopwatchOpenConsoleBtn = new Button();
             StopwatchResetBtn = new Button();
             StopwatchStartBtn = new Button();
             SuspendLayout();
             // 
             // cutOutput
             // 
-            cutOutput.Location = new Point(11, 122);
-            cutOutput.Margin = new Padding(3, 4, 3, 4);
+            cutOutput.Location = new Point(10, 92);
             cutOutput.Multiline = true;
             cutOutput.Name = "cutOutput";
             cutOutput.ReadOnly = true;
             cutOutput.ScrollBars = ScrollBars.Vertical;
-            cutOutput.Size = new Size(326, 160);
+            cutOutput.Size = new Size(286, 121);
             cutOutput.TabIndex = 36;
             // 
             // StopwatchMsOutput
@@ -55,9 +52,9 @@
             StopwatchMsOutput.BackColor = Color.FromArgb(33, 42, 62);
             StopwatchMsOutput.Font = new Font("Segoe UI", 35F, FontStyle.Regular, GraphicsUnit.Point);
             StopwatchMsOutput.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchMsOutput.Location = new Point(265, 0);
+            StopwatchMsOutput.Location = new Point(213, 0);
             StopwatchMsOutput.Name = "StopwatchMsOutput";
-            StopwatchMsOutput.Size = new Size(52, 88);
+            StopwatchMsOutput.Size = new Size(42, 71);
             StopwatchMsOutput.TabIndex = 35;
             StopwatchMsOutput.Text = "0";
             StopwatchMsOutput.UseCompatibleTextRendering = true;
@@ -67,24 +64,11 @@
             label5.AutoSize = true;
             label5.BackColor = Color.FromArgb(33, 42, 62);
             label5.ForeColor = Color.FromArgb(241, 246, 249);
-            label5.Location = new Point(12, 98);
+            label5.Location = new Point(10, 74);
             label5.Name = "label5";
-            label5.Size = new Size(47, 20);
+            label5.Size = new Size(37, 15);
             label5.TabIndex = 37;
             label5.Text = "Leaps";
-            // 
-            // StopwatchConsoleInput
-            // 
-            StopwatchConsoleInput.BackColor = Color.FromArgb(57, 72, 103);
-            StopwatchConsoleInput.BorderStyle = BorderStyle.None;
-            StopwatchConsoleInput.Enabled = false;
-            StopwatchConsoleInput.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchConsoleInput.Location = new Point(12, 367);
-            StopwatchConsoleInput.Name = "StopwatchConsoleInput";
-            StopwatchConsoleInput.PlaceholderText = "Console mode";
-            StopwatchConsoleInput.Size = new Size(325, 20);
-            StopwatchConsoleInput.TabIndex = 34;
-            StopwatchConsoleInput.KeyDown += ConsoleInputEnterKeydown;
             // 
             // StopwatchOutput
             // 
@@ -94,24 +78,10 @@
             StopwatchOutput.ForeColor = Color.FromArgb(241, 246, 249);
             StopwatchOutput.Location = new Point(0, 0);
             StopwatchOutput.Name = "StopwatchOutput";
-            StopwatchOutput.Size = new Size(286, 88);
+            StopwatchOutput.Size = new Size(229, 71);
             StopwatchOutput.TabIndex = 30;
             StopwatchOutput.Text = "00:00:00:0";
             StopwatchOutput.UseCompatibleTextRendering = true;
-            // 
-            // StopwatchOpenConsoleBtn
-            // 
-            StopwatchOpenConsoleBtn.BackColor = Color.FromArgb(57, 72, 103);
-            StopwatchOpenConsoleBtn.FlatStyle = FlatStyle.Popup;
-            StopwatchOpenConsoleBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchOpenConsoleBtn.Location = new Point(12, 329);
-            StopwatchOpenConsoleBtn.Margin = new Padding(3, 4, 3, 4);
-            StopwatchOpenConsoleBtn.Name = "StopwatchOpenConsoleBtn";
-            StopwatchOpenConsoleBtn.Size = new Size(325, 31);
-            StopwatchOpenConsoleBtn.TabIndex = 33;
-            StopwatchOpenConsoleBtn.Text = "Enable console";
-            StopwatchOpenConsoleBtn.UseVisualStyleBackColor = false;
-            StopwatchOpenConsoleBtn.Click += SwitchConsoleAccessability;
             // 
             // StopwatchResetBtn
             // 
@@ -119,10 +89,9 @@
             StopwatchResetBtn.Enabled = false;
             StopwatchResetBtn.FlatStyle = FlatStyle.Popup;
             StopwatchResetBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchResetBtn.Location = new Point(181, 290);
-            StopwatchResetBtn.Margin = new Padding(3, 4, 3, 4);
+            StopwatchResetBtn.Location = new Point(158, 218);
             StopwatchResetBtn.Name = "StopwatchResetBtn";
-            StopwatchResetBtn.Size = new Size(160, 31);
+            StopwatchResetBtn.Size = new Size(140, 23);
             StopwatchResetBtn.TabIndex = 32;
             StopwatchResetBtn.Text = "Reset";
             StopwatchResetBtn.UseVisualStyleBackColor = false;
@@ -133,10 +102,9 @@
             StopwatchStartBtn.BackColor = Color.FromArgb(57, 72, 103);
             StopwatchStartBtn.FlatStyle = FlatStyle.Popup;
             StopwatchStartBtn.ForeColor = Color.FromArgb(241, 246, 249);
-            StopwatchStartBtn.Location = new Point(12, 290);
-            StopwatchStartBtn.Margin = new Padding(3, 4, 3, 4);
+            StopwatchStartBtn.Location = new Point(10, 218);
             StopwatchStartBtn.Name = "StopwatchStartBtn";
-            StopwatchStartBtn.Size = new Size(160, 31);
+            StopwatchStartBtn.Size = new Size(140, 23);
             StopwatchStartBtn.TabIndex = 31;
             StopwatchStartBtn.Text = "Start";
             StopwatchStartBtn.UseVisualStyleBackColor = false;
@@ -144,19 +112,18 @@
             // 
             // NewStopwatchControl
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 42, 62);
             Controls.Add(cutOutput);
             Controls.Add(StopwatchMsOutput);
             Controls.Add(label5);
-            Controls.Add(StopwatchConsoleInput);
             Controls.Add(StopwatchOutput);
-            Controls.Add(StopwatchOpenConsoleBtn);
             Controls.Add(StopwatchResetBtn);
             Controls.Add(StopwatchStartBtn);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "NewStopwatchControl";
-            Size = new Size(345, 400);
+            Size = new Size(302, 250);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -166,9 +133,7 @@
         private TextBox cutOutput;
         private Label StopwatchMsOutput;
         private Label label5;
-        private TextBox StopwatchConsoleInput;
         private Label StopwatchOutput;
-        private Button StopwatchOpenConsoleBtn;
         private Button StopwatchResetBtn;
         private Button StopwatchStartBtn;
     }
