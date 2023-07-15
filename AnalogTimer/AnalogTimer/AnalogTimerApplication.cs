@@ -10,8 +10,8 @@ internal class AnalogTimerApplication : ConsoleApplication<IAnalogTimer>
 {
     public AnalogTimerApplication()
     {
-        var displayService = new ConsoleDisplayService();
         Entity = new Implementations.AnalogTimer();
+        var displayService = new ConsoleDisplayService(Entity);
 
         Entity.Tick += displayService.DisplayTick;
         Entity.Updated += displayService.DisplayUpdated;

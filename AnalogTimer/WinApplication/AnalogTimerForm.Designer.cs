@@ -112,7 +112,6 @@
         private TabControl TabWindow;
         private TabPage TimerTab;
         private TabPage StopwatchTab;
-        private Button button3;
         private AnalogTimerControl analogTimerControl1;
         private NewStopwatchControl newStopwatchControl1;
     }

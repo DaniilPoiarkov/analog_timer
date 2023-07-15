@@ -34,15 +34,15 @@ public class ConsoleDisplayService : IDisplayService
 
     private static int PositionLeft = _startPositionLeft;
 
-    public ConsoleDisplayService()
+    public ConsoleDisplayService(IAnalogTimer analogTimer)
     {
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        analogTimer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             PrintValue(digit.ToString(), _position);
             UIHelper.SetCursor();
         };
 
-        MillisecondDisplayHelper.DisplayZero();
+        analogTimer.MillisecondDisplayHelper.DisplayZero();
         DisplayTick(new());
     }
 

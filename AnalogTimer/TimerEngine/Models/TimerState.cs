@@ -229,7 +229,7 @@ public class TimerState
         Minutes = _zero;
         Seconds = _zero;
         Milliseconds = _zero;
-        MillisecondDisplayHelper.DisplayZero();
+        //MillisecondDisplayHelper.DisplayZero();
         IsZero = true;
     }
 }

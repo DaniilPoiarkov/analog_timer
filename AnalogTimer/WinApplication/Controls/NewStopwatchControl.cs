@@ -2,7 +2,6 @@
 using static WinApplication.Statics.Helper;
 using WinApplication.ButtonStateEngine;
 using WinApplication.ButtonStateEngine.StopwatchButtonStates;
-using AnalogTimer.Helpers;
 using WinApplication.Implementations;
 
 namespace WinApplication;
@@ -72,6 +71,7 @@ public partial class NewStopwatchControl : UserControl
 
                 _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
                 cutOutput.Text = string.Empty;
+                StopwatchMsOutput.Text = "0";
                 SubscribeToButtons();
             });
         };
@@ -99,7 +99,7 @@ public partial class NewStopwatchControl : UserControl
             }
         };
 
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             SetMillisecond(digit.ToString());
         };

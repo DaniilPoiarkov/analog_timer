@@ -27,6 +27,8 @@ public class AnalogTimer : IAnalogTimer
 
     public event TimerUpdated? Stopeed;
 
+    public MillisecondDisplayHelper MillisecondDisplayHelper { get; }
+
     private TimerEventArgs TimerEventArgs => new()
     {
         State = GetSnapshot(),
@@ -58,6 +60,7 @@ public class AnalogTimer : IAnalogTimer
         Type = TimerType.Stopwatch;
 
         StateCallback = _state.AddMilliseconds;
+        MillisecondDisplayHelper = new MillisecondDisplayHelper();
     }
 
     public AnalogTimer()

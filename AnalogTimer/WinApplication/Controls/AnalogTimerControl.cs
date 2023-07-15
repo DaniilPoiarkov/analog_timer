@@ -1,6 +1,4 @@
-﻿using AnalogTimer.Contracts;
-using WinApplication.Implementations;
-using AnalogTimer.Helpers;
+﻿using WinApplication.Implementations;
 using static WinApplication.Statics.Helper;
 using MyTimer = AnalogTimer.Implementations.AnalogTimer;
 using AnalogTimer.Models;
@@ -39,7 +37,7 @@ public partial class AnalogTimerControl : UserControl
         _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
         SubscribeToButtons();
 
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             SetMillisecond(digit.ToString());
         };
@@ -106,6 +104,7 @@ public partial class AnalogTimerControl : UserControl
                 HoursInput.Value = 0;
                 MinutesInput.Value = 0;
                 SecondsInput.Value = 0;
+                TimerMsOutput.Text = "0";
                 TickPerSecondInput.Value = 1;
 
                 ResetFormValues(true);
@@ -129,7 +128,7 @@ public partial class AnalogTimerControl : UserControl
             }
         };
 
-        MillisecondDisplayHelper.OutputHandler += (_, digit) =>
+        _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
         {
             SetMillisecond(digit.ToString());
         };

@@ -3,19 +3,19 @@ using System.ComponentModel;
 
 namespace AnalogTimer.Helpers;
 
-public static class MillisecondDisplayHelper
+public class MillisecondDisplayHelper
 {
-    private static BackgroundWorker _worker = new();
+    private BackgroundWorker _worker = new();
 
-    private static CancellationTokenSource? _cts;
+    private CancellationTokenSource? _cts;
 
-    private static TaskCompletionSource? _tcs;
+    private TaskCompletionSource? _tcs;
 
-    private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+    private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-    public static event EventHandler<int>? OutputHandler;
+    public event EventHandler<int>? OutputHandler;
 
-    public static Task BackgroundDisplay()
+    public Task BackgroundDisplay()
     {
         _tcs = new TaskCompletionSource();
         _worker = new BackgroundWorker();
@@ -59,17 +59,17 @@ public static class MillisecondDisplayHelper
         return _tcs.Task;
     }
 
-    public static void StopDisplay()
+    public void StopDisplay()
     {
         _cts?.Cancel();
     }
 
-    public static void DisplayZero()
+    public void DisplayZero()
     {
         OutputHandler?.Invoke(null, 0);
     }
 
-    private static async Task Display(CancellationToken cancellationToken)
+    private async Task Display(CancellationToken cancellationToken)
     {
         int snapshot = 0;
 

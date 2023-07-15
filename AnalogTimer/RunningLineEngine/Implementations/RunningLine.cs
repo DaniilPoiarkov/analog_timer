@@ -47,6 +47,11 @@ public class RunningLine : IRunningLine
 
     public void ChangeSpeed(int coefficient)
     {
+        if (coefficient <= 0)
+        {
+            throw new Exception("Speed coefficient cannot be equal or below 0");
+        }
+
         _speedCoefficient = coefficient;
     }
 
