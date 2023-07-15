@@ -45,7 +45,7 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
             .Add<PausePrompt>()
             .Add<CleanLinePrompt>()
             .Add<RunPrompt>()
-            .Add<CLosePromp>()
+            .Add<ClosePrompt>()
             .Build();
     }
 }
