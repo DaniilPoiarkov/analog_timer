@@ -6,6 +6,8 @@ internal abstract class ButtonsStateBase
 
     protected readonly Button RightBtn;
 
+#pragma warning disable CS0067
+
     public virtual event EventHandler<EventArgs>? StartPressed;
 
     public virtual event EventHandler<EventArgs>? PausePressed;
@@ -16,6 +18,7 @@ internal abstract class ButtonsStateBase
 
     public virtual event EventHandler<EventArgs>? CutPressed;
 
+#pragma warning restore CS0067
 
     protected ButtonsStateBase(Button leftBtn, Button rightBrn)
     {

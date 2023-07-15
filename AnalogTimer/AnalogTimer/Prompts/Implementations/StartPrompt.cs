@@ -7,7 +7,7 @@ namespace TimerEngine.Prompts.Implementations;
 
 public class StartPrompt : AnalogTimerPromptBase
 {
-    public override string Instruction => "Write \'start\' to start timer.\n\t" +
+    public override string Instruction => "Write \'start\' to start timer or stopwatch.\n\t" +
         "Flags: \'-h\', \'-m\', \'-s\' allows you to add hours, minutes and seconds accordingly.\n\t\t" +
         "Usage with positive number which represents amount of specific value.";
 

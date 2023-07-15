@@ -1,6 +1,4 @@
-﻿using AnalogTimer.Helpers;
-
-namespace AnalogTimer.Models;
+﻿namespace AnalogTimer.Models;
 
 public class TimerState
 {
@@ -229,7 +227,6 @@ public class TimerState
         Minutes = _zero;
         Seconds = _zero;
         Milliseconds = _zero;
-        MillisecondDisplayHelper.DisplayZero();
         IsZero = true;
     }
 }

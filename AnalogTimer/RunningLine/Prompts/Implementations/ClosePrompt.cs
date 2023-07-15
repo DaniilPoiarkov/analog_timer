@@ -2,7 +2,7 @@
 
 namespace RunningLineEngine.Prompts.Implementations;
 
-public class CLosePromp : RunningLinePromptBase
+public class ClosePrompt : RunningLinePromptBase
 {
     public override string Name => "close";
 
