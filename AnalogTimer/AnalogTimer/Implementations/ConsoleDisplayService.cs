@@ -1,5 +1,4 @@
 ﻿using AnalogTimer.Contracts;
-using AnalogTimer.Helpers;
 using AnalogTimer.Models;
 using AnalogTimer.Patterns;
 using ConsoleApplicationBuilder.Helpers;

@@ -15,6 +15,8 @@ internal class RunningLineApplication : ConsoleApplication<IRunningLine>
 
     public RunningLineApplication()
     {
+        Console.Title = "Running Line";
+
         var display = new DefaultDisplayHandler();
 
         Entity = new MyRunningLine(new RunningLineConfiguration());

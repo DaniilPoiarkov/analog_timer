@@ -104,6 +104,7 @@ public class AnalogTimer : IAnalogTimer
     public void ResetState()
     {
         UpdateState(timer => timer._state.Reset());
+        MillisecondDisplayHelper.DisplayZero();
     }
 
     private void UpdateState(Action<AnalogTimer> stateUpdateAction)
