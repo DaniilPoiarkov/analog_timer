@@ -66,34 +66,44 @@ public class MillisecondDisplayHelper
 
     public void DisplayZero()
     {
-        OutputHandler?.Invoke(null, 0);
+        OutputHandler?.Invoke(this, 0);
     }
 
     private async Task Display(CancellationToken cancellationToken)
     {
         int snapshot = 0;
 
-        while (!cancellationToken.IsCancellationRequested)
+        for (int i = 0; i < 10 && !cancellationToken.IsCancellationRequested; i++)
         {
-            for (int i = 0; i < 10; i++)
+            if (i == 9)
             {
-                var digit = i switch
-                {
-                    < 3 => 0,
-                    < 5 => 3,
-                    < 7 => 5,
-                    _ => 7
-                };
-
-                if (digit == snapshot)
-                    continue;
-
-                await Task.Delay(10, cancellationToken);
-                
-                OutputHandler?.Invoke(null, i);
-
-                snapshot = digit;
+                i = 0;
+                continue;
             }
+
+            var digit = i switch
+            {
+                < 3 => 0,
+                < 5 => 3,
+                < 7 => 5,
+                _ => 7
+            };
+
+            if (digit == snapshot)
+            {
+                continue;
+            }
+
+            await Task.Delay(10, cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                break;
+            }
+
+            OutputHandler?.Invoke(this, digit);
+
+            snapshot = digit;
         }
     }
 }

@@ -36,11 +36,6 @@ public partial class AnalogTimerControl : UserControl
 
         _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
         SubscribeToButtons();
-
-        _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
-        {
-            SetMillisecond(digit.ToString());
-        };
     }
 
     #region Subscribtions
@@ -116,17 +111,11 @@ public partial class AnalogTimerControl : UserControl
     {
         _timer.Tick += _timerDisplayService.DisplayTick;
         _timer.Updated += _timerDisplayService.DisplayUpdated;
-        _timer.Stopeed += _ =>
+        _timer.Stopeed += args =>
         {
             _switchStateBtnState = new InitialButtonsState(SwitchTimerBtn, TimerCaancelBtn);
             SubscribeToButtons();
             ResetFormValues(true);
-
-            if (_timer.GetSnapshot().IsZero)
-            {
-                _timer.MillisecondDisplayHelper.DisplayZero();
-                TimerMsOutput.Text = "0";
-            }
         };
 
         _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>
