@@ -92,11 +92,6 @@ public partial class NewStopwatchControl : UserControl
         {
             _buttonState = new InitialButtonState(StopwatchStartBtn, StopwatchResetBtn);
             SubscribeToButtons();
-
-            if (_timer.GetSnapshot().IsZero)
-            {
-                StopwatchMsOutput.Text = "0";
-            }
         };
 
         _timer.MillisecondDisplayHelper.OutputHandler += (_, digit) =>

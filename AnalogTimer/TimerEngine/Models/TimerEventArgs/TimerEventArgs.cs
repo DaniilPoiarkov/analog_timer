@@ -9,5 +9,5 @@ public class TimerEventArgs
 
     public TimerType? TimerType { get; set; }
 
-    public bool IsStopped { get; set; }
+    public bool IsZero { get; set; }
 }

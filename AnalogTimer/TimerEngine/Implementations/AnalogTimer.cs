@@ -166,9 +166,11 @@ public class AnalogTimer : IAnalogTimer
                     IsRunning = false;
 
                     MillisecondDisplayHelper.StopDisplay();
+                    await Task.Delay(10);
+
                     MillisecondDisplayHelper.DisplayZero();
 
-                    Stopeed?.Invoke(new() { IsStopped = true });
+                    Stopeed?.Invoke(new() { IsZero = true });
                 }
             }
             catch (Exception ex)
@@ -195,6 +197,6 @@ public class AnalogTimer : IAnalogTimer
         IsRunning = false;
         await Execution;
         Counter = null;
-        Stopeed?.Invoke(new() { IsStopped = true });
+        Stopeed?.Invoke(new TimerEventArgs());
     }
 }
